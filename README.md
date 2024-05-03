@@ -15,10 +15,17 @@
 - Projekts izmanto spring boot versiju 2.7.x - ta ir pedeja versija, kas atbalsta java 11. Spring Boot 3.x atbalsta tikai java 17+;
 - Pasniedzejs mineja, ka sagaida, ka darba apjoms ir CILVEKU_SKAITS * 40h. Tas nozime, ka velamais darba apjoms uz mums 4iem ir 160 person-stundas.
 - Kursa prasibas - [OOP_prasibas](https://pad.riseup.net/p/kxIMtcn-TmUrEISZZbC_-keep)
-- (Ja ir vel kas, ko vajadzetu zinat ... Ludzu pievienot seit)
-
 
 ## TODO
-- Skatīt zem GitHub repository sadaļas -> Projects.
-- Tur varēs redzēt sarakstu ar uzdevumiem.
+- Skatīt zem GitHub repository sadaļas -> Projects. Tur varēs redzēt sarakstu ar uzdevumiem.
 - Ja šobrīd taisāt kādu no uzdevumiem, tad paņemiet to uz sevi (Assignees) un Status "In Progress".
+
+## Datubāze
+- Visi izmantojam vienu datubāzi, kad atrodas AWS (mākonī). Tā varēsim darboties visi ar tiem pašiem datiem un nevajadzēs uztraukties par datubāzes uzstādījumiem.
+- Var pieslēgties klāt izmantojot MySQL workbench (vai citu datubāžu rīku). Šeit parametri (kad publicēsim, vajadzēs paslēpt un nomainīt paroli):
+```
+hostname: http://receptes1.ch62g4ug00sh.eu-north-1.rds.amazonaws.com/
+port: 3306
+username: admin
+parole: oop12345
+```
