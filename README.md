@@ -17,7 +17,7 @@
 - Kursa prasibas - [OOP_prasibas](https://pad.riseup.net/p/kxIMtcn-TmUrEISZZbC_-keep)
 
 ## TODO
-- Skatīt zem GitHub repository sadaļas -> Projects. Tur varēs redzēt sarakstu ar uzdevumiem.
+- Skatīt zem GitHub repository sadaļas -> Projects. Tur varēs redzēt sarakstu ar uzdevumiem;
 - Ja šobrīd taisāt kādu no uzdevumiem, tad paņemiet to uz sevi (Assignees) un Status "In Progress".
 
 ## Datubāze
