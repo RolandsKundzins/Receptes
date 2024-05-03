@@ -7,7 +7,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ReceptesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReceptesApplication.class, args);
+		//Spring application var izmantot, lai paraditu majaslapu vai uztaisitu rest endpoint - var paskaties failu "HelloWorldController.java"
+		//SpringApplication.run(ReceptesApplication.class, args);
+		
+		
+		//Izdrukaa konsole visas receptes
+		RecipeList recipeList = new RecipeList();
+
+		recipeList.printRecipes();
+		
+		recipeList.closeConnection();
 	}
 
 }
