@@ -18,17 +18,7 @@
 - (Ja ir vel kas, ko vajadzetu zinat ... Ludzu pievienot seit)
 
 
-## TODO - SVARIGI
-- Datubazes setup
-- Receptes saraksts
-- Receptes skats
-- Lietotaja pieslegsanas/atslegsanas
-- sistēmas dizaina apraksts
-
-## TODO, lai dabutu pietiekamu apjomu/sarezgitibu
-- Receptes komentari
-- Statistikas skats - cik skatijumi vai komentari diena/nedela/menesi
-
-
-## TODO - kosmoss, varbut ja visas zvaigznes saliksies, tad izdarisim:
-- ...
+## TODO
+- Skatīt zem GitHub repository sadaļas -> Projects.
+- Tur varēs redzēt sarakstu ar uzdevumiem.
+- Ja šobrīd taisāt kādu no uzdevumiem, tad paņemiet to uz sevi (Assignees) un Status "In Progress".
