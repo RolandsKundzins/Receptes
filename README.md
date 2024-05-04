@@ -24,8 +24,12 @@
 - Visi izmantojam vienu datubāzi, kad atrodas AWS (mākonī). Tā varēsim darboties visi ar tiem pašiem datiem un nevajadzēs uztraukties par datubāzes uzstādījumiem.
 - Var pieslēgties klāt izmantojot MySQL workbench (vai citu datubāžu rīku). Šeit parametri (kad publicēsim, vajadzēs paslēpt un nomainīt paroli):
 ```
-hostname: http://receptes1.ch62g4ug00sh.eu-north-1.rds.amazonaws.com/
+hostname: receptes1.ch62g4ug00sh.eu-north-1.rds.amazonaws.com
 port: 3306
 username: admin
 parole: oop12345
 ```
+- Bildes arī glabāsim datubāzē, lai mazāk uzstādīšanas, kā arī visi tām varēs piekļūt, jo mākonis.
+
+## Frontend
+- Piedāvāju lietot Thymeleaf. Tam pamatā parasti ir HTML, CSS, JS un fīčas no Java. Krietni ietaupīsim laiku uzstādot React, kuru tāpat nevērtēs, jo nav OOP.
