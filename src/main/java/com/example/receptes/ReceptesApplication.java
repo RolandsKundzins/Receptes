@@ -1,18 +1,16 @@
 package com.example.receptes;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-//import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//@SpringBootApplication
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan
+//@Configuration
+//@EnableAutoConfiguration
+//@ComponentScan
+
+@SpringBootApplication
 public class ReceptesApplication {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		//Spring application var izmantot, lai paraditu majaslapu vai uztaisitu rest endpoint - var paskaties failu "HelloWorldController.java"
 		SpringApplication.run(ReceptesApplication.class, args);
 		

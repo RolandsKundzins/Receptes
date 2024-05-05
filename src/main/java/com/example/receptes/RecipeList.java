@@ -42,7 +42,7 @@ public class RecipeList {
         
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			//additional parameters: preparedStatement.setString(1, "%" + firstName + "%");
+			//additional parameters example: preparedStatement.setString(1, "%" + firstName + "%");
 			ResultSet results = preparedStatement.executeQuery();
             while (results.next()) {
             	recipes.add(new Recipe(results.getInt("recepteId"), results.getString("nosaukums"), results.getInt("pagatavosanasLaiks"), results.getString("receptesApraksts")));

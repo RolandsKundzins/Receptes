@@ -9,7 +9,8 @@ public class Recipe {
 	private int pagatavosanasLaiks;
 //	private LocalDateTime createdAt;
 	private String receptesApraksts;
-
+	//TODO pievienot parejos laukus
+	
 	public Recipe() {
 		
 	}

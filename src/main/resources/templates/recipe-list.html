@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipe List</title>
+    
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-    <h1>Recipe List</h1>
+    <h1>Receptes</h1>
     <table>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Ingredients</th>
-                <th>Instructions</th>
+                <th>nosaukums</th>
+                <th>pagatavosanasLaiks</th>
+                <th>receptesApraksts</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +32,7 @@
             <tr th:each="recipe : ${recipes}">
                 <td th:text="${recipe.nosaukums}"></td>
                 <td th:text="${recipe.pagatavosanasLaiks}"></td>
+                <td th:text="${recipe.receptesApraksts}"></td>
             </tr>
         </tbody>
     </table>
