@@ -1,4 +1,4 @@
-package com.example.receptes;
+package receptes.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import receptes.type.Recipe;
 
 
 @Component

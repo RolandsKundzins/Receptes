@@ -1,4 +1,4 @@
-package com.example.receptes;
+package receptes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ReceptesApplication {
 
 	public static void main(String[] args) {
-		//Spring application var izmantot, lai paraditu majaslapu vai uztaisitu rest endpoint - var paskaties failu "HelloWorldController.java"
+		//Spring application var izmantot, lai paraditu majaslapu vai uztaisitu rest endpoint - var paskaties failu "RecipeController.java"
 		SpringApplication.run(ReceptesApplication.class, args);
 		
 		System.out.println("ReceptesApplication -> main");

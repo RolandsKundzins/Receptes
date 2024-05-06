@@ -1,7 +1,7 @@
 //Type for Recipe
 
 
-package com.example.receptes;
+package receptes.type;
 
 public class Recipe {
 	private int recepteId;
