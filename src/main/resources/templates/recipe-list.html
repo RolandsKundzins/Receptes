@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes</title>
+    
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Receptes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>nosaukums</th>
+                <th>pagatavosanasLaiks</th>
+                <th>receptesApraksts</th>
+                <th>Papildus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate over recipes and display them in the table -->
+            <tr th:each="recipe : ${recipes}">
+                <td th:text="${recipe.nosaukums}"></td>
+                <td th:text="${recipe.pagatavosanasLaiks}"></td>
+                <td th:text="${recipe.receptesApraksts}"></td>
+                <td>
+			         <a th:href="@{/recepte(recepteId = ${recipe.recepteId})}">Detalizetak</a>
+			    </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

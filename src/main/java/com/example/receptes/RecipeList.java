@@ -5,8 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class RecipeList {
 	protected Connection conn;
 
@@ -16,6 +21,7 @@ public class RecipeList {
 	static final String database = "ReceptesDB";
 
 	public RecipeList() {
+		System.out.println("RecipeList constructor");
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://" + hostname + ":3306/?autoReconnect=true&serverTimezone=UTC&characterEncoding=utf8", user, password);
@@ -29,28 +35,30 @@ public class RecipeList {
 	}
 	
 	
-	
-	
-	//Si funkcija izdruka visas receptes konsolee 
-	public void printRecipes() {
-        try {
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM " + database + ".Recepte");
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                // Assuming you have columns like "recipe_id", "recipe_name" in your table
-                int recepteId = resultSet.getInt("recepteId");
-                String nosaukums = resultSet.getString("nosaukums");
-                System.out.println("Recipe ID: " + recepteId + ", Recipe Name: " + nosaukums);
+	public List<Recipe> getAllRecipes() {
+		String sql = "SELECT * FROM " + database + ".Recepte";
+        List<Recipe> recipes = new LinkedList<>();
+        
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			//additional parameters example: preparedStatement.setString(1, "%" + firstName + "%");
+			ResultSet results = preparedStatement.executeQuery();
+            while (results.next()) {
+            	recipes.add(new Recipe(results.getInt("recepteId"), results.getString("nosaukums"), results.getInt("pagatavosanasLaiks"), results.getString("receptesApraksts")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        return recipes;
     }
 	
 	
+	// TODO sis pagaidam nekur netiek saukts, jo uz "Terminate/Disconnect All" viss tiek brutali nogalinats
 	public void closeConnection() {
 		// Close connection to the database server
 		try {
+			System.out.println("closeConnection");
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
