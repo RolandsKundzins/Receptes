@@ -35,7 +35,6 @@ public class RecipeList {
 	}
 	
 	
-	
 	public List<Recipe> getAllRecipes() {
 		String sql = "SELECT * FROM " + database + ".Recepte";
         List<Recipe> recipes = new LinkedList<>();
@@ -55,9 +54,11 @@ public class RecipeList {
     }
 	
 	
+	// TODO sis pagaidam nekur netiek saukts, jo uz "Terminate/Disconnect All" viss tiek brutali nogalinats
 	public void closeConnection() {
 		// Close connection to the database server
 		try {
+			System.out.println("closeConnection");
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

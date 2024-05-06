@@ -15,12 +15,6 @@ public class ReceptesApplication {
 		SpringApplication.run(ReceptesApplication.class, args);
 		
 		System.out.println("ReceptesApplication -> main");
-		//Izdrukaa konsole visas receptes
-//		RecipeList recipeList = new RecipeList();
-//
-//		recipeList.printRecipes();
-//		
-//		recipeList.closeConnection();
 	}
 
 }

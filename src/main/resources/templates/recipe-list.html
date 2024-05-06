@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Recipe List</title>
+    <title>Recipes</title>
     
     <style>
         table {
@@ -25,6 +25,7 @@
                 <th>nosaukums</th>
                 <th>pagatavosanasLaiks</th>
                 <th>receptesApraksts</th>
+                <th>Papildus</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,9 @@
                 <td th:text="${recipe.nosaukums}"></td>
                 <td th:text="${recipe.pagatavosanasLaiks}"></td>
                 <td th:text="${recipe.receptesApraksts}"></td>
+                <td>
+			         <a th:href="@{/recepte(recepteId = ${recipe.recepteId})}">Detalizetak</a>
+			    </td>
             </tr>
         </tbody>
     </table>
