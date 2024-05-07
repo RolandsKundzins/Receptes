@@ -3,7 +3,7 @@
 
 package receptes.type;
 
-public class Recipe {
+public class RecipeType {
 	private int recepteId;
 	private String nosaukums;
 	private int pagatavosanasLaiks;
@@ -11,12 +11,12 @@ public class Recipe {
 	private String receptesApraksts;
 	//TODO pievienot parejos laukus - vini jau ir datubazes pievienoti
 	
-	public Recipe() {
+	public RecipeType() {
 		
 	}
 	
 	
-	public Recipe(int recepteId, String nosaukums, int pagatavosanasLaiks, String receptesApraksts) {
+	public RecipeType(int recepteId, String nosaukums, int pagatavosanasLaiks, String receptesApraksts) {
 		this.recepteId = recepteId;
 		this.nosaukums = nosaukums;
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
