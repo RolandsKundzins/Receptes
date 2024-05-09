@@ -29,15 +29,17 @@ public class SecurityConfiguration {
 		return httpSecurity
 			.csrf(htppSecurityCsrfConfigurer -> htppSecurityCsrfConfigurer.disable())
 			.authorizeHttpRequests(registry -> {
-			registry.antMatchers("/register").permitAll(); //sadi var iestatit lapas, kuram var pieklut bez auth
-//			registry.antMatchers("/admin/**").hasRole("ADMIN"); //pagaidam nav vairaku lietotaja limenu
-//			registry.antMatchers("/user/**").hasRole("USER");
-			registry.anyRequest().authenticated();
-		})
-		.formLogin(form -> form
-            .permitAll()
-        )
-		.build();
+				registry.antMatchers("/register").permitAll(); //sadi var iestatit lapas, kuram var pieklut bez auth
+				//registry.antMatchers("/admin/**").hasRole("ADMIN"); //pagaidam nav vairaku lietotaja limenu
+				//registry.antMatchers("/user/**").hasRole("USER");
+				registry.anyRequest().authenticated();
+			})
+			.formLogin(form -> form
+				.loginPage("/login")
+				.defaultSuccessUrl("/receptes", true)
+	            .permitAll()
+	        )
+			.build();
 	}
 	
 

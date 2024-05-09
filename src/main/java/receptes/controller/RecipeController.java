@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import receptes.model.RecipeModel;
 
 
+@SuppressWarnings("unused")
 @Controller
 @RequestMapping("/")
 public class RecipeController {
@@ -22,10 +23,10 @@ public class RecipeController {
 	private RecipeModel recipeModel;
 	
 	
-	@GetMapping("/")
-    public String redirectTorecipeModel(RedirectAttributes attributes) {
-        return "redirect:/receptes";
-    }
+//	@GetMapping("/")
+//    public String redirectTorecipeModel(RedirectAttributes attributes) {
+//        return "redirect:/receptes";
+//    }
 	
 
 	@GetMapping("/receptes")

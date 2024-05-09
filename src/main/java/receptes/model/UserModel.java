@@ -43,7 +43,7 @@ public class UserModel {
 	}
 	
 	
-	public boolean insertUser(String epasts, String parole, String lietotajvards) {
+	public OperationResult insertUser(String epasts, String parole, String lietotajvards) {
 		String sql = "INSERT INTO " + DatabaseConnection.getDatabase() + ".`Lietotajs` (`epasts`, `parole`, `lietotajvards`) VALUES (?,?,?);";
 		int rowsAffected = 0;
 		
@@ -61,11 +61,13 @@ public class UserModel {
 				el.printStackTrace();
 			}
 			e.printStackTrace();
+			
+			return new OperationResult(false, "Error occurred while inserting user: " + e.getMessage());
 		}
 		
 		if(rowsAffected > 0) {
-			return true;
+	        return new OperationResult(true, "User inserted successfully");
 		}
-		return false;
+	    return new OperationResult(false, "Failed to insert user. Please contact administrator!");
 	}
 }
