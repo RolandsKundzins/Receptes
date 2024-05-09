@@ -22,12 +22,6 @@ public class RecipeController {
 	@Autowired
 	private RecipeModel recipeModel;
 	
-	
-//	@GetMapping("/")
-//    public String redirectTorecipeModel(RedirectAttributes attributes) {
-//        return "redirect:/receptes";
-//    }
-	
 
 	@GetMapping("/receptes")
 	public String showrecipeModel(Model model) {

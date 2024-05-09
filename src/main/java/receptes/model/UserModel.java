@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Component;
 
+import receptes.type.OperationResult;
 import receptes.type.UserType;
 
 import java.sql.Connection;
