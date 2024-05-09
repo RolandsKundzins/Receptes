@@ -3,21 +3,21 @@
 
 package receptes.type;
 
-public class Recipe {
-	private int recepteId;
+public class RecipeType {
+	private int recepteID;
 	private String nosaukums;
 	private int pagatavosanasLaiks;
 //	private LocalDateTime createdAt;
 	private String receptesApraksts;
 	//TODO pievienot parejos laukus - vini jau ir datubazes pievienoti
 	
-	public Recipe() {
+	public RecipeType() {
 		
 	}
 	
 	
-	public Recipe(int recepteId, String nosaukums, int pagatavosanasLaiks, String receptesApraksts) {
-		this.recepteId = recepteId;
+	public RecipeType(int recepteId, String nosaukums, int pagatavosanasLaiks, String receptesApraksts) {
+		this.recepteID = recepteId;
 		this.nosaukums = nosaukums;
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
 		this.receptesApraksts = receptesApraksts;
@@ -26,11 +26,11 @@ public class Recipe {
 
 	//getters and setters
 	public int getRecepteId() {
-		return recepteId;
+		return recepteID;
 	}
 
 	public void setRecepteId(int recepteId) {
-		this.recepteId = recepteId;
+		this.recepteID = recepteId;
 	}
 
 	public String getNosaukums() {
