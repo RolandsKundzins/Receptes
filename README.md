@@ -30,6 +30,8 @@ username: admin
 parole: oop12345
 ```
 - Bildes arī glabāsim datubāzē, lai mazāk uzstādīšanas, kā arī visi tām varēs piekļūt, jo mākonis.
+- Redigejot datubazi - nemt vera, ka citi strada ar to pasu un, ka uz tas ir balstits esoss kods.
+- db backup var taisit ar: mysqldump -h receptes1.ch62g4ug00sh.eu-north-1.rds.amazonaws.com -u admin -p ReceptesDB > backup_file.sql
 
 ## Frontend
 - Piedāvāju lietot Thymeleaf. Tam pamatā parasti ir HTML, CSS, JS un fīčas no Java. Krietni ietaupīsim laiku uzstādot React, kuru tāpat nevērtēs, jo nav OOP.

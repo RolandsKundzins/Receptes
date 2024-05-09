@@ -13,27 +13,21 @@ public class UserType {
 	//private izveidesDatums - ir datubazee
 	private Boolean irAktivs; // - ir datubazee, bet bez administratora nav jegas
 	
-	private Boolean isDefined = false; //Nav ideals risinajums
+	private Boolean irDefinets = false; //Nav ideals risinajums
 
 	public UserType() {
-		isDefined = false;
+		irDefinets = false;
 	}
 	
 	public UserType(String epasts, String parole, String lietotajvards, Boolean irAktivs) {
-//		super();
 		this.epasts = epasts;
 		this.parole = parole;
 		this.lietotajvards = lietotajvards;
 		this.irAktivs = irAktivs;
-		isDefined = true;
+		irDefinets = true;
 	}
 	
-	
-	public Boolean getIsDefined() {
-		return isDefined;
-	}
-	
-	
+
 	public String getEpasts() {
 		return epasts;
 	}
@@ -42,28 +36,36 @@ public class UserType {
 		this.epasts = epasts;
 	}
 
-	public String getPassword() {
+	public String getParole() {
 		return parole;
 	}
 
-	public String getUsername() {
+	public void setParole(String parole) {
+		this.parole = parole;
+	}
+
+	public String getLietotajvards() {
 		return lietotajvards;
 	}
 
-	public boolean isAccountNonExpired() {
-		return true;
+	public void setLietotajvards(String lietotajvards) {
+		this.lietotajvards = lietotajvards;
 	}
 
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	public boolean isEnabled() {
+	public Boolean getIrAktivs() {
 		return irAktivs;
+	}
+
+	public void setIrAktivs(Boolean irAktivs) {
+		this.irAktivs = irAktivs;
+	}
+
+	public Boolean getIrDefinets() {
+		return irDefinets;
+	}
+
+	public void setIrDefinets(Boolean irDefinets) {
+		this.irDefinets = irDefinets;
 	}
 
 	@Override

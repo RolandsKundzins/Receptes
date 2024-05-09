@@ -26,8 +26,10 @@ public class SecurityConfiguration {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-		return httpSecurity.authorizeHttpRequests(registry -> {
-//			registry.antMatchers("/receptes").permitAll(); //sadi var iestatit lapas, kuram var pieklut bez auth
+		return httpSecurity
+			.csrf(htppSecurityCsrfConfigurer -> htppSecurityCsrfConfigurer.disable())
+			.authorizeHttpRequests(registry -> {
+			registry.antMatchers("/register").permitAll(); //sadi var iestatit lapas, kuram var pieklut bez auth
 //			registry.antMatchers("/admin/**").hasRole("ADMIN"); //pagaidam nav vairaku lietotaja limenu
 //			registry.antMatchers("/user/**").hasRole("USER");
 			registry.anyRequest().authenticated();

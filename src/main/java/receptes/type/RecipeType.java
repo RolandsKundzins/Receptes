@@ -4,7 +4,7 @@
 package receptes.type;
 
 public class RecipeType {
-	private int recepteId;
+	private int recepteID;
 	private String nosaukums;
 	private int pagatavosanasLaiks;
 //	private LocalDateTime createdAt;
@@ -17,7 +17,7 @@ public class RecipeType {
 	
 	
 	public RecipeType(int recepteId, String nosaukums, int pagatavosanasLaiks, String receptesApraksts) {
-		this.recepteId = recepteId;
+		this.recepteID = recepteId;
 		this.nosaukums = nosaukums;
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
 		this.receptesApraksts = receptesApraksts;
@@ -26,11 +26,11 @@ public class RecipeType {
 
 	//getters and setters
 	public int getRecepteId() {
-		return recepteId;
+		return recepteID;
 	}
 
 	public void setRecepteId(int recepteId) {
-		this.recepteId = recepteId;
+		this.recepteID = recepteId;
 	}
 
 	public String getNosaukums() {

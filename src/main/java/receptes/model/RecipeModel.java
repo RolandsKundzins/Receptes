@@ -33,7 +33,7 @@ public class RecipeModel {
 			//additional parameters example: preparedStatement.setString(1, "%" + firstName + "%");
 			ResultSet results = preparedStatement.executeQuery();
             while (results.next()) {
-            	recipes.add(new RecipeType(results.getInt("recepteId"), results.getString("nosaukums"), results.getInt("pagatavosanasLaiks"), results.getString("receptesApraksts")));
+            	recipes.add(new RecipeType(results.getInt("recepteID"), results.getString("nosaukums"), results.getInt("pagatavosanasLaiks"), results.getString("receptesApraksts")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

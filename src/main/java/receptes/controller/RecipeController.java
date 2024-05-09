@@ -35,10 +35,12 @@ public class RecipeController {
         model.addAttribute("recipes", recipeModel.getAllRecipes());
         return "recipe-list"; // src/main/templates/recipe-list.html
     }
+	
+
 	@GetMapping("/recepte")
-	public String showRecipeSingle(@RequestParam("recepteId") String recepteId, Model model) {
+	public String showRecipeSingle(@RequestParam("recepteId") String recepteID, Model model) {
 		// TODO FINISH THIS IN #3 task (Receptes skats)
-		System.out.println(String.format("showRecipeSingle(recepteId: %s))", recepteId));
+		System.out.println(String.format("showRecipeSingle(recepteId: %s))", recepteID));
 //        model.addAttribute("recipe", recipeModel.getRecipe());
         return "recipe-single"; // src/main/templates/recipe-single.html
     }

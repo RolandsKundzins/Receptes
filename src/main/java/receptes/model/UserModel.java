@@ -41,4 +41,31 @@ public class UserModel {
 		
 		return new UserType();
 	}
+	
+	
+	public boolean insertUser(String epasts, String parole, String lietotajvards) {
+		String sql = "INSERT INTO " + DatabaseConnection.getDatabase() + ".`Lietotajs` (`epasts`, `parole`, `lietotajvards`) VALUES (?,?,?);";
+		int rowsAffected = 0;
+		
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, epasts);
+			preparedStatement.setString(2, parole);
+			preparedStatement.setString(3, lietotajvards);
+			rowsAffected = preparedStatement.executeUpdate();
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException el) {
+				el.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		
+		if(rowsAffected > 0) {
+			return true;
+		}
+		return false;
+	}
 }
