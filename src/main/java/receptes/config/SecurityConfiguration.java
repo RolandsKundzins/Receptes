@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import receptes.MyUserDetailsService;
 
@@ -26,6 +28,7 @@ public class SecurityConfiguration {
 		return httpSecurity
 			.csrf(htppSecurityCsrfConfigurer -> htppSecurityCsrfConfigurer.disable())
 			.authorizeHttpRequests(registry -> {
+				registry.antMatchers("/home").permitAll();
 				registry.antMatchers("/register").permitAll(); //sadi var iestatit lapas, kuram var pieklut bez auth
 				//registry.antMatchers("/admin/**").hasRole("ADMIN"); //pagaidam nav vairaku lietotaja limenu
 				//registry.antMatchers("/user/**").hasRole("USER");
@@ -33,9 +36,18 @@ public class SecurityConfiguration {
 			})
 			.formLogin(form -> form
 				.loginPage("/login")
-				.defaultSuccessUrl("/receptes", true)
+				.defaultSuccessUrl("/recipe/list", true)//veiksmīgs logins - novirzas uz recepšu sarakstu
 	            .permitAll()
 	        )
+            .exceptionHandling(exceptionHandling ->
+            exceptionHandling
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/home"))
+            )//iestatu, ka home page ir sākums
+		    .logout(logout ->
+		        logout
+		            .logoutUrl("/logout")
+		            .logoutSuccessUrl("/home")//kad izlogojās, novirzas uz home page
+		    )
 			.build();
 	}
 	

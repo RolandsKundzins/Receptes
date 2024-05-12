@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes Home</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .recipe {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .recipe h2 {
+            margin-top: 0;
+            color: #555;
+        }
+        
+        .recipe p {
+            margin-bottom: 10px;
+            color: #777;
+        }
+        
+        .nav {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .nav a {
+            color: #444;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="/login">Login</a>
+        </div>
+        <h1>Laipni lūgti receptēs!!!</h1>
+        <p>Atklāj savu jauno garšas buķeti un pievienojies mums ar savām receptēm!</p>
+        
+            <div th:each="recipe : ${recipes}" class="recipe">
+            <h2 th:text="${recipe.nosaukums}"></h2>
+            <p><strong>Preparation Time:</strong> <span th:text="${recipe.pagatavosanasLaiks}"></span> minutes</p>
+            <p th:text="${recipe.receptesApraksts}"></p>
+            <a th:href="@{/recepte(recepteId = ${recipe.recepteId})}">Detalizetak</a>
+            
+        </div>
+
+    </div>
+
+</body>
+</html>

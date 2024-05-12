@@ -16,14 +16,14 @@ import receptes.model.RecipeModel;
 
 @SuppressWarnings("unused")
 @Controller
-@RequestMapping("/")
+@RequestMapping("/recipe")
 public class RecipeController {
 
 	@Autowired
 	private RecipeModel recipeModel;
 	
 
-	@GetMapping("/receptes")
+	@GetMapping("/list")
 	public String showrecipeModel(Model model) {
         // Load recipe data and add it to the model
 		System.out.println("showrecipeModel");
@@ -32,7 +32,7 @@ public class RecipeController {
     }
 	
 
-	@GetMapping("/recepte")
+	@GetMapping("/object")
 	public String showRecipeSingle(@RequestParam("recepteId") String recepteID, Model model) {
 		// TODO FINISH THIS IN #3 task (Receptes skats)
 		System.out.println(String.format("showRecipeSingle(recepteId: %s))", recepteID));
