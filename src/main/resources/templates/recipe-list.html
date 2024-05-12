@@ -37,7 +37,7 @@
                 <td th:text="${recipe.pagatavosanasLaiks}"></td>
                 <td th:text="${recipe.receptesApraksts}"></td>
                 <td>
-			         <a th:href="@{/recepte(recepteId = ${recipe.recepteId})}">Detalizetak</a>
+			         <a th:href="@{/recipe/object?(recepteId = ${recipe.recepteId})}">Detalizētāk</a>
 			    </td>
             </tr>
         </tbody>

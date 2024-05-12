@@ -31,7 +31,6 @@ public class RecipeController {
         return "recipe-list"; // src/main/templates/recipe-list.html
     }
 	
-
 	@GetMapping("/object")
 	public String showRecipeSingle(@RequestParam("recepteId") String recepteID, Model model) {
 		// TODO FINISH THIS IN #3 task (Receptes skats)

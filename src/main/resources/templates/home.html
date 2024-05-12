@@ -68,11 +68,8 @@
             <h2 th:text="${recipe.nosaukums}"></h2>
             <p><strong>Preparation Time:</strong> <span th:text="${recipe.pagatavosanasLaiks}"></span> minutes</p>
             <p th:text="${recipe.receptesApraksts}"></p>
-            <a th:href="@{/recepte(recepteId = ${recipe.recepteId})}">Detalizetak</a>
-            
+            <a th:href="@{/recipe/object?(recepteId = ${recipe.recepteId})}">Detalizētāk</a>            
         </div>
-
     </div>
-
 </body>
 </html>
