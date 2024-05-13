@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import receptes.model.RecipeModel;
+import receptes.model.ProductModel;
 
 
 @SuppressWarnings("unused")
@@ -21,6 +22,9 @@ public class RecipeController {
 
 	@Autowired
 	private RecipeModel recipeModel;
+	
+	@Autowired
+	private ProductModel productModel;
 	
 
 	@GetMapping("/list")
@@ -32,10 +36,10 @@ public class RecipeController {
     }
 	
 	@GetMapping("/object")
-	public String showRecipeSingle(@RequestParam("recepteId") String recepteID, Model model) {
-		// TODO FINISH THIS IN #3 task (Receptes skats)
+	public String showRecipeSingle(@RequestParam("recepteId") int recepteID, Model model) {
 		System.out.println(String.format("showRecipeSingle(recepteId: %s))", recepteID));
-//        model.addAttribute("recipe", recipeModel.getRecipe());
+        model.addAttribute("recepte", recipeModel.getRecipeById(recepteID));
+        model.addAttribute("produkti", productModel.getProductsByRecipeId(recepteID));
         return "recipe-single"; // src/main/templates/recipe-single.html
     }
 }

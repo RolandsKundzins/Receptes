@@ -3,24 +3,35 @@
 
 package receptes.type;
 
+import java.sql.Timestamp;
+
 public class RecipeType {
 	private int recepteID;
 	private String nosaukums;
 	private int pagatavosanasLaiks;
-//	private LocalDateTime createdAt;
+	private Timestamp pievienosanasDatums;
 	private String receptesApraksts;
-	//TODO pievienot parejos laukus - vini jau ir datubazes pievienoti
+	private int lietotajsID;
+	private String lietotajvards;
 	
+	
+	private Boolean irDefinets = false; //Nav ideals risinajums
+
 	public RecipeType() {
-		
+		this.irDefinets = false;	
 	}
 	
 	
-	public RecipeType(int recepteId, String nosaukums, int pagatavosanasLaiks, String receptesApraksts) {
+	public RecipeType(int recepteId, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards) {
 		this.recepteID = recepteId;
 		this.nosaukums = nosaukums;
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
 		this.receptesApraksts = receptesApraksts;
+		this.pievienosanasDatums = timestamp;
+		this.lietotajsID = lietotajsID;
+		this.lietotajvards = lietotajvards;
+		
+		this.irDefinets = true;
 	}
 
 
@@ -49,11 +60,54 @@ public class RecipeType {
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
 	}
 
+	public Timestamp getPievienosanasDatums() {
+		return pievienosanasDatums;
+	}
+
+
+	public void setPievienosanasDatums(Timestamp pievienosanasDatums) {
+		this.pievienosanasDatums = pievienosanasDatums;
+	}
+
 	public String getReceptesApraksts() {
 		return receptesApraksts;
 	}
 
 	public void setReceptesApraksts(String receptesApraksts) {
 		this.receptesApraksts = receptesApraksts;
+	}
+
+	public int getLietotajsID() {
+		return lietotajsID;
+	}
+
+	public void setLietotajsID(int lietotajsID) {
+		this.lietotajsID = lietotajsID;
+	}
+
+	public String getLietotajvards() {
+		return lietotajvards;
+	}
+
+	public void setLietotajvards(String lietotajvards) {
+		this.lietotajvards = lietotajvards;
+	}
+
+
+	public Boolean getIrDefinets() {
+		return irDefinets;
+	}
+
+	public void setIrDefinets(Boolean irDefinets) {
+		this.irDefinets = irDefinets;
+	}
+
+
+	@Override
+	public String toString() {
+		return "RecipeType [recepteID=" + recepteID + ", nosaukums=" + nosaukums + ", pagatavosanasLaiks="
+				+ pagatavosanasLaiks + ", pievienosanasDatums=" + pievienosanasDatums + ", receptesApraksts="
+				+ receptesApraksts + ", lietotajsID=" + lietotajsID + ", lietotajvards=" + lietotajvards
+				+ ", irDefinets=" + irDefinets + "]";
 	}
 }

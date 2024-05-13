@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Recipes Home</title>
+    <title>Receptes</title>
     
     <style>
         body {
@@ -33,7 +33,7 @@
             padding: 15px;
             background-color: #f9f9f9;
         }
-        
+       
         .recipe h2 {
             margin-top: 0;
             color: #555;
@@ -64,9 +64,10 @@
         <h1>Laipni lūgti receptēs!!!</h1>
         <p>Atklāj savu jauno garšas buķeti un pievienojies mums ar savām receptēm!</p>
         
-            <div th:each="recipe : ${recipes}" class="recipe">
+        <div th:each="recipe : ${recipes}" class="recipe">
             <h2 th:text="${recipe.nosaukums}"></h2>
-            <p><strong>Preparation Time:</strong> <span th:text="${recipe.pagatavosanasLaiks}"></span> minutes</p>
+    
+            <p><strong>Pagatavosanas laiks:</strong> <span th:text="${recipe.pagatavosanasLaiks}"></span> minutes</p>
             <p th:text="${recipe.receptesApraksts}"></p>
             <a th:href="@{/recipe/object?(recepteId = ${recipe.recepteId})}">Detalizētāk</a>            
         </div>
