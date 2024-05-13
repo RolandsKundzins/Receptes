@@ -8,8 +8,21 @@
     </style>
 </head>
 <body>
-    <h1>Viena recepte</h1>
-    <a th:href="@{/logout}">Log out</a>
-    <p>Dati par recepti</p>
+    <a th:href="@{/logout}">Atvienoties</a>
+    <a th:href="@{/recipe/list}">Atpakal</a>
+
+	<h1 th:text="${recepte.nosaukums}"></h1>
+    <p><strong>Pagatavosanas laiks:</strong> <span th:text="${recepte.pagatavosanasLaiks}"></span> minutes</p>
+    <p><strong>Izveidoja:</strong> <span th:text="${recepte.lietotajvards}"></p>
+    <p><strong>Pievienots:</strong> <span th:text="${#dates.format(recepte.pievienosanasDatums, 'dd.MM.yyyy')}"></span></p>
+    
+    <h3>Produkti:</h3>
+    <ul>
+	    <li th:each="produkts : ${produkti}" th:text="${produkts.nosaukums}"></li>
+	</ul>
+
+
+    <h3>Apraksts:</h3>
+    <p th:text="${recepte.receptesApraksts}"></p>
 </body>
 </html>
