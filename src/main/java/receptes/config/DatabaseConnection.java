@@ -22,7 +22,7 @@ public class DatabaseConnection {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				conn = DriverManager.getConnection("jdbc:mysql://" + hostname + ":3306/?autoReconnect=true&serverTimezone=UTC&characterEncoding=utf8", user, password);
-				conn.setAutoCommit(false);
+				conn.setAutoCommit(true);//false - nesaglabā datus
 			}
 			catch (ClassNotFoundException e) {
 				e.printStackTrace();

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .actions {
+            text-align: right;
+        }
+        .actions a {
+            margin-left: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Produktu saraksts</h2>
+    <table>
+        <thead>
+            <tr>
+                <!--<th>ID</th>-->
+                <th>Nosaukums</th>
+                <th>Darbības</th>
+                <<!--th></th>-->
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <!--<td th:text="${product.produktsId}"></td>-->
+                <td th:text="${product.nosaukums}"></td>
+                <td class="actions">
+                    <!-- Edit Product -->
+                    <a th:href="@{/product/edit(produktsId=${product.produktsId})}">Rediģēt</a>
+                    <!-- Delete Product -->
+                    <a th:href="@{/product/delete(produktsId=${product.produktsId})}" onclick="return confirm('Vai tiešām dzēst?')">Dzēst</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Link to create new product -->
+    <p style="text-align: center;">
+        <a th:href="@{/product/create}" style="color: #007bff;">Pievienot jaunu produktu</a>
+    </p>
+</body>
+</html>
