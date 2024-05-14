@@ -22,7 +22,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		UserType userType = userModel.findByUsername(username);
-		if(userType.getIrDefinets() == true) {
+		if(userType != null) {
 			System.out.println("loadUserByUsername" + userType.toString());
 			return User.builder()
 				.username(userType.getLietotajvards())

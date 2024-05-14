@@ -33,14 +33,19 @@ public class UserModel {
 			ResultSet results = preparedStatement.executeQuery();
 			
 			if(results.next()) {
-				return new UserType(results.getString("epasts"), results.getString("parole"), 
-						results.getString("lietotajvards"), results.getBoolean("irAktivs"));
+				return new UserType(
+					results.getInt("lietotajsID"),
+					results.getString("epasts"), 
+					results.getString("parole"), 
+					results.getString("lietotajvards"), 
+					results.getBoolean("irAktivs")
+				);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return new UserType();
+		return null;
 	}
 	
 	
