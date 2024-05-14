@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <title>Pieslegties</title>
     <!-- So vajag vel paskaties <link rel="stylesheet" th:href="@{/css/login.css}"> -->
+    
+        <!-- TODO Ielikt atseviska faila -->
+    <style>
+		.error-message {
+		    background-color: #ffcccc; /* Light red background */
+		    padding: 10px;
+		    border: 1px solid #ff9999; /* Red border */
+		    border-radius: 5px; /* Rounded corners */
+		    margin-top: 10px;
+		    margin-bottom: 10px;
+		}
+    </style> 
 </head>
 <body>
     <h2>Pieslegties</h2>
+    
+    	
+	<div th:if="${param.error}" class="error-message">
+	    <p>Notika kluda (seit vajadzetu, but istajam kludas pazinojumam, bet vins nav ieks url)</p>
+	</div>
     
     <div style="margin-bottom: 20px;">
         <i>Ja slinkums taisit lietotaju: <b>"user1"</b> un <b>"1234"</b></i>
