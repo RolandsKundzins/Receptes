@@ -4,18 +4,20 @@
 package receptes.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import receptes.model.RecipeModel;
+import receptes.model.StatisticsModel;
+import receptes.type.StatisticsType;
 import receptes.model.ProductModel;
 
 
-@SuppressWarnings("unused")
 @Controller
 @RequestMapping("/recipe")
 public class RecipeController {
@@ -26,9 +28,12 @@ public class RecipeController {
 	@Autowired
 	private ProductModel productModel;
 	
+	@Autowired
+	private StatisticsModel statisticsModel;
+	
 
 	@GetMapping("/list")
-	public String showrecipeModel(Model model) {
+	public String showRecipeList(Model model) {
         // Load recipe data and add it to the model
 		System.out.println("showrecipeModel");
         model.addAttribute("recipes", recipeModel.getAllRecipes());
@@ -38,8 +43,16 @@ public class RecipeController {
 	@GetMapping("/object")
 	public String showRecipeSingle(@RequestParam("recepteId") int recepteID, Model model) {
 		System.out.println(String.format("showRecipeSingle(recepteId: %s))", recepteID));
-        model.addAttribute("recepte", recipeModel.getRecipeById(recepteID));
+        //Datu ieguve paradisanai
+		model.addAttribute("recepte", recipeModel.getRecipeById(recepteID));
         model.addAttribute("produkti", productModel.getProductsByRecipeId(recepteID));
-        return "recipe-single"; // src/main/templates/recipe-single.html
+        
+        //Statistikas saglabasana
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String lietotajvardsSkatitajs = authentication.getName();
+        StatisticsType statistics = new StatisticsType(-1, lietotajvardsSkatitajs, recepteID, null);
+        statisticsModel.insertStatistics(statistics);
+
+        return "recipe-single"; // src/main/templates/recipe-single.html //Izmanto model, lai paraditu skata objektus
     }
 }
