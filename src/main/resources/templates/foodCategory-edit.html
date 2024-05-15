@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Product</h1>
+        <form action="#" th:action="@{/food-category/update}" th:object="${foodCategory}" method="post">
+            <input type="hidden" th:field="*{foodCategoryId}">
+            <label for="nosaukums">Ēdiena kategorijas nosaukums:</label>
+            <input type="text" id="nosaukums" th:field="*{nosaukums}" placeholder="">
+            <button type="submit">Saglabāt izmaiņas</button>
+        </form>
+    </div>
+</body>
+</html>

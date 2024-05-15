@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ēdienu kategoriju saraksts</title>
+    <link th:href="@{/styles.css}" rel="stylesheet" />
+</head>
+<body>
+    <h2>Ēdienu kategoriju saraksts</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nosaukums</th>
+                <th>Darbības</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="foodCategory : ${foodCategories}">
+                <td th:text="${foodCategory.nosaukums}"></td>
+                <td class="actions">
+                	<a th:href="@{/food-category/edit(foodCategoryId=${foodCategory.foodCategoryId})}">Rediģēt</a>
+            		<a th:href="@{/food-category/delete(foodCategoryId=${foodCategory.foodCategoryId})}" 
+            		onclick="return confirm('Vai tiešām dzēst?')">Dzēst</a>
+            	</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="text-align: center;">
+        <a th:href="@{/food-category/create}">Pievienot jaunu ēdiena kategoriju</a>
+    </p>
+</body>
+</html>
