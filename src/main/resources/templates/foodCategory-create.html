@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Pievienot ēdiena kateogriju</title>
+    <link th:href="@{/styles.css}" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
-        <h1>Pievienot ēdiena kateogriju</h1>
-        <form action="#" th:action="@{/food-category/create}" th:object="${foodCategory}" method="post">
-            <label for="nosaukums">Nosaukums: </label>
-            <input type="text" id="nosaukums" th:field="*{nosaukums}" placeholder="Nosaukums">
-            <button type="submit">Pievienot</button>
-        </form>
-    </div>
+	<div th:replace="navbar :: navbar"></div>
+	<main>
+	    <div class="container">
+	        <h1>Pievienot ēdiena kateogriju</h1>
+	        <form action="#" th:action="@{/food-category/create}" th:object="${foodCategory}" method="post">
+	            <label for="nosaukums">Nosaukums: </label>
+	            <input type="text" id="nosaukums" th:field="*{nosaukums}" placeholder="Nosaukums">
+	            <button type="submit">Pievienot</button>
+	        </form>
+	    </div>
+    </main>
 </body>
 </html>
