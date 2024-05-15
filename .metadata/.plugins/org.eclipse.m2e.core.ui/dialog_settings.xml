@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="/home/niklavs/project/receptes/Receptes"/>
 			<item value="/home/vboxuser/eclipse-workspace/receptes"/>
 		</list>
 		<list key="projectNameTemplate">
