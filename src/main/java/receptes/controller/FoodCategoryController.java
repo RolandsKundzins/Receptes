@@ -25,7 +25,7 @@ public class FoodCategoryController {
 	@GetMapping("/list")
 	public String showFoodCategoryModel(Model model) {
         model.addAttribute("foodCategories", foodCategoryModel.getAllFoodCategories());
-        return "foodCategory-list"; // src/main/templates/recipe-list.html
+        return "foodCategory/list"; // src/main/templates/recipe-list.html
     }
 	
 	//varbut japieliek vienas kategorijas apskate, bet nezinu vai ir vērts, jo listā
@@ -35,7 +35,7 @@ public class FoodCategoryController {
 	public String showCreatePage(Model model) {
 		FoodCategoryType foodCategory = new FoodCategoryType();
 		model.addAttribute("foodCategory", foodCategory);
-        return "foodCategory-create"; 
+        return "foodCategory/create"; 
 	}
 	
 	@PostMapping("/create")
@@ -47,7 +47,7 @@ public class FoodCategoryController {
 	@GetMapping("/edit")
 	public String showEditPage(@RequestParam("foodCategoryId") int foodCategoryId, Model model) {
         model.addAttribute("foodCategory", foodCategoryModel.getFoodCategoryById(foodCategoryId));
-        return "foodCategory-edit"; 
+        return "foodCategory/edit"; 
     }
 	
 	@PostMapping("/update")

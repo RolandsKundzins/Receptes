@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
 import receptes.type.ProductType;
-import receptes.type.RecipeType;
 
 @Component
 public class ProductModel {
@@ -39,14 +38,14 @@ public class ProductModel {
         return products;
     }
 	
-	public ProductType getProductById(int produktsId) {
+	public ProductType getProductById(int produktsID) {
 		String database = DatabaseConnection.getDatabase();
         String sql = "SELECT * FROM " + database + ".Produkts WHERE produktsID = ?";
         ProductType product = null;
         
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, produktsId);
+            preparedStatement.setInt(1, produktsID);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
                 product = new ProductType(
@@ -107,7 +106,7 @@ public class ProductModel {
 	    try {
 	        PreparedStatement preparedStatement = conn.prepareStatement(sql);
 	        preparedStatement.setString(1, product.getNosaukums());
-	        preparedStatement.setInt(2, product.getProduktsId());
+	        preparedStatement.setInt(2, product.getProduktsID());
 	        preparedStatement.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();

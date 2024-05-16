@@ -9,6 +9,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleException(Exception ex) {
+    	System.out.println("GlobalExceptionHandler.ModelAndView");
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("errorMessage", ex.getMessage());
         return modelAndView;

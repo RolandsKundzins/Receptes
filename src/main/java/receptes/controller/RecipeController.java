@@ -37,12 +37,12 @@ public class RecipeController {
         // Load recipe data and add it to the model
 		System.out.println("showrecipeModel");
         model.addAttribute("recipes", recipeModel.getAllRecipes());
-        return "recipe-list"; // src/main/templates/recipe-list.html
+        return "recipe/list"; // src/main/templates/recipe-list.html
     }
 	
 	@GetMapping("/object")
-	public String showRecipeSingle(@RequestParam("recepteId") int recepteID, Model model) {
-		System.out.println(String.format("showRecipeSingle(recepteId: %s))", recepteID));
+	public String showRecipeSingle(@RequestParam("recepteID") int recepteID, Model model) {
+		System.out.println(String.format("showRecipeSingle(recepteID: %s))", recepteID));
         //Datu ieguve paradisanai
 		model.addAttribute("recepte", recipeModel.getRecipeById(recepteID));
         model.addAttribute("produkti", productModel.getProductsByRecipeId(recepteID));
@@ -53,6 +53,6 @@ public class RecipeController {
         StatisticsType statistics = new StatisticsType(-1, lietotajvardsSkatitajs, recepteID, null);
         statisticsModel.insertStatistics(statistics);
 
-        return "recipe-single"; // src/main/templates/recipe-single.html //Izmanto model, lai paraditu skata objektus
+        return "recipe/single"; // src/main/templates/recipe-single.html //Izmanto model, lai paraditu skata objektus
     }
 }

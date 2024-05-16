@@ -45,8 +45,11 @@
             background-color: #0056b3;
         }
     </style>
+
+    <link th:href="@{/styles.css}" rel="stylesheet" />
 </head>
 <body>
+	<div th:replace="navbar :: navbar"></div>
     <div class="container">
         <h1>Product Details</h1>
         <div th:if="${product != null}" class="product-details">
@@ -58,8 +61,8 @@
         </div>
         <!-- topošās iespējas (linki) dzēst, rediģēt, uztaisīt jaunu -->
         <!--<div class="actions">
-            <a th:href="@{/product/delete(produktsId=${product.produktsID})}">Dzēst</a>
-            <a th:href="@{/product/edit(produktsId=${product.produktsID})}">Rediģēt</a>
+            <a th:href="@{/product/delete(produktsID=${product.produktsID})}">Dzēst</a>
+            <a th:href="@{/product/edit(produktsID=${product.produktsID})}">Rediģēt</a>
             <a th:href="@{/product/create}">Add New Product/ izveidot jaunu produktu</a>
         </div>-->
     </div>

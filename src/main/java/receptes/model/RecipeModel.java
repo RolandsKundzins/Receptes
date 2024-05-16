@@ -51,7 +51,7 @@ public class RecipeModel {
     }
 	
 	
-	public RecipeType getRecipeById(int recepteId) {
+	public RecipeType getRecipeById(int recepteID) {
 		String database = DatabaseConnection.getDatabase();
         String sql = "SELECT r.*, l.lietotajsID, l.lietotajvards "
         		+ "FROM " + database + ".Recepte r "
@@ -61,7 +61,7 @@ public class RecipeModel {
         
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setInt(1, recepteId);
+            preparedStatement.setInt(1, recepteID);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
                 recipe = new RecipeType(

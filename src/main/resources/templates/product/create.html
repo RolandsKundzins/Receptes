@@ -50,8 +50,10 @@
             background-color: #0056b3;
         }
     </style>
+    <link th:href="@{/styles.css}" rel="stylesheet" />
 </head>
 <body>
+	<div th:replace="navbar :: navbar"></div>
     <div class="container">
         <h1>Pievienot jaunu produktu</h1>
         <form action="#" th:action="@{/product/create}" th:object="${product}" method="post">
