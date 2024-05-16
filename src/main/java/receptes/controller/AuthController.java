@@ -30,7 +30,7 @@ public class AuthController {
 	@GetMapping("/login")
     public String showCustomLoginPage(HttpSession session, Model model) {
 		System.out.println("showCustomLoginPage");
-		return "login"; // src/main/templates/login.html
+		return "auth/login"; // src/main/templates/login.html
     }
 
 
@@ -39,7 +39,7 @@ public class AuthController {
     public String showRegistrationForm(Model model) {
 		System.out.println("showRegistrationForm");
         model.addAttribute("user", new UserType());
-        return "registration"; // src/main/templates/registration.html
+        return "auth/registration"; // src/main/templates/registration.html
     }
 	
 	

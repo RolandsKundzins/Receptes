@@ -6,23 +6,22 @@ public class ProductType {
 
 	
 	public ProductType() {
-		
 	}
 	
 	
-	public ProductType(int produktsId, String nosaukums) {
-		this.produktsID = produktsId;
+	public ProductType(int produktsID, String nosaukums) {
+		this.produktsID = produktsID;
 		this.nosaukums = nosaukums;
 	}
 
 
 	//getters and setters
-	public int getProduktsId() {
+	public int getProduktsID() {
 		return produktsID;
 	}
 
-	public void setProduktsId(int produktsId) {
-		this.produktsID = produktsId;
+	public void setProduktsID(int produktsID) {
+		this.produktsID = produktsID;
 	}
 
 	public String getNosaukums() {

@@ -4,7 +4,7 @@ package receptes.type;
 
 
 public class UserType {
-	private int lietotajsId;
+	private int lietotajsID;
 	private String epasts;
 	private String parole;
 	private String lietotajvards;
@@ -17,8 +17,8 @@ public class UserType {
 	public UserType() {
 	}
 	
-	public UserType(int lietotajsId, String epasts, String parole, String lietotajvards, Boolean irAktivs) {
-		this.lietotajsId = lietotajsId;
+	public UserType(int lietotajsID, String epasts, String parole, String lietotajvards, Boolean irAktivs) {
+		this.lietotajsID = lietotajsID;
 		this.epasts = epasts;
 		this.parole = parole;
 		this.lietotajvards = lietotajvards;
@@ -27,11 +27,11 @@ public class UserType {
 	
 	
 	//GETTERS AND SETTERS
-	public int getLietotajsId() {
-		return lietotajsId;
+	public int getLietotajsID() {
+		return lietotajsID;
 	}
-	public void setLietotajsId(int lietotajsId) {
-		this.lietotajsId = lietotajsId;
+	public void setLietotajsID(int lietotajsID) {
+		this.lietotajsID = lietotajsID;
 	}
 
 	public String getEpasts() {

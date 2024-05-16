@@ -22,8 +22,8 @@ public class RecipeType {
 	}
 	
 	
-	public RecipeType(int recepteId, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards) {
-		this.recepteID = recepteId;
+	public RecipeType(int recepteID, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards) {
+		this.recepteID = recepteID;
 		this.nosaukums = nosaukums;
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
 		this.receptesApraksts = receptesApraksts;
@@ -36,12 +36,12 @@ public class RecipeType {
 
 
 	//getters and setters
-	public int getRecepteId() {
+	public int getRecepteID() {
 		return recepteID;
 	}
 
-	public void setRecepteId(int recepteId) {
-		this.recepteID = recepteId;
+	public void setRecepteID(int recepteID) {
+		this.recepteID = recepteID;
 	}
 
 	public String getNosaukums() {

@@ -3,6 +3,7 @@ package receptes.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -22,10 +23,9 @@ public class StatisticsModel {
 	
 	
 	public boolean insertStatistics(StatisticsType statistika) {
-		// #5 Write an sql statement that inserts teacher in database.
 		String database = DatabaseConnection.getDatabase();
 		String sql = "INSERT INTO " + database + ".`Statistika` (`lietotajvards`, `recepteID`) VALUES (?, ?);";
-		//skatLaiks vertibai tiek izmantots DB default value
+		//skatLaiks vertibai tiek izmantots DB default value (CURRENT_TIMESTAMP)
 		int rowsAffected = 0;
 		
 		try {
@@ -33,15 +33,23 @@ public class StatisticsModel {
 			preparedStatement.setString(1, statistika.getLietotajvards());
 			preparedStatement.setInt(2, statistika.getRecepteID());
 			rowsAffected = preparedStatement.executeUpdate();
-			conn.commit();
-			if(rowsAffected > 0) {
-				return true;
+			if(rowsAffected == 0) {
+				throw new Exception("Rows affected equal to zero for statistics insert!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 		
-		return false;
+		return true;
+	}
+
+
+
+	public List<StatisticsType> getStatisticsByLietotajsID(int lietotajvards) {
+		return null;
 	}
 }

@@ -49,8 +49,10 @@
             text-decoration: underline;
         }
     </style>
+    <link th:href="@{/styles.css}" rel="stylesheet" />
 </head>
 <body>
+	<div th:replace="navbar :: navbar"></div>
     <h2>Produktu saraksts</h2>
     <table>
         <thead>
@@ -58,18 +60,18 @@
                 <!--<th>ID</th>-->
                 <th>Nosaukums</th>
                 <th>Darbības</th>
-                <<!--th></th>-->
+                <!--th></th>-->
             </tr>
         </thead>
         <tbody>
             <tr th:each="product : ${products}">
-                <!--<td th:text="${product.produktsId}"></td>-->
+                <!--<td th:text="${product.produktsID}"></td>-->
                 <td th:text="${product.nosaukums}"></td>
                 <td class="actions">
                     <!-- Edit Product -->
-                    <a th:href="@{/product/edit(produktsId=${product.produktsId})}">Rediģēt</a>
+                    <a th:href="@{/product/edit(produktsID=${product.produktsID})}">Rediģēt</a>
                     <!-- Delete Product -->
-                    <a th:href="@{/product/delete(produktsId=${product.produktsId})}" onclick="return confirm('Vai tiešām dzēst?')">Dzēst</a>
+                    <a th:href="@{/product/delete(produktsID=${product.produktsID})}" onclick="return confirm('Vai tiešām dzēst?')">Dzēst</a>
                 </td>
             </tr>
         </tbody>
