@@ -123,5 +123,28 @@ public class ProductModel {
 	        e.printStackTrace();
 	    }
 	}
+	
+	//atgriež sarakstu List<ProductType> 
+    public List<ProductType> getProductsByName(String name) {
+        String database = DatabaseConnection.getDatabase();
+        String sql = "SELECT * FROM " + database + ".Produkts WHERE nosaukums LIKE ?";
+        List<ProductType> products = new LinkedList<>();
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, "%" + name + "%");
+            ResultSet results = preparedStatement.executeQuery();
+            while (results.next()) {
+                products.add(new ProductType(
+                    results.getInt("produktsID"), 
+                    results.getString("nosaukums")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
 
 }

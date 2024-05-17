@@ -1,5 +1,7 @@
 package receptes.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import receptes.model.ProductModel;
 import receptes.type.ProductType;
@@ -72,5 +75,20 @@ public class ProductController {
 	    productModel.deleteProduct(produktsID);
 	    return "redirect:/product/list"; 
 	}
+	
+	//atgriež produktu saraksta skatu ar izfiltrētajiem produktiem
+    /*@GetMapping("/search")
+    public String searchProducts(@RequestParam("name") String name, Model model) {
+        List<ProductType> products = productModel.getProductsByName(name);
+        model.addAttribute("products", products);
+        return "product/list"; 
+    }*/
+    
+	//atgriež izfiltrētos produktus JSON formātā
+    @GetMapping("/search")
+    @ResponseBody
+    public List<ProductType> searchProducts(@RequestParam("name") String name) {
+        return productModel.getProductsByName(name);
+    }
 	
 }

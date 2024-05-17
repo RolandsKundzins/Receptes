@@ -50,6 +50,13 @@
 	        <artifactId>spring-boot-starter-security</artifactId>
 	    </dependency>
 	</dependencies>
+	
+	<!-- JSON dependency -->
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	</dependency>
+
 
 
 	<build>
