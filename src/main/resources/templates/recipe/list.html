@@ -24,6 +24,26 @@
     <div>
 	    <h1>Receptes</h1>
 	    
+	    <p>Meklesana</p>
+	    <form th:action="@{/recipe/list}" method="get">
+	        <input type="text" name="search" th:value="${param.search}" />
+	        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
+	        <button type="submit">Search</button>
+	    </form>
+	    <form th:action="@{/recipe/list}" method="get">
+	        <input type="hidden" name="search" value="" />
+	        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
+	        <button type="submit">Clear Search</button>
+	    </form>
+	    <p>Sort by:
+	    	Name
+	        <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEASC})}">▲</a>
+		    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEDESC})}">▼</a>
+		    Cooking Time
+		    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEASC})}">▲</a>
+		    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEDESC})}">▼</a>
+	    </p>
+	    
 	    <table>
 	        <thead>
 	            <tr>
