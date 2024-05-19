@@ -2,7 +2,9 @@ package receptes.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -23,6 +25,8 @@ public class StatisticsModel {
 	
 	
 	public boolean insertStatistics(StatisticsType statistika) {
+		System.out.println("insertStatistics");
+
 		String database = DatabaseConnection.getDatabase();
 		String sql = "INSERT INTO " + database + ".`Statistika` (`lietotajvards`, `recepteID`) VALUES (?, ?);";
 		//skatLaiks vertibai tiek izmantots DB default value (CURRENT_TIMESTAMP)
@@ -49,7 +53,34 @@ public class StatisticsModel {
 
 
 
-	public List<StatisticsType> getStatisticsByLietotajsID(int lietotajvards) {
-		return null;
+	public List<StatisticsType> getStatisticsByLietotajvards(String lietotajvards) {
+		System.out.println("getStatisticsByLietotajvards");
+
+		String sql = "SELECT * FROM " + DatabaseConnection.getDatabase() + ".Statistika s WHERE s.lietotajvards = ?";
+		
+		List<StatisticsType> statistics = new LinkedList<>();
+		
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, lietotajvards);
+
+			ResultSet results = preparedStatement.executeQuery();
+            while (results.next()) {
+            	statistics.add(new StatisticsType(
+        			results.getInt("statistikaID"), 
+        			results.getString("lietotajvards"),
+        			results.getInt("recepteID"),
+        			results.getTimestamp("skatLaiks")
+    			));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
+		return statistics;
+		
+		
+		//atgriež visas receptes un skatLaiks
+		//frontend (vai vēlams backend) uztaisīt, ka 
 	}
 }
