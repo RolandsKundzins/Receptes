@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import receptes.enums.RecipeOrderBy;
 import receptes.model.RecipeModel;
 import receptes.model.StatisticsModel;
 import receptes.type.StatisticsType;
@@ -31,13 +32,16 @@ public class RecipeController {
 	@Autowired
 	private StatisticsModel statisticsModel;
 	
-
 	@GetMapping("/list")
-	public String showRecipeList(Model model) {
-        // Load recipe data and add it to the model
-		System.out.println("showrecipeModel");
-        model.addAttribute("recipes", recipeModel.getAllRecipes());
-        return "recipe/list"; // src/main/templates/recipe-list.html
+	public String showRecipeList(Model model, 
+			@RequestParam(name = "search", required = false) String search,
+			@RequestParam(name = "orderBy", required = false) RecipeOrderBy orderBy) {
+        
+		// Load recipe data and add it to the model
+		System.out.println("showRecipeList");
+		model.addAttribute("recipes", recipeModel.getRecipes(search, orderBy));
+        
+        return "recipe/list"; // src/main/templates/recipe/list.html
     }
 	
 	@GetMapping("/object")
@@ -53,6 +57,6 @@ public class RecipeController {
         StatisticsType statistics = new StatisticsType(-1, lietotajvardsSkatitajs, recepteID, null);
         statisticsModel.insertStatistics(statistics);
 
-        return "recipe/single"; // src/main/templates/recipe-single.html //Izmanto model, lai paraditu skata objektus
+        return "recipe/single"; // src/main/templates/recipe/single.html //Izmanto model, lai paraditu skata objektus
     }
 }
