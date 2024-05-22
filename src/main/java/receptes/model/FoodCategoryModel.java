@@ -62,7 +62,6 @@ public class FoodCategoryModel {
         return foodCategory;
     }
 	
-	//nav uztaisits getFoodCategoriesByRecipieId
 	public FoodCategoryType getFoodCategoryByRecipeId(int recepteID) {
 		String database = DatabaseConnection.getDatabase();
 		 String sql = "SELECT edienaKategorijasID, EdienaKategorija.nosaukums "

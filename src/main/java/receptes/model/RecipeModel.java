@@ -13,15 +13,11 @@ import org.springframework.stereotype.Component;
 import receptes.config.DatabaseConnection;
 import receptes.enums.RecipeOrderBy;
 import receptes.type.RecipeType;
-import receptes.model.FoodCategoryModel;
-import receptes.type.FoodCategoryType;
 
 
 @Component
 public class RecipeModel {
 	protected Connection conn;
-	
-	private FoodCategoryModel foodCategoryModel;	
 
 
 	public RecipeModel() {
@@ -39,24 +35,16 @@ public class RecipeModel {
 			//additional parameters example: preparedStatement.setString(1, "%" + firstName + "%");
 			ResultSet results = preparedStatement.executeQuery();
             while (results.next()) {
-            	RecipeType recipe = new RecipeType(
+            	recipes.add(new RecipeType(
             	        results.getInt("recepteID"), 
             	        results.getString("nosaukums"), 
             	        results.getInt("pagatavosanasLaiks"), 
             	        results.getTimestamp("pievienosanasDatums"),
             	        results.getString("receptesApraksts"),
             	        0, // sobrid nesuta lietotaju prieks receptes saraksta
-            	        //foodCategoryModel.getFoodCategoryById(results.getInt("edienaKategorijaID")),
             	        null,
             	        results.getInt("edienaKategorijaID")
-            	    );
-            	    
-            	    // Print the new RecipeType object
-            		System.out.print(recipe.toString());
-            	    System.out.println("aaa");
-            	    
-            	    // Add the RecipeType object to the recipes list
-            	    recipes.add(recipe);
+            	    ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
