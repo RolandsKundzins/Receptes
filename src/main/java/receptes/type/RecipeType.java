@@ -13,6 +13,7 @@ public class RecipeType {
 	private String receptesApraksts;
 	private int lietotajsID;
 	private String lietotajvards;
+	private int kategorija;
 	
 	
 	private Boolean irDefinets = false; //Nav ideals risinajums
@@ -22,7 +23,7 @@ public class RecipeType {
 	}
 	
 	
-	public RecipeType(int recepteID, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards) {
+	public RecipeType(int recepteID, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards, int kategorija) {
 		this.recepteID = recepteID;
 		this.nosaukums = nosaukums;
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
@@ -30,7 +31,7 @@ public class RecipeType {
 		this.pievienosanasDatums = timestamp;
 		this.lietotajsID = lietotajsID;
 		this.lietotajvards = lietotajvards;
-		
+		this.kategorija = kategorija;
 		this.irDefinets = true;
 	}
 
@@ -92,7 +93,14 @@ public class RecipeType {
 	public void setLietotajvards(String lietotajvards) {
 		this.lietotajvards = lietotajvards;
 	}
+	
+	public int getKategorija() {
+		return kategorija;
+	}
 
+	public void setKategorija(int kategorija) {
+		this.kategorija = kategorija;
+	}
 
 	public Boolean getIrDefinets() {
 		return irDefinets;

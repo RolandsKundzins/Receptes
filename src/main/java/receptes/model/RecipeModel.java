@@ -36,14 +36,15 @@ public class RecipeModel {
 			ResultSet results = preparedStatement.executeQuery();
             while (results.next()) {
             	recipes.add(new RecipeType(
-            			results.getInt("recepteID"), 
-            			results.getString("nosaukums"), 
-            			results.getInt("pagatavosanasLaiks"), 
-            			results.getTimestamp("pievienosanasDatums"),
-            			results.getString("receptesApraksts"),
-            			0, //sobrid nesuta lietotaju prieks receptes saraksta
-            			null
-    			));
+            	        results.getInt("recepteID"), 
+            	        results.getString("nosaukums"), 
+            	        results.getInt("pagatavosanasLaiks"), 
+            	        results.getTimestamp("pievienosanasDatums"),
+            	        results.getString("receptesApraksts"),
+            	        0, // sobrid nesuta lietotaju prieks receptes saraksta
+            	        null,
+            	        results.getInt("edienaKategorijaID")
+            	    ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,7 +74,8 @@ public class RecipeModel {
             		result.getTimestamp("pievienosanasDatums"),
             		result.getString("receptesApraksts"),
             		result.getInt("lietotajsID"),
-            		result.getString("lietotajvards")
+            		result.getString("lietotajvards"),
+            		result.getInt("edienaKategorijaID")
                 );
                 
             }
@@ -131,7 +133,8 @@ public class RecipeModel {
                 		results.getTimestamp("pievienosanasDatums"),
                 		results.getString("receptesApraksts"),
                 		0,
-                		null));
+                		null,
+                		results.getInt("edienaKategorijaID")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
