@@ -20,51 +20,54 @@
 </head>
 <body>
 	<div th:replace="navbar :: navbar"></div>
-
-    <div>
-	    <h1>Receptes</h1>
-	    
-	    <p>Meklesana</p>
-	    <form th:action="@{/recipe/list}" method="get">
-	        <input type="text" name="search" th:value="${param.search}" />
-	        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
-	        <button type="submit">Search</button>
-	    </form>
-	    <form th:action="@{/recipe/list}" method="get">
-	        <input type="hidden" name="search" value="" />
-	        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
-	        <button type="submit">Clear Search</button>
-	    </form>
-	    <p>Sort by:
-	    	Name
-	        <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEASC})}">▲</a>
-		    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEDESC})}">▼</a>
-		    Cooking Time
-		    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEASC})}">▲</a>
-		    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEDESC})}">▼</a>
-	    </p>
-	    
-	    <table>
-	        <thead>
-	            <tr>
-	                <th>nosaukums</th>
-	                <th>pagatavosanasLaiks</th>
-	                <th>receptesApraksts</th>
-	                <th>Papildus</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <!-- Iterate over recipes and display them in the table -->
-	            <tr th:each="recipe : ${recipes}">
-	                <td th:text="${recipe.nosaukums}"></td>
-	                <td th:text="${recipe.pagatavosanasLaiks}"></td>
-	                <td th:text="${recipe.receptesApraksts}"></td>
-	                <td>
-				         <a th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Detalizētāk</a>
-				    </td>
-	            </tr>
-	        </tbody>
-	    </table>
-    </div>
+	<main>
+	    <div>
+		    <h1>Receptes</h1>
+		    
+		    <p>Meklesana</p>
+		    <form th:action="@{/recipe/list}" method="get">
+		        <input type="text" name="search" th:value="${param.search}" />
+		        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
+		        <button type="submit">Search</button>
+		    </form>
+		    <form th:action="@{/recipe/list}" method="get">
+		        <input type="hidden" name="search" value="" />
+		        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
+		        <button type="submit">Clear Search</button>
+		    </form>
+		    <p>Sort by:
+		    	Name
+		        <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEASC})}">▲</a>
+			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEDESC})}">▼</a>
+			    Cooking Time
+			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEASC})}">▲</a>
+			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEDESC})}">▼</a>
+		    </p>
+		    
+		    <table>
+		        <thead>
+		            <tr>
+		                <th>nosaukums</th>
+		                <th>pagatavosanasLaiks</th>
+		                <th>receptesApraksts</th>
+		                <th>edienaKategorija</th>
+		                <th>Papildus</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <!-- Iterate over recipes and display them in the table -->
+		            <tr th:each="recipe : ${recipes}">
+		                <td th:text="${recipe.nosaukums}"></td>
+		                <td th:text="${recipe.pagatavosanasLaiks}"></td>
+		                <td th:text="${recipe.receptesApraksts}"></td>
+		                <td th:text="${recipe.kategorija}"></td>
+		                <td>
+					         <a class="table-button" th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Detalizētāk</a>
+					    </td>
+		            </tr>
+		        </tbody>
+		    </table>
+	    </div>
+    </main>
 </body>
 </html>

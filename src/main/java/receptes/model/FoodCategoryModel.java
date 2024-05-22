@@ -63,6 +63,30 @@ public class FoodCategoryModel {
     }
 	
 	//nav uztaisits getFoodCategoriesByRecipieId
+	public FoodCategoryType getFoodCategoryByRecipeId(int recepteID) {
+		String database = DatabaseConnection.getDatabase();
+		 String sql = "SELECT edienaKategorijasID, EdienaKategorija.nosaukums "
+		    		+ "FROM " + database + ".Recepte "
+		    		+ "JOIN " + database + ".EdienaKategorija ON edienaKategorijaID = edienaKategorijasID "
+					+ "WHERE recepteID = ?";
+		 FoodCategoryType foodCategory = null;
+		 try {
+	            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+	            preparedStatement.setInt(1, recepteID);
+	            ResultSet result = preparedStatement.executeQuery();
+	            if (result.next()) {
+	                foodCategory = new FoodCategoryType(
+	            		result.getInt("edienaKategorijasID"), 
+	            		result.getString("nosaukums")
+	                );
+	            }
+		 }catch (SQLException e) {
+			 e.printStackTrace();
+	     }
+		 System.out.println(foodCategory.toString());
+		 
+		 return foodCategory;
+	}
 	
 	public void addFoodCategory(FoodCategoryType foodCategory) {
 	    String sql = "INSERT INTO " + DatabaseConnection.getDatabase() + ".EdienaKategorija (nosaukums) VALUES (?)";

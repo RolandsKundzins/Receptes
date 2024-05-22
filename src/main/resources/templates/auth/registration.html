@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Registrejies</title>
-    
+    <link th:href="@{/styles.css}" rel="stylesheet" />
     
     <!-- TODO Ielikt atseviska faila -->
     <style>
@@ -24,35 +24,76 @@
 		    margin-top: 10px;
 		    margin-bottom: 10px;
 		}
+		main{
+			display: flex;
+    		justify-content: center;
+    		padding-top: 100px;
+		}
+		.login-panel{
+			width: 300px;
+	    	background: #ebebeb;
+	    	padding: 10px;
+	    	border: 2px solid #9e9e9e;
+    	}
+    	.input-field-wrapper{
+	    	display: flex;
+	    	flex-direction: column;
+	    	padding-bottom: 10px;
+    	}
+    	h2{
+    		text-align: center;
+    	}
+    	.login-panel button{
+    		height: 30px;
+    		width: 100%;
+    	}
+    	.login-panel a{
+	    	display: flex;
+	    	justify-content: center;
+    	}
+    	.login-panel input{
+    		height: 20px;
+    	}
+		
     </style> 
 </head>
 <body>
-    <h2>Registret jaunu lietotaju</h2> 
-
-	<div th:if="${param.error}" class="error-message">
-	    <p th:text="${param.error}"></p>
-	</div>
-	
-	<div th:if="${param.successMessage}" class="success-message">
-	    <p th:text="${param.successMessage}" style="margin-bottom: 0;"></p>
-	    <a th:href="@{/login}" class="btn btn-primary">Pieslegties</a>
-	</div>
-
-
-    <form action="#" th:action="@{/register}" th:object="${user}" method="post">
-        <label for="epasts">Epasts:</label>
-        <input type="email" id="epasts" th:field="*{epasts}" required><br><br>
-        
-        <label for="lietotajvards">Lietotajvards:</label>
-        <input type="text" id="lietotajvards" th:field="*{lietotajvards}" required><br><br>
-        
-        <label for="parole">Parole:</label>
-        <input type="password" id="parole" th:field="*{parole}" required><br><br>
-        
-        <button type="submit">Registreties</button>
-    </form>
-    
-    <h2>Jau ir konts?</h2>
-    <a th:href="@{/login}">Pieslegties</a>
+	<main>
+		<div class="login-panel">
+		    <h2>Registret jaunu lietotaju</h2> 
+		
+			<div th:if="${param.error}" class="error-message">
+			    <p th:text="${param.error}"></p>
+			</div>
+			
+			<div th:if="${param.successMessage}" class="success-message">
+			    <p th:text="${param.successMessage}" style="margin-bottom: 0;"></p>
+			    <a th:href="@{/login}" class="btn btn-primary">Pieslegties</a>
+			</div>
+		
+		
+		    <form action="#" th:action="@{/register}" th:object="${user}" method="post">
+		    	<div class="input-field-wrapper">
+			        <label for="epasts">Epasts:</label>
+			        <input type="email" id="epasts" th:field="*{epasts}" required>
+		        </div>
+		        
+		        <div class="input-field-wrapper">
+			        <label for="lietotajvards">Lietotajvards:</label>
+			        <input type="text" id="lietotajvards" th:field="*{lietotajvards}" required>
+		        </div>
+		        
+		        <div class="input-field-wrapper">
+			        <label for="parole">Parole:</label>
+			        <input type="password" id="parole" th:field="*{parole}" required>
+		        </div>
+		        
+		        <button type="submit">Registreties</button>
+		    </form>
+		    
+		    <h2>Jau ir konts?</h2>
+		    <a th:href="@{/login}">Pieslegties</a>
+	    </div>
+    </main>
 </body>
 </html>

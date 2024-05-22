@@ -15,31 +15,69 @@
 		    margin-top: 10px;
 		    margin-bottom: 10px;
 		}
+		main{
+			display: flex;
+    		justify-content: center;
+    		padding-top: 100px;
+		}
+		.login-panel{
+			width: 300px;
+	    	background: #ebebeb;
+	    	padding: 10px;
+	    	border: 2px solid #9e9e9e;
+    	}
+    	.input-field-wrapper{
+	    	display: flex;
+	    	flex-direction: column;
+	    	padding-bottom: 10px;
+    	}
+    	h2{
+    		text-align: center;
+    	}
+    	.login-panel button{
+    		height: 30px;
+    		width: 100%;
+    	}
+    	.login-panel a{
+	    	display: flex;
+	    	justify-content: center;
+    	}
+    	.login-panel input{
+    		height: 20px;
+    	}
+    	
     </style> 
+    <link th:href="@{/styles.css}" rel="stylesheet" />
 </head>
 <body>
-    <h2>Pieslegties</h2>
-    
-    	
-	<div th:if="${param.error}" class="error-message">
-	    <p>Notika kluda (seit vajadzetu, but istajam kludas pazinojumam, bet vins nav ieks url)</p>
-	</div>
-    
-    <div style="margin-bottom: 20px;">
-        <i>Ja slinkums taisit lietotaju: <b>"user1"</b> un <b>"1234"</b></i>
-    </div>
-
-    <form th:action="@{/login}" method="post">
-        <label for="username">Lietotajvards:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        
-        <label for="password">Parole:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        
-        <button type="submit">Pieslegties</button>
-    </form>
-    
-    <h2>Vel nav konta?</h2> 
-    <a th:href="@{/register}">Registreties</a>
+	<main>
+	<div class="login-panel">
+	    <h2>Pieslegties</h2>
+	    
+	    	
+		<div th:if="${param.error}" class="error-message">
+		    <p>Notika kluda (seit vajadzetu, but istajam kludas pazinojumam, bet vins nav ieks url)</p>
+		</div>
+	    
+	    <div style="margin-bottom: 20px;">
+	        <i>Ja slinkums taisit lietotaju: <b>"user1"</b> un <b>"1234"</b></i>
+	    </div>
+	
+	    <form th:action="@{/login}" method="post">
+	    	<div class="input-field-wrapper">
+		        <label for="username">Lietotajvards:</label>
+		        <input type="text" id="username" name="username" required>
+	        </div>
+	        <div class="input-field-wrapper">
+		        <label for="password">Parole:</label>
+		        <input type="password" id="password" name="password" required>
+	        </div>
+	        <button type="submit">Pieslegties</button>
+	    </form>
+	    
+	    <h2>Vel nav konta?</h2> 
+	    <a th:href="@{/register}">Registreties</a>
+	    </div>
+    </main>
 </body>
 </html>

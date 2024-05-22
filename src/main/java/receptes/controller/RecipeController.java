@@ -17,7 +17,7 @@ import receptes.model.RecipeModel;
 import receptes.model.StatisticsModel;
 import receptes.type.StatisticsType;
 import receptes.model.ProductModel;
-
+import receptes.model.FoodCategoryModel;
 
 @Controller
 @RequestMapping("/recipe")
@@ -28,6 +28,9 @@ public class RecipeController {
 	
 	@Autowired
 	private ProductModel productModel;
+	
+	@Autowired
+	private FoodCategoryModel foodCategoryModel;
 	
 	@Autowired
 	private StatisticsModel statisticsModel;
@@ -50,6 +53,7 @@ public class RecipeController {
         //Datu ieguve paradisanai
 		model.addAttribute("recepte", recipeModel.getRecipeById(recepteID));
         model.addAttribute("produkti", productModel.getProductsByRecipeId(recepteID));
+        model.addAttribute("kategorija", foodCategoryModel.getFoodCategoryByRecipeId(recepteID));
         
         //Statistikas saglabasana
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

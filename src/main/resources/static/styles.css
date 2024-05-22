@@ -43,3 +43,39 @@ header>div>a{
     color: var(--navbar-foreground);
 }
 
+table {
+	 border-collapse: collapse;
+	 width: 100%;
+}
+
+table, td, th {  
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+}
+
+table a.table-button{
+	height: 30px;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 5%;
+    background-color: #317cf5;
+    color: white;
+}
+
+table a.table-button.destructive{
+	 background-color: #fa7575;
+}
+
+table thead tr{
+	background-color: #e8e8e8;
+}
+
+a.button{
+	height: 30px;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 5%;
+    background-color: #317cf5;
+    color: white;
+}
