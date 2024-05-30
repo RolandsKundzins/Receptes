@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Lieotaja statistika</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <link th:href="@{/styles.css}" rel="stylesheet" />
 </head>
@@ -10,8 +11,36 @@
 	<div th:replace="navbar :: navbar"></div>
 
 	<h1>Statistika</h1>
-	<p>Sis tiks taisits ieks uzdevuma #7 (github projects var paskaties)</p>
-	<p>Seit vares apskaties savu recepsu kopejo skatijumu skaitu par dienu/nedelu/menesi</p>
+	<p>Kopējais skatījumu skaits tavām receptēm šonedēļ</p>
+	
 
+
+    <canvas id="viewCountChart" width="400" height="200"></canvas>
+    <script th:inline="javascript">
+        var labels = [[${datesArray}]];
+        var data = [[${viewCountsArray}]];
+
+        let ctx = document.getElementById('viewCountChart').getContext('2d');
+        let viewCountChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'View Counts',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

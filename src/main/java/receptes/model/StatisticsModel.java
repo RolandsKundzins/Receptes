@@ -1,15 +1,18 @@
 package receptes.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
+import receptes.type.StatisticsByDateType;
 import receptes.type.StatisticsType;
 
 @Component
@@ -34,7 +37,7 @@ public class StatisticsModel {
 		
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, statistika.getLietotajvards());
+			preparedStatement.setString(1, statistika.getSkatitajsLietotajvards());
 			preparedStatement.setInt(2, statistika.getRecepteID());
 			rowsAffected = preparedStatement.executeUpdate();
 			if(rowsAffected == 0) {
@@ -52,35 +55,40 @@ public class StatisticsModel {
 	}
 
 
-
-	public List<StatisticsType> getStatisticsByLietotajvards(String lietotajvards) {
+	//TODO Return view count of all use recipes in last 7 days
+	//Something like this: day, view_count
+	public List<StatisticsByDateType> getViewCountsPerDay(String lietotajvardsSkatitajs, LocalDate startDate, LocalDate endDate) {
 		System.out.println("getStatisticsByLietotajvards");
 
-		String sql = "SELECT * FROM " + DatabaseConnection.getDatabase() + ".Statistika s WHERE s.lietotajvards = ?";
+		String sql = String.join("\n",
+			"SELECT DATE(s.skatLaiks) as skatijumaDatums, COUNT(*) as skatijumuSkaits",
+			"FROM ", DatabaseConnection.getDatabase(), ".Statistika s",
+			"WHERE s.lietotajvards = ?", //'user1'
+			"	AND DATE(s.skatLaiks) >= ?", //'2024-05-15'  startDate
+			"	AND DATE(s.skatLaiks) <= ?", //'2024-05-22'  endDate
+			"GROUP BY DATE(s.skatLaiks);"
+		);
 		
-		List<StatisticsType> statistics = new LinkedList<>();
-		
+		List<StatisticsByDateType> statisticsByDate = new LinkedList<>();
+				
+				
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, lietotajvards);
-
+			preparedStatement.setString(1, lietotajvardsSkatitajs);
+			preparedStatement.setDate(2, Date.valueOf(startDate));
+			preparedStatement.setDate(3, Date.valueOf(endDate));
 			ResultSet results = preparedStatement.executeQuery();
+			
             while (results.next()) {
-            	statistics.add(new StatisticsType(
-        			results.getInt("statistikaID"), 
-        			results.getString("lietotajvards"),
-        			results.getInt("recepteID"),
-        			results.getTimestamp("skatLaiks")
-    			));
+            	statisticsByDate.add(new StatisticsByDateType(
+        	        results.getDate("skatijumaDatums").toLocalDate(), 
+        	        results.getInt("skatijumuSkaits")
+        	    ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-		
-		return statistics;
-		
-		
-		//atgriež visas receptes un skatLaiks
-		//frontend (vai vēlams backend) uztaisīt, ka 
+        
+        return statisticsByDate;
 	}
 }

@@ -57,7 +57,7 @@ public class RecipeController {
         
         //Statistikas saglabasana
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String lietotajvardsSkatitajs = authentication.getName();
+        String lietotajvardsSkatitajs = authentication.getName();       
         StatisticsType statistics = new StatisticsType(-1, lietotajvardsSkatitajs, recepteID, null);
         statisticsModel.insertStatistics(statistics);
 
