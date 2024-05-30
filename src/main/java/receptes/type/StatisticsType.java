@@ -6,7 +6,7 @@ public class StatisticsType {
 	private int statistikaID;
 	private String lietotajvardsSkatitajs; //tabulā pagaidām saucās kā "lietotajvārds"
 	private int recepteID;
-	private Timestamp skatLaiks;
+	private Timestamp skatLaiks; //šo var neaizpildīt, ja paredzēts, ka tiks izmantota db noklusējuma vērtība
 	
 	
 	public StatisticsType(int statistikaID, String lietotajvardsSkatitajs, int recepteID, Timestamp skatLaiks) {

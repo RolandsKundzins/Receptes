@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -79,11 +81,22 @@ public class StatisticsModel {
 			preparedStatement.setDate(3, Date.valueOf(endDate));
 			ResultSet results = preparedStatement.executeQuery();
 			
-            while (results.next()) {
-            	statisticsByDate.add(new StatisticsByDateType(
-        	        results.getDate("skatijumaDatums").toLocalDate(), 
-        	        results.getInt("skatijumuSkaits")
-        	    ));
+			Map<LocalDate, Integer> viewCountMap = new HashMap<>();
+            
+			while (results.next()) {
+            	viewCountMap.put(
+        			results.getDate("skatijumaDatums").toLocalDate(), 
+        			results.getInt("skatijumuSkaits")
+            	);
+            }
+            
+            for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+                int viewCount = viewCountMap.getOrDefault(date, 0);
+
+                statisticsByDate.add(new StatisticsByDateType(
+            		date, 
+            		viewCount
+                ));
             }
         } catch (SQLException e) {
             e.printStackTrace();

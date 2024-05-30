@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import receptes.enums.RecipeOrderBy;
 import receptes.model.RecipeModel;
 import receptes.model.StatisticsModel;
+import receptes.type.RecipeType;
 import receptes.type.StatisticsType;
 import receptes.model.ProductModel;
 import receptes.model.FoodCategoryModel;
@@ -51,15 +52,21 @@ public class RecipeController {
 	public String showRecipeSingle(@RequestParam("recepteID") int recepteID, Model model) {
 		System.out.println(String.format("showRecipeSingle(recepteID: %s))", recepteID));
         //Datu ieguve paradisanai
-		model.addAttribute("recepte", recipeModel.getRecipeById(recepteID));
+		RecipeType recipe = recipeModel.getRecipeById(recepteID);
+		model.addAttribute("recepte", recipe);
         model.addAttribute("produkti", productModel.getProductsByRecipeId(recepteID));
         model.addAttribute("kategorija", foodCategoryModel.getFoodCategoryByRecipeId(recepteID));
         
         //Statistikas saglabasana
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String lietotajvardsSkatitajs = authentication.getName();       
-        StatisticsType statistics = new StatisticsType(-1, lietotajvardsSkatitajs, recepteID, null);
-        statisticsModel.insertStatistics(statistics);
+        String lietotajvardsSkatitajs = authentication.getName();
+        if(lietotajvardsSkatitajs.equals(recipe.getLietotajvards())) {
+        	System.out.println("Lietotajs apskata savu recepti. Statistika nemainās.");
+        } else {
+        	StatisticsType statistics = new StatisticsType(-1, lietotajvardsSkatitajs, recepteID, null);
+            statisticsModel.insertStatistics(statistics);
+        }
+        
 
         return "recipe/single"; // src/main/templates/recipe/single.html //Izmanto model, lai paraditu skata objektus
     }

@@ -11,14 +11,23 @@
 	<div th:replace="navbar :: navbar"></div>
 
 	<h1>Statistika</h1>
-	<p>Kopējais skatījumu skaits tavām receptēm šonedēļ</p>
+	<p>Kopējais skatījumu skaits tavām receptēm Pēdējās <span th:text="${dienu_skaits}"></span> dienās</p>
 	
-
+	
+	<form th:action="@{/statistics/single}" method="get">
+	    <label><input type="radio" name="dienuskaits" value="7" th:checked="${dienu_skaits == 7}"> Skatījumi Pēdējā Nedēļā</label><br>
+	    <label><input type="radio" name="dienuskaits" value="30" th:checked="${dienu_skaits == 30}"> Skatījumi Pēdējā Mēnesī</label><br>
+	    <label><input type="radio" name="dienuskaits" value="90" th:checked="${dienu_skaits == 90}"> Skatījumi Pēdējās 90 Dienās</label><br>
+	    <button type="submit">Iegūt</button>
+	</form>
+	
 
     <canvas id="viewCountChart" width="400" height="200"></canvas>
     <script th:inline="javascript">
-        var labels = [[${datesArray}]];
-        var data = [[${viewCountsArray}]];
+    	var statistics = [[${statistics}]];
+    	
+    	var labels = statistics.map(stat => stat.datums);
+        var data = statistics.map(stat => stat.skatijumuSkaits);
 
         let ctx = document.getElementById('viewCountChart').getContext('2d');
         let viewCountChart = new Chart(ctx, {
