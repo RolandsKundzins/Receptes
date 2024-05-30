@@ -4,14 +4,14 @@ import java.sql.Timestamp;
 
 public class StatisticsType {
 	private int statistikaID;
-	private String lietotajvards;
+	private String lietotajvardsSkatitajs; //tabulā pagaidām saucās kā "lietotajvārds"
 	private int recepteID;
-	private Timestamp skatLaiks;
+	private Timestamp skatLaiks; //šo var neaizpildīt, ja paredzēts, ka tiks izmantota db noklusējuma vērtība
 	
 	
-	public StatisticsType(int statistikaID, String lietotajvards, int recepteID, Timestamp skatLaiks) {
+	public StatisticsType(int statistikaID, String lietotajvardsSkatitajs, int recepteID, Timestamp skatLaiks) {
 		this.statistikaID = statistikaID;
-		this.lietotajvards = lietotajvards;
+		this.lietotajvardsSkatitajs = lietotajvardsSkatitajs;
 		this.recepteID = recepteID;
 		this.skatLaiks = skatLaiks;
 	}
@@ -26,11 +26,11 @@ public class StatisticsType {
 	}
 
 
-	public String getLietotajvards() {
-		return lietotajvards;
+	public String getSkatitajsLietotajvards() {
+		return lietotajvardsSkatitajs;
 	}
-	public void setLietotajvards(String lietotajvards) {
-		this.lietotajvards = lietotajvards;
+	public void setSkatitajsLietotajvards(String lietotajvards) {
+		this.lietotajvardsSkatitajs = lietotajvards;
 	}
 
 

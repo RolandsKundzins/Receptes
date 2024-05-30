@@ -1,13 +1,20 @@
 package receptes.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
+import receptes.type.StatisticsByDateType;
 import receptes.type.StatisticsType;
 
 @Component
@@ -23,6 +30,8 @@ public class StatisticsModel {
 	
 	
 	public boolean insertStatistics(StatisticsType statistika) {
+		System.out.println("insertStatistics");
+
 		String database = DatabaseConnection.getDatabase();
 		String sql = "INSERT INTO " + database + ".`Statistika` (`lietotajvards`, `recepteID`) VALUES (?, ?);";
 		//skatLaiks vertibai tiek izmantots DB default value (CURRENT_TIMESTAMP)
@@ -30,7 +39,7 @@ public class StatisticsModel {
 		
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, statistika.getLietotajvards());
+			preparedStatement.setString(1, statistika.getSkatitajsLietotajvards());
 			preparedStatement.setInt(2, statistika.getRecepteID());
 			rowsAffected = preparedStatement.executeUpdate();
 			if(rowsAffected == 0) {
@@ -48,8 +57,51 @@ public class StatisticsModel {
 	}
 
 
+	//TODO Return view count of all use recipes in last 7 days
+	//Something like this: day, view_count
+	public List<StatisticsByDateType> getViewCountsPerDay(String lietotajvardsSkatitajs, LocalDate startDate, LocalDate endDate) {
+		System.out.println("getStatisticsByLietotajvards");
 
-	public List<StatisticsType> getStatisticsByLietotajsID(int lietotajvards) {
-		return null;
+		String sql = String.join("\n",
+			"SELECT DATE(s.skatLaiks) as skatijumaDatums, COUNT(*) as skatijumuSkaits",
+			"FROM ", DatabaseConnection.getDatabase(), ".Statistika s",
+			"WHERE s.lietotajvards = ?", //'user1'
+			"	AND DATE(s.skatLaiks) >= ?", //'2024-05-15'  startDate
+			"	AND DATE(s.skatLaiks) <= ?", //'2024-05-22'  endDate
+			"GROUP BY DATE(s.skatLaiks);"
+		);
+		
+		List<StatisticsByDateType> statisticsByDate = new LinkedList<>();
+				
+				
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, lietotajvardsSkatitajs);
+			preparedStatement.setDate(2, Date.valueOf(startDate));
+			preparedStatement.setDate(3, Date.valueOf(endDate));
+			ResultSet results = preparedStatement.executeQuery();
+			
+			Map<LocalDate, Integer> viewCountMap = new HashMap<>();
+            
+			while (results.next()) {
+            	viewCountMap.put(
+        			results.getDate("skatijumaDatums").toLocalDate(), 
+        			results.getInt("skatijumuSkaits")
+            	);
+            }
+            
+            for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+                int viewCount = viewCountMap.getOrDefault(date, 0);
+
+                statisticsByDate.add(new StatisticsByDateType(
+            		date, 
+            		viewCount
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return statisticsByDate;
 	}
 }
