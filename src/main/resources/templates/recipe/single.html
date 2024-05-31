@@ -11,7 +11,16 @@
 	<main>
 		<div>
 			<h1 th:text="${recepte.nosaukums}"></h1>
-		    <p><strong>Pagatavosanas laiks:</strong> <span th:text="${recepte.pagatavosanasLaiks}"></span> minutes</p>
+
+			<div>
+                <button id="likeButton" onclick="likeRecipe()" th:disabled="${receptePatik.lietotajamPatikRecepte}">
+					<span th:text="${receptePatik.lietotajamPatikRecepte ? 'Jau patīk' : 'Patīk'}"></span>
+				</button>
+				<p id="likeMessage"></p>
+            </div>
+
+			<p><strong>Patīk</strong> <span th:text="${receptePatik.patikSkaits}"></span> lietotājiem</p>		    
+			<p><strong>Pagatavosanas laiks:</strong> <span th:text="${recepte.pagatavosanasLaiks}"></span> minutes</p>
 		    <p><strong>Izveidoja:</strong> <span th:text="${recepte.lietotajvards}"></span></p>
 		    <p><strong>Pievienots:</strong> <span th:text="${#dates.format(recepte.pievienosanasDatums, 'dd.MM.yyyy')}"></span></p>
 		    <p><strong>Ēdiena kategorija:</strong> <span th:text="${kategorija.nosaukums}"></span></p>
@@ -25,5 +34,38 @@
 		    <p th:text="${recepte.receptesApraksts}"></p>
 	    </div>
     </main>
+
+
+	<script>
+        function likeRecipe() {
+            let recepteID = [[${recepte.recepteID}]];
+			let likeButton = document.getElementById('likeButton');
+            let likeMessage = document.getElementById('likeMessage');
+			let patikSkaitsElement = document.getElementById('patikSkaits');
+
+			likeButton.disabled = true;
+            likeButton.innerText = 'Patīk...';
+            fetch('/recipeLike/add?recepteID=' + recepteID, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    likeButton.disabled = true;
+					likeMessage.innerText = data.message;
+
+					if(data.message.success == true){
+						let patikSkaits = parseInt(patikSkaitsElement.innerText) + 1;
+						patikSkaitsElement.innerText = patikSkaits;
+					}
+
+					
+                })
+                .catch(error => {
+					likeButton.disabled = false;
+					likeMessage.innerText = "Notika kļūdu atzīmējot, ka recepte patīk. Mēģini vēlreiz!";
+				})
+				.finally(() => {
+                    likeButton.innerText = 'Patīk';
+                });
+        }
+    </script>
 </body>
 </html>

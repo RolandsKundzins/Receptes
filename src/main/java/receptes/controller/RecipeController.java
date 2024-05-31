@@ -4,7 +4,6 @@
 package receptes.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import receptes.enums.RecipeOrderBy;
 import receptes.model.RecipeModel;
 import receptes.model.StatisticsModel;
+import receptes.type.RecipeLikeType;
 import receptes.type.RecipeType;
 import receptes.type.StatisticsType;
 import receptes.model.ProductModel;
+import receptes.model.RecipeLikeModel;
 import receptes.model.FoodCategoryModel;
 
 @Controller
@@ -26,6 +27,9 @@ public class RecipeController {
 
 	@Autowired
 	private RecipeModel recipeModel;
+	
+	@Autowired
+	private RecipeLikeModel recipeLikeModel;
 	
 	@Autowired
 	private ProductModel productModel;
@@ -51,23 +55,28 @@ public class RecipeController {
 	@GetMapping("/object")
 	public String showRecipeSingle(@RequestParam("recepteID") int recepteID, Model model) {
 		System.out.println(String.format("showRecipeSingle(recepteID: %s))", recepteID));
-        //Datu ieguve paradisanai
+		String lietotajvardsSkatitajs = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        //Receptes datu ieguve parādīšanai
 		RecipeType recipe = recipeModel.getRecipeById(recepteID);
 		model.addAttribute("recepte", recipe);
         model.addAttribute("produkti", productModel.getProductsByRecipeId(recepteID));
         model.addAttribute("kategorija", foodCategoryModel.getFoodCategoryByRecipeId(recepteID));
         
+        RecipeLikeType recipeLikeType = new RecipeLikeType(
+    		recipeLikeModel.isRecipeAlreadyLiked(lietotajvardsSkatitajs, recepteID), 
+    		recipeLikeModel.recipeLikeCount(recepteID)
+        );
+        model.addAttribute("receptePatik", recipeLikeType);
+        
         //Statistikas saglabasana
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String lietotajvardsSkatitajs = authentication.getName();
         if(lietotajvardsSkatitajs.equals(recipe.getLietotajvards())) {
         	System.out.println("Lietotajs apskata savu recepti. Statistika nemainās.");
         } else {
         	StatisticsType statistics = new StatisticsType(-1, lietotajvardsSkatitajs, recepteID, null);
             statisticsModel.insertStatistics(statistics);
         }
-        
 
-        return "recipe/single"; // src/main/templates/recipe/single.html //Izmanto model, lai paraditu skata objektus
+        return "recipe/single"; // src/main/templates/recipe/single.html
     }
 }

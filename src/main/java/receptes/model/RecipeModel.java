@@ -140,7 +140,4 @@ public class RecipeModel {
         }
         return recipes;
     }
-
 }
-
-//nt recepteID, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards

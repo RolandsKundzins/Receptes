@@ -3,12 +3,17 @@ package receptes.type;
 public class OperationResult {
     private boolean success;
     private String message;
-
+    
     // Constructors
+    public OperationResult() {
+    }
+
     public OperationResult(boolean success, String message) {
         this.success = success;
         this.message = message;
     }
+    
+
 
     // Getters and setters
     public boolean isSuccess() {
