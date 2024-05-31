@@ -6,6 +6,7 @@
 
 ### Uzstadi Git
 - Iespejams, ka stumjot (push) uz GitHub, prasis username un paroli. Lai katru reizi tas nebutu javada, var uzstadit ssh: https://www.youtube.com/watch?v=EoLrCX1VVog un (vai) https://www.youtube.com/watch?v=bc3_FL9zWWs&t=496s
+- Zaru iespējams uztaisīt pa taisno no uzdevuma, izmantojot "Create branch".
 
 ### Galvenais zars ir MAIN
 - Ieteiktu taisit izstrades zarus (feature) un tikai tad taisit Pull Request uz MAIN, lai samazinatu iespeju, ka kads koda fragments neveiksmigi pazud.
