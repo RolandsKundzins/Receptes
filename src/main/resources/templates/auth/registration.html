@@ -75,17 +75,19 @@
 		    <form action="#" th:action="@{/register}" th:object="${user}" method="post">
 		    	<div class="input-field-wrapper">
 			        <label for="epasts">Epasts:</label>
-			        <input type="email" id="epasts" th:field="*{epasts}" required>
+			        <input type="email" id="epasts" th:field="*{epasts}" required
+			        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+           			title="Nederīgs e-pasta formāts. Lūdzu, ievadiet derīgu e-pasta adresi, piemēram, lietotajs@epasts.lv">
 		        </div>
 		        
 		        <div class="input-field-wrapper">
 			        <label for="lietotajvards">Lietotajvards:</label>
-			        <input type="text" id="lietotajvards" th:field="*{lietotajvards}" required>
+			        <input type="text" id="lietotajvards" th:field="*{lietotajvards}" required minlength="4">
 		        </div>
 		        
 		        <div class="input-field-wrapper">
 			        <label for="parole">Parole:</label>
-			        <input type="password" id="parole" th:field="*{parole}" required>
+			        <input type="password" id="parole" th:field="*{parole}" required minlength="8">
 		        </div>
 		        
 		        <button type="submit">Registreties</button>
@@ -93,6 +95,9 @@
 		    
 		    <h2>Jau ir konts?</h2>
 		    <a th:href="@{/login}">Pieslegties</a>
+		    
+		    <h2>Nevēlies reģistrēties?</h2> 
+		    <a th:href="@{/home}">Receptes nereģistrētiem lietotājiem</a>
 	    </div>
     </main>
 </body>

@@ -19,18 +19,10 @@ public class HomeController {
 	private RecipeModel recipeModel;
 
 	@GetMapping("/home")
-	public String Home(Model model) {
-
-		System.out.println("Home lapa");
+	public String showHomePage(Model model) {
+		System.out.println("showHomePage");
 		// pagaidām home lapa iegūst visas receptes, bet vajadzētu kaut kādas apmēram random populārākās
         model.addAttribute("recipes", recipeModel.getAllRecipes());
         return "home"; 
     }
-	
-	@GetMapping("/home/test")
-	public String test() {
-
-        return "test"; 
-    }
-	
 }

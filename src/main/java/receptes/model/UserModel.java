@@ -49,6 +49,37 @@ public class UserModel {
 	}
 	
 	
+	//Check if user exists based on email and username
+	public String checkUserExists(String lietotajvards, String epasts) {		
+		String sql = "SELECT lietotajvards, epasts FROM " + DatabaseConnection.getDatabase() + ".Lietotajs WHERE lietotajvards = ? OR epasts = ?";
+		String result = "";
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, lietotajvards);
+			preparedStatement.setString(2, epasts);
+			ResultSet results = preparedStatement.executeQuery();
+			
+			if(results.next()) {
+				if(results.getString("lietotajvards").equals(lietotajvards)) {
+					result = "lietotajvārdu";
+				}
+				if(results.getString("epasts").equals(epasts)) {
+					if(!result.isEmpty()) result += " un ";
+					result += "epastu";
+				}
+				
+				if(!"".equals(result)) {
+					result = String.join(" ", "Lietotājs ar šādu", result, "jau eksistē!");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
 	public OperationResult insertUser(String epasts, String parole, String lietotajvards) {
 		String sql = "INSERT INTO " + DatabaseConnection.getDatabase() + ".`Lietotajs` (`epasts`, `parole`, `lietotajvards`) VALUES (?,?,?);";
 		int rowsAffected = 0;
@@ -59,7 +90,6 @@ public class UserModel {
 			preparedStatement.setString(2, parole);
 			preparedStatement.setString(3, lietotajvards);
 			rowsAffected = preparedStatement.executeUpdate();
-			conn.commit();
 		} catch (SQLException e) {
 			try {
 				conn.rollback();

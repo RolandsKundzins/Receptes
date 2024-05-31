@@ -59,7 +59,7 @@
 <body>
     <div class="container">
         <div class="nav">
-            <a href="/login">Login</a>
+            <a th:href="@{/login}">Login</a>
         </div>
         <h1>Laipni lūgti receptēs!!!</h1>
         <p>Atklāj savu jauno garšas buķeti un pievienojies mums ar savām receptēm!</p>
@@ -69,8 +69,18 @@
     
             <p><strong>Pagatavosanas laiks:</strong> <span th:text="${recipe.pagatavosanasLaiks}"></span> minutes</p>
             <p th:text="${recipe.receptesApraksts}"></p>
-            <a th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Detalizētāk</a>            
+        	<!--<a th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Detalizētāk</a>-->
+			<a href="#" onclick="showLoginAlert()">Detalizētāk</a>
         </div>
     </div>
+
+
+	<script>
+		function showLoginAlert() {
+		    if (confirm("Lūdzu pieslēdzies, lai redzētu vairāk. Apstiprini, lai dotos uz pieslēgšanās lapu:")) {
+		        window.location.href = "/login";
+		    }
+		}
+	</script>
 </body>
 </html>

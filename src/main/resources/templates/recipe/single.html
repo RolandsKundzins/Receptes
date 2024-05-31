@@ -12,8 +12,9 @@
 		<div>
 			<h1 th:text="${recepte.nosaukums}"></h1>
 		    <p><strong>Pagatavosanas laiks:</strong> <span th:text="${recepte.pagatavosanasLaiks}"></span> minutes</p>
-		    <p><strong>Izveidoja:</strong> <span th:text="${recepte.lietotajvards}"></p>
+		    <p><strong>Izveidoja:</strong> <span th:text="${recepte.lietotajvards}"></span></p>
 		    <p><strong>Pievienots:</strong> <span th:text="${#dates.format(recepte.pievienosanasDatums, 'dd.MM.yyyy')}"></span></p>
+		    <p><strong>Ēdiena kategorija:</strong> <span th:text="${kategorija.nosaukums}"></span></p>
 		    
 		    <h3>Produkti:</h3>
 		    <ul>
@@ -22,9 +23,6 @@
 		
 		    <h3>Apraksts:</h3>
 		    <p th:text="${recepte.receptesApraksts}"></p>
-		    
-		    <h3>Ēdiena kategorija:</h3>
-		    <p th:text="${kategorija.nosaukums}" />
 	    </div>
     </main>
 </body>

@@ -2,6 +2,8 @@ package receptes.controller;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,6 +48,28 @@ public class AuthController {
 	//Apstrada datus no registracijas lapas
 	@PostMapping("/register")
     public String registerUser(@ModelAttribute("user") UserType user, RedirectAttributes redirectAttributes, HttpSession session) {
+		//Pārbaudes:
+		// - Epasts pārbaude
+		String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+		Pattern pattern = Pattern.compile(emailRegex);
+		Matcher matcher = pattern.matcher(user.getEpasts());
+		if (!matcher.matches()) {
+		    return "redirect:/register?error=" + URLEncoder.encode("Nederīgs e-pasta formāts. Lūdzu, ievadiet derīgu e-pasta adresi, piemēram, lietotajs@epasts.lv", StandardCharsets.UTF_8);
+		}
+		// - Lietotājvārda pārbaude
+		if(user.getLietotajvards().length() < 4) {
+			return "redirect:/register?error=" + URLEncoder.encode("Lietotājvārda garumam jābūt vismaz 4 simboliem", StandardCharsets.UTF_8);
+		}
+		// - Paroles pārbaude
+		if(user.getParole().length() < 8) {
+			return "redirect:/register?error=" + URLEncoder.encode("Parolei jāsatur vismaz 8 cipari", StandardCharsets.UTF_8);
+		}
+		// - Lietotāja eksistēšanas pārbaude
+		String userExists = userModel.checkUserExists(user.getLietotajvards(), user.getEpasts());
+		if(!"".equals(userExists)) {
+			return "redirect:/register?error=" + URLEncoder.encode(userExists, StandardCharsets.UTF_8);
+		}
+		
         // Sifre paroli
         String encodedPassword = passwordEncoder.encode(user.getParole());
 

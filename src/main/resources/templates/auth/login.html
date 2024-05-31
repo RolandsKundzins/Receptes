@@ -51,32 +51,42 @@
 </head>
 <body>
 	<main>
-	<div class="login-panel">
-	    <h2>Pieslegties</h2>
-	    
-	    	
-		<div th:if="${param.error}" class="error-message">
-		    <p>Notika kluda (seit vajadzetu, but istajam kludas pazinojumam, bet vins nav ieks url)</p>
-		</div>
-	    
-	    <div style="margin-bottom: 20px;">
-	        <i>Ja slinkums taisit lietotaju: <b>"user1"</b> un <b>"1234"</b></i>
-	    </div>
-	
-	    <form th:action="@{/login}" method="post">
-	    	<div class="input-field-wrapper">
-		        <label for="username">Lietotajvards:</label>
-		        <input type="text" id="username" name="username" required>
-	        </div>
-	        <div class="input-field-wrapper">
-		        <label for="password">Parole:</label>
-		        <input type="password" id="password" name="password" required>
-	        </div>
-	        <button type="submit">Pieslegties</button>
-	    </form>
-	    
-	    <h2>Vel nav konta?</h2> 
-	    <a th:href="@{/register}">Registreties</a>
+		<div class="login-panel">
+		    <h2>Pieslegties</h2>
+		    
+		    	
+			<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="error-message">
+			    <p>Notika kļūda:
+			        <span 
+						th:text="(${session['SPRING_SECURITY_LAST_EXCEPTION'].message == 'Bad credentials'}) ? 
+			                       'Nepareizs lietotājvārds vai parole' : 
+			                       ${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+			        </span>!
+			    </p>
+			</div>
+
+		    
+		    <div style="margin-bottom: 20px;">
+		        <i>Ja slinkums taisit lietotaju: <b>"user1"</b> un <b>"1234"</b></i>
+		    </div>
+		
+		    <form th:action="@{/login}" method="post">
+		    	<div class="input-field-wrapper">
+			        <label for="username">Lietotajvards:</label>
+			        <input type="text" id="username" name="username" required>
+		        </div>
+		        <div class="input-field-wrapper">
+			        <label for="password">Parole:</label>
+			        <input type="password" id="password" name="password" required>
+		        </div>
+		        <button type="submit">Pieslegties</button>
+		    </form>
+		    
+		    <h2>Vel nav konta?</h2> 
+		    <a th:href="@{/register}">Registreties</a>
+		    
+		    <h2>Nevēlies pieslēgties?</h2> 
+		    <a th:href="@{/home}">Receptes nereģistrētiem lietotājiem</a>
 	    </div>
     </main>
 </body>
