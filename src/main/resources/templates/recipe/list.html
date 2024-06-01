@@ -51,6 +51,7 @@
 		                <th>pagatavosanasLaiks</th>
 		                <th>receptesApraksts</th>
 		                <th>edienaKategorija</th>
+						<th>autors</th>
 		                <th>Papildus</th>
 		            </tr>
 		        </thead>
@@ -61,6 +62,7 @@
 		                <td th:text="${recipe.pagatavosanasLaiks}"></td>
 		                <td th:text="${recipe.receptesApraksts}"></td>
 		                <td th:text="${recipe.kategorija}"></td>
+						<td th:text="${recipe.lietotajvards}"></td>
 		                <td>
 					         <a class="table-button" th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Detalizētāk</a>
 					    </td>
