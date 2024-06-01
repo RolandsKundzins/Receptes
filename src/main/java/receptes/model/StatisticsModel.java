@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
 import receptes.type.StatisticsByDateType;
-import receptes.type.StatisticsType;
 
 @Component
 public class StatisticsModel {
@@ -27,35 +26,6 @@ public class StatisticsModel {
 		conn = DatabaseConnection.getConnection();
 	}
 	
-	
-	
-	public boolean insertRecipeView(StatisticsType statistika) {
-		System.out.println("insertStatistics");
-
-		String database = DatabaseConnection.getDatabase();
-		String sql = "INSERT INTO " + database + ".`Statistika` (`lietotajvards`, `recepteID`) VALUES (?, ?);";
-		//skatLaiks vertibai tiek izmantots DB default value (CURRENT_TIMESTAMP)
-		int rowsAffected = 0;
-		
-		try {
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, statistika.getSkatitajsLietotajvards());
-			preparedStatement.setInt(2, statistika.getRecepteID());
-			rowsAffected = preparedStatement.executeUpdate();
-			if(rowsAffected == 0) {
-				throw new Exception("Rows affected equal to zero for statistics insert!");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
-	}
-
 
 	// ******************* STATISTIKAS IEGUVE ***************************
 	//Atgriež skatījumu un patīk skaitu konkrētā datumu periodā priekš lietotāja, kurš apskata statistikas lapu.
@@ -109,7 +79,7 @@ public class StatisticsModel {
 	private Map<LocalDate, Integer> getViewsPerDate(String lietotajvardsSkatitajs, LocalDate startDate, LocalDate endDate) {
 	    String sqlViews = String.join("\n",
 	        "SELECT DATE(s.skatLaiks) as datums, COUNT(*) as skaits",
-	        "FROM", DatabaseConnection.getDatabase(), ".Statistika s",
+	        "FROM", DatabaseConnection.getDatabase(), ".LietotajsRecepteSkatits s",
 	        "JOIN", DatabaseConnection.getDatabase(), ".Recepte r ON r.recepteID = s.recepteID",
 	        "JOIN", DatabaseConnection.getDatabase(), ".Lietotajs l ON r.lietotajsID = l.lietotajsID",
 	        "WHERE l.lietotajvards = ?",

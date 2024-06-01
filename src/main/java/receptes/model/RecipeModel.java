@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import receptes.config.DatabaseConnection;
 import receptes.enums.RecipeOrderBy;
 import receptes.type.RecipeType;
+import receptes.type.RecipeViewType;
 
 
 @Component
@@ -147,4 +148,33 @@ public class RecipeModel {
         }
         return recipes;
     }
+	
+	
+	//Kad lietotajs apskata recepti, tad tiek pievienots ieraksts tabulā "LietotajsRecepteSkatits" ar apskates laiku
+	public boolean insertRecipeUserViewed(RecipeViewType recipeViewType) {
+		System.out.println("insertRecipeView");
+
+		String database = DatabaseConnection.getDatabase();
+		String sql = "INSERT INTO " + database + ".`LietotajsRecepteSkatits` (`lietotajvardsSkatitajs`, `recepteID`) VALUES (?, ?);";
+		//skatLaiks vertibai tiek izmantots DB default value (CURRENT_TIMESTAMP)
+		int rowsAffected = 0;
+		
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, recipeViewType.getLietotajvardsSkatitajs());
+			preparedStatement.setInt(2, recipeViewType.getRecepteID());
+			rowsAffected = preparedStatement.executeUpdate();
+			if(rowsAffected == 0) {
+				throw new Exception("Rows affected equal to zero for statistics insert!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
 }

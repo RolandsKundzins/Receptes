@@ -2,21 +2,21 @@ package receptes.type;
 
 import java.sql.Timestamp;
 
-public class StatisticsType {
-	private int statistikaID;
+public class RecipeViewType {
+	private int LietotajsRecepteSkatitsID;
 	private String lietotajvardsSkatitajs; //tabulā pagaidām saucās kā "lietotajvārds"
 	private int recepteID;
 	private Timestamp skatLaiks; //šo var neaizpildīt, ja paredzēts, ka tiks izmantota db noklusējuma vērtība
 	
 	
 	//Konstruktors, kuru izmanto insertam, jo datumu un id nosaka datubāze
-	public StatisticsType(String lietotajvardsSkatitajs, int recepteID) {
+	public RecipeViewType(String lietotajvardsSkatitajs, int recepteID) {
 		this.lietotajvardsSkatitajs = lietotajvardsSkatitajs;
 		this.recepteID = recepteID;
 	}
 	
-	public StatisticsType(int statistikaID, String lietotajvardsSkatitajs, int recepteID, Timestamp skatLaiks) {
-		this.statistikaID = statistikaID;
+	public RecipeViewType(int LietotajsRecepteSkatitsID, String lietotajvardsSkatitajs, int recepteID, Timestamp skatLaiks) {
+		this.LietotajsRecepteSkatitsID = LietotajsRecepteSkatitsID;
 		this.lietotajvardsSkatitajs = lietotajvardsSkatitajs;
 		this.recepteID = recepteID;
 		this.skatLaiks = skatLaiks;
@@ -24,21 +24,20 @@ public class StatisticsType {
 
 
 	//GETTERS AND SETTERS
-	public int getStatistikaID() {
-		return statistikaID;
-	}
-	public void setStatistikaID(int statistikaID) {
-		this.statistikaID = statistikaID;
-	}
-
-
-	public String getSkatitajsLietotajvards() {
+	public String getLietotajvardsSkatitajs() {
 		return lietotajvardsSkatitajs;
 	}
-	public void setSkatitajsLietotajvards(String lietotajvards) {
-		this.lietotajvardsSkatitajs = lietotajvards;
+	public void setLietotajvardsSkatitajs(String lietotajvardsSkatitajs) {
+		this.lietotajvardsSkatitajs = lietotajvardsSkatitajs;
 	}
+	
 
+	public int getLietotajsRecepteSkatitsID() {
+		return LietotajsRecepteSkatitsID;
+	}
+	public void setLietotajsRecepteSkatitsID(int lietotajsRecepteSkatitsID) {
+		LietotajsRecepteSkatitsID = lietotajsRecepteSkatitsID;
+	}
 
 	public int getRecepteID() {
 		return recepteID;

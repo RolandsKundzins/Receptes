@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import receptes.enums.RecipeOrderBy;
 import receptes.model.RecipeModel;
-import receptes.model.StatisticsModel;
 import receptes.type.RecipeLikeType;
 import receptes.type.RecipeType;
-import receptes.type.StatisticsType;
+import receptes.type.RecipeViewType;
 import receptes.model.ProductModel;
 import receptes.model.RecipeLikeModel;
 import receptes.model.FoodCategoryModel;
@@ -36,10 +35,6 @@ public class RecipeController {
 	
 	@Autowired
 	private FoodCategoryModel foodCategoryModel;
-	
-	
-	@Autowired
-	private StatisticsModel statisticsModel;
 	
 	
 	@GetMapping("/list")
@@ -76,8 +71,8 @@ public class RecipeController {
         if(lietotajvardsSkatitajs.equals(recipe.getLietotajvards())) {
         	System.out.println("Lietotajs apskata savu recepti. Statistika nemainās.");
         } else {
-        	StatisticsType statistics = new StatisticsType(lietotajvardsSkatitajs, recepteID);
-        	statisticsModel.insertRecipeView(statistics);
+        	RecipeViewType statistics = new RecipeViewType(lietotajvardsSkatitajs, recepteID);
+        	recipeModel.insertRecipeUserViewed(statistics);
         }
 
         return "recipe/single"; // src/main/templates/recipe/single.html
