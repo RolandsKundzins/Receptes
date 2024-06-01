@@ -37,8 +37,10 @@ public class RecipeController {
 	@Autowired
 	private FoodCategoryModel foodCategoryModel;
 	
+	
 	@Autowired
 	private StatisticsModel statisticsModel;
+	
 	
 	@GetMapping("/list")
 	public String showRecipeList(Model model, 
@@ -47,7 +49,7 @@ public class RecipeController {
         
 		// Load recipe data and add it to the model
 		System.out.println("showRecipeList");
-		model.addAttribute("recipes", recipeModel.getRecipes(search, orderBy));
+		model.addAttribute("recipes", recipeModel.getListOfRecipes(search, orderBy));
         
         return "recipe/list"; // src/main/templates/recipe/list.html
     }
@@ -62,6 +64,7 @@ public class RecipeController {
 		model.addAttribute("recepte", recipe);
         model.addAttribute("produkti", productModel.getProductsByRecipeId(recepteID));
         model.addAttribute("kategorija", foodCategoryModel.getFoodCategoryByRecipeId(recepteID));
+        model.addAttribute("lietotajvardsSkatitajs", lietotajvardsSkatitajs);
         
         RecipeLikeType recipeLikeType = new RecipeLikeType(
     		recipeLikeModel.isRecipeAlreadyLiked(lietotajvardsSkatitajs, recepteID), 
@@ -73,8 +76,8 @@ public class RecipeController {
         if(lietotajvardsSkatitajs.equals(recipe.getLietotajvards())) {
         	System.out.println("Lietotajs apskata savu recepti. Statistika nemainās.");
         } else {
-        	StatisticsType statistics = new StatisticsType(-1, lietotajvardsSkatitajs, recepteID, null);
-            statisticsModel.insertStatistics(statistics);
+        	StatisticsType statistics = new StatisticsType(lietotajvardsSkatitajs, recepteID);
+        	statisticsModel.insertRecipeView(statistics);
         }
 
         return "recipe/single"; // src/main/templates/recipe/single.html

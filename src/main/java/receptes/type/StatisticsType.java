@@ -9,6 +9,12 @@ public class StatisticsType {
 	private Timestamp skatLaiks; //šo var neaizpildīt, ja paredzēts, ka tiks izmantota db noklusējuma vērtība
 	
 	
+	//Konstruktors, kuru izmanto insertam, jo datumu un id nosaka datubāze
+	public StatisticsType(String lietotajvardsSkatitajs, int recepteID) {
+		this.lietotajvardsSkatitajs = lietotajvardsSkatitajs;
+		this.recepteID = recepteID;
+	}
+	
 	public StatisticsType(int statistikaID, String lietotajvardsSkatitajs, int recepteID, Timestamp skatLaiks) {
 		this.statistikaID = statistikaID;
 		this.lietotajvardsSkatitajs = lietotajvardsSkatitajs;

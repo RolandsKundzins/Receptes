@@ -7,31 +7,41 @@
     <link th:href="@{/styles.css}" rel="stylesheet" />
 </head>
 <body>
-	<div th:replace="navbar :: navbar"></div>
+	<div th:replace="navbar :: navbar" />
 	<main>
 		<div>
-			<h1 th:text="${recepte.nosaukums}"></h1>
+			<h1 th:text="${recepte.nosaukums}" />
 
 			<div>
-                <button id="likeButton" onclick="likeRecipe()" th:disabled="${receptePatik.lietotajamPatikRecepte}">
-					<span th:text="${receptePatik.lietotajamPatikRecepte ? 'Jau patīk' : 'Patīk'}"></span>
+                <button 
+					id="likeButton" 
+					onclick="likeRecipe()" 
+					th:disabled="${lietotajvardsSkatitajs == recepte.lietotajvards}"
+					th:title="${lietotajvardsSkatitajs == recepte.lietotajvards ? 'Diemžēl nevari atzīmēt savu recepti ar Patīk' : ''}"
+				>
+					<span th:text="${receptePatik.lietotajamPatikRecepte ? 'Patīk' : 'Patikt'}" />
 				</button>
-				<p id="likeMessage"></p>
+				<p id="likeMessage" />
             </div>
 
-			<p><strong>Patīk</strong> <span th:text="${receptePatik.patikSkaits}"></span> lietotājiem</p>		    
-			<p><strong>Pagatavosanas laiks:</strong> <span th:text="${recepte.pagatavosanasLaiks}"></span> minutes</p>
-		    <p><strong>Izveidoja:</strong> <span th:text="${recepte.lietotajvards}"></span></p>
-		    <p><strong>Pievienots:</strong> <span th:text="${#dates.format(recepte.pievienosanasDatums, 'dd.MM.yyyy')}"></span></p>
-		    <p><strong>Ēdiena kategorija:</strong> <span th:text="${kategorija.nosaukums}"></span></p>
+			<p>
+				<strong>Patīk</strong> <span th:text="${receptePatik.patikSkaits}" /> lietotājiem.
+				<span th:if="${lietotajvardsSkatitajs == recepte.lietotajvards}">
+			        (Diemžēl nevari atzīmēt savu recepti ar "Patīk")
+			    </span>
+			</p>		    
+			<p><strong>Pagatavosanas laiks:</strong> <span th:text="${recepte.pagatavosanasLaiks}" /> minutes</p>
+		    <p><strong>Izveidoja:</strong> <span th:text="${recepte.lietotajvards}" />
+		    <p><strong>Pievienots:</strong> <span th:text="${#dates.format(recepte.pievienosanasDatums, 'dd.MM.yyyy')}"/> </p>
+		    <p><strong>Ēdiena kategorija:</strong> <span th:text="${kategorija.nosaukums}" /> </p>
 		    
 		    <h3>Produkti:</h3>
 		    <ul>
-			    <li th:each="produkts : ${produkti}" th:text="${produkts.nosaukums}"></li>
+			    <li th:each="produkts : ${produkti}" th:text="${produkts.nosaukums}" />
 			</ul>
 		
 		    <h3>Apraksts:</h3>
-		    <p th:text="${recepte.receptesApraksts}"></p>
+		    <p th:text="${recepte.receptesApraksts}" />
 	    </div>
     </main>
 
@@ -41,30 +51,26 @@
             let recepteID = [[${recepte.recepteID}]];
 			let likeButton = document.getElementById('likeButton');
             let likeMessage = document.getElementById('likeMessage');
-			let patikSkaitsElement = document.getElementById('patikSkaits');
 
 			likeButton.disabled = true;
             likeButton.innerText = 'Patīk...';
-            fetch('/recipeLike/add?recepteID=' + recepteID, { method: 'POST' })
+            fetch('/recipeLike/change?recepteID=' + recepteID, { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
-                    likeButton.disabled = true;
+					likeButton.disabled = false;
 					likeMessage.innerText = data.message;
 
-					if(data.message.success == true){
-						let patikSkaits = parseInt(patikSkaitsElement.innerText) + 1;
-						patikSkaitsElement.innerText = patikSkaits;
+					if(data.extraData.patik == true){
+						likeButton.innerText = 'Patīk';
+					} else {
+						likeButton.innerText = 'Patikt';
 					}
-
-					
                 })
                 .catch(error => {
 					likeButton.disabled = false;
 					likeMessage.innerText = "Notika kļūdu atzīmējot, ka recepte patīk. Mēģini vēlreiz!";
-				})
-				.finally(() => {
-                    likeButton.innerText = 'Patīk';
-                });
+					likeButton.innerText = 'Patikt';
+				});
         }
     </script>
 </body>

@@ -26,7 +26,11 @@ public class RecipeModel {
 	
 	
 	public List<RecipeType> getAllRecipes() {
-		String sql = "SELECT * FROM " + DatabaseConnection.getDatabase() + ".Recepte";
+		String sql = String.join("\n", 
+		    "SELECT r.*, l.lietotajvards",
+		    "FROM " + DatabaseConnection.getDatabase() + ".Recepte r",
+		    "JOIN " + DatabaseConnection.getDatabase() + ".Lietotajs l ON r.lietotajsID = l.lietotajsID"
+		);
         List<RecipeType> recipes = new LinkedList<>();
         
 		try {
@@ -40,8 +44,8 @@ public class RecipeModel {
             	        results.getInt("pagatavosanasLaiks"), 
             	        results.getTimestamp("pievienosanasDatums"),
             	        results.getString("receptesApraksts"),
-            	        0, // sobrid nesuta lietotaju prieks receptes saraksta
-            	        null,
+            	        results.getInt("lietotajsID"),
+            	        results.getString("lietotajvards"),
             	        results.getInt("edienaKategorijaID")
             	    ));
             }
@@ -54,6 +58,7 @@ public class RecipeModel {
 	
 	
 	public RecipeType getRecipeById(int recepteID) {
+		System.out.println("getRecipeById");
 		String database = DatabaseConnection.getDatabase();
         String sql = "SELECT r.*, l.lietotajsID, l.lietotajvards "
         		+ "FROM " + database + ".Recepte r "
@@ -76,38 +81,39 @@ public class RecipeModel {
             		result.getString("lietotajvards"),
             		result.getInt("edienaKategorijaID")
                 );
-                
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
-        System.out.println(recipe.toString());
-
         return recipe;
     } 
 
-	public List<RecipeType> getRecipes(String search, RecipeOrderBy orderBy) {
-		String sql = "SELECT * FROM " + DatabaseConnection.getDatabase() + ".Recepte";
+	public List<RecipeType> getListOfRecipes(String search, RecipeOrderBy orderBy) {
+		String sql = String.join("\n", 
+		    "SELECT r.*, l.lietotajvards",
+		    "FROM " + DatabaseConnection.getDatabase() + ".Recepte r",
+		    "JOIN " + DatabaseConnection.getDatabase() + ".Lietotajs l ON r.lietotajsID = l.lietotajsID"
+		);
 		
 		if (search != null && !search.isEmpty()) {
-			sql += " WHERE nosaukums like ?";
+			sql += " WHERE r.nosaukums like ?";
 		}
 		
 		if (orderBy != null) {
 			
 			switch(orderBy) {
 		      case NAMEASC:
-		    	  sql += " ORDER BY nosaukums ASC";
+		    	  sql += " ORDER BY r.nosaukums ASC";
 		    	  break;
 		      case NAMEDESC:
-		    	  sql += " ORDER BY nosaukums DESC";
+		    	  sql += " ORDER BY r.nosaukums DESC";
 		    	  break;
 		      case COOKINGTIMEASC:
-		    	  sql += " ORDER BY pagatavosanasLaiks ASC";
+		    	  sql += " ORDER BY r.pagatavosanasLaiks ASC";
 		    	  break;
 		      case COOKINGTIMEDESC:
-		    	  sql += " ORDER BY pagatavosanasLaiks DESC";
+		    	  sql += " ORDER BY r.pagatavosanasLaiks DESC";
 		    	  break;
 		    }
 		}
@@ -126,14 +132,15 @@ public class RecipeModel {
 			ResultSet results = preparedStatement.executeQuery();
             while (results.next()) {
             	recipes.add(new RecipeType(
-            			results.getInt("recepteID"), 
-                		results.getString("nosaukums"), 
-                		results.getInt("pagatavosanasLaiks"),
-                		results.getTimestamp("pievienosanasDatums"),
-                		results.getString("receptesApraksts"),
-                		0,
-                		null,
-                		results.getInt("edienaKategorijaID")));
+        			results.getInt("recepteID"), 
+            		results.getString("nosaukums"), 
+            		results.getInt("pagatavosanasLaiks"),
+            		results.getTimestamp("pievienosanasDatums"),
+            		results.getString("receptesApraksts"),
+        	        results.getInt("lietotajsID"),
+        	        results.getString("lietotajvards"),
+            		results.getInt("edienaKategorijaID")
+    			));
             }
         } catch (SQLException e) {
             e.printStackTrace();

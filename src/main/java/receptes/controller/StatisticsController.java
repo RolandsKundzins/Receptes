@@ -24,17 +24,22 @@ public class StatisticsController {
 	
 	
 	@GetMapping("/single")
-	public String showStatisticsSingle(@RequestParam("dienuskaits") int dienuSkaits, Model model) {
-		System.out.println("showStatisticsSingle");
-
+	public String showStatisticsForUser(@RequestParam("dienuskaits") int dienuSkaits, Model model) {
+		System.out.println("showStatisticsForUser");
+		
+		if(dienuSkaits < 1 || dienuSkaits > 90) {
+			System.out.println("showStatisticsForUser: Lietotājs ievada nelegālas vērtības, uzstāda dienuSkaits = 7.");
+			dienuSkaits = 7;
+		}
+		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String lietotajvardsSkatitajs = authentication.getName();
         
         LocalDate endDate = LocalDate.now();
-        LocalDate startDate = endDate.minusDays(dienuSkaits-1); // Calculate the start date as seven days ago
+        LocalDate startDate = endDate.minusDays(dienuSkaits-1); // Aprēķina sākuma dienu kā dienuSkaits dienas atpakaļ
         
-        List<StatisticsByDateType> viewCountsPerDay = statisticsModel.getViewCountsPerDay(lietotajvardsSkatitajs, startDate, endDate);
-
+        List<StatisticsByDateType> viewCountsPerDay = statisticsModel.getStatisticsPerDate(lietotajvardsSkatitajs, startDate, endDate);
+        
         model.addAttribute("statistics", viewCountsPerDay);
         
         model.addAttribute("dienu_skaits", dienuSkaits); //nav tas pats, kas "dienuskaits" @RequestParam
