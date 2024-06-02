@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import receptes.enums.RecipeOrderBy;
 import receptes.model.RecipeModel;
 
 
@@ -21,8 +22,7 @@ public class HomeController {
 	@GetMapping("/home")
 	public String showHomePage(Model model) {
 		System.out.println("showHomePage");
-		// pagaidām home lapa iegūst visas receptes, bet vajadzētu kaut kādas apmēram random populārākās
-        model.addAttribute("recipes", recipeModel.getAllRecipes());
+        model.addAttribute("recipes", recipeModel.getListOfRecipes("", RecipeOrderBy.DATEADDEDDESC));
         return "home"; 
     }
 }

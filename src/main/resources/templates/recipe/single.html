@@ -25,7 +25,7 @@
             </div>
 
 			<p>
-				<strong>Patīk</strong> <span th:text="${receptePatik.patikSkaits}" /> lietotājiem.
+				<strong>Patīk</strong> <span id="patikSkaitsSpan" th:text="${receptePatik.patikSkaits}" /> lietotājiem.
 				<span th:if="${lietotajvardsSkatitajs == recepte.lietotajvards}">
 			        (Diemžēl nevari atzīmēt savu recepti ar "Patīk")
 			    </span>
@@ -51,6 +51,7 @@
             let recepteID = [[${recepte.recepteID}]];
 			let likeButton = document.getElementById('likeButton');
             let likeMessage = document.getElementById('likeMessage');
+			let patikSkaitsSpan = document.getElementById('patikSkaitsSpan');
 
 			likeButton.disabled = true;
             likeButton.innerText = 'Patīk...';
@@ -64,6 +65,10 @@
 						likeButton.innerText = 'Patīk';
 					} else {
 						likeButton.innerText = 'Patikt';
+					}
+
+					if(data.success == true){
+						patikSkaitsSpan.innerText = data.extraData.patikSkaits;
 					}
                 })
                 .catch(error => {

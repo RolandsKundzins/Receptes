@@ -29,39 +29,6 @@ public class RecipeModel {
 	}
 	
 	
-	public List<RecipeType> getAllRecipes() {
-		String sql = String.join("\n", 
-		    "SELECT r.*, l.lietotajvards, ek.nosaukums AS edienaKategorijasNosaukums",
-		    "FROM " + DatabaseConnection.getDatabase() + ".Recepte r",
-		    "JOIN " + DatabaseConnection.getDatabase() + ".Lietotajs l ON r.lietotajsID = l.lietotajsID",
-		    "JOIN " + DatabaseConnection.getDatabase() + ".EdienaKategorija ek ON ek.edienaKategorijasID = r.edienaKategorijaID"
-		);
-        List<RecipeType> recipes = new LinkedList<>();
-        
-		try {
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet results = preparedStatement.executeQuery();
-            while (results.next()) {
-            	recipes.add(new RecipeType(
-            	        results.getInt("recepteID"), 
-            	        results.getString("nosaukums"), 
-            	        results.getInt("pagatavosanasLaiks"), 
-            	        results.getTimestamp("pievienosanasDatums"),
-            	        results.getString("receptesApraksts"),
-            	        results.getInt("lietotajsID"),
-            	        results.getString("lietotajvards"),
-            	        results.getInt("edienaKategorijaID"),
-            	        results.getString("edienaKategorijasNosaukums")
-            	    ));
-            }
-        } catch (SQLException e) {
-            throw new CustomException("Notika kļūda iegūstot recepšu sarakstu", e);
-        }
-        
-        return recipes;
-    }
-	
-	
 	public RecipeType getRecipeById(int recepteID) {
 		System.out.println("getRecipeById");
 		String database = DatabaseConnection.getDatabase();
@@ -123,7 +90,14 @@ public class RecipeModel {
 		      case COOKINGTIMEDESC:
 		    	  sql += " ORDER BY r.pagatavosanasLaiks DESC";
 		    	  break;
+		      case DATEADDEDASC:
+		    	  sql += " ORDER BY r.pievienosanasDatums ASC";
+		    	  break;
+		      case DATEADDEDDESC:
+		    	  sql += " ORDER BY r.pievienosanasDatums DESC";
+		    	  break;
 		    }
+			
 		}
 		
 		System.out.print(sql + "\n");
