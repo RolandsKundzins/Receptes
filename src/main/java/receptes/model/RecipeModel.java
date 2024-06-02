@@ -173,4 +173,31 @@ public class RecipeModel {
 		
 		return generatedId;
 	}
+	
+	public void UpdateRecipe(RecipeType recipeType) {
+		System.out.println("updateRecipe");
+		
+		String database = DatabaseConnection.getDatabase();
+		String sql = "UPDATE " + database + ".`Recepte` SET `nosaukums` = ?, `pagatavosanasLaiks` = ?, `receptesApraksts` = ?, `lietotajsID` = ?, `edienaKategorijaID` = ? WHERE `recepteID` = ?;";
+		System.out.println(sql);
+		
+		int rowsAffected = 0;
+		int generatedId = -1;
+		
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, recipeType.getNosaukums());
+			preparedStatement.setInt(2, recipeType.getPagatavosanasLaiks());
+			preparedStatement.setString(3, recipeType.getReceptesApraksts());
+			preparedStatement.setInt(4, recipeType.getLietotajsID());
+			preparedStatement.setInt(5, recipeType.getKategorijaID());
+			preparedStatement.setInt(6, recipeType.getRecepteID());
+			rowsAffected = preparedStatement.executeUpdate();
+			if(rowsAffected == 0) {
+				throw new CustomException("Rows affected equal to zero for recipe update!");
+			}
+		} catch (SQLException e) {
+			throw new CustomException("Notika datu bāzes kļūda redigejot recepti", e);
+		}
+	}
 }

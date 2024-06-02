@@ -11,6 +11,10 @@
 	<main>
 		<div>
 			<h1 th:text="${recepte.nosaukums}" />
+			
+			<div>
+			
+			<a class="edit-button" th:hidden="${lietotajvardsSkatitajs != recepte.lietotajvards}" th:href="@{/recipe/editobject?(recepteID = ${recepte.recepteID})}">Rediget recepti</a>
 
 			<div>
                 <button 

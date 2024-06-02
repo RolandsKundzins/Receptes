@@ -40,4 +40,25 @@ public class ProductRecipeModel {
 			throw new CustomException("Notika datu bāzes kļūda pievienojot produkts recepte datus", e);
 		}
 	}
+	
+	public void DeleteByRecipeId(int recipeId) {
+		System.out.println("DeleteByRecipeId");
+
+		String database = DatabaseConnection.getDatabase();
+		String sql = "DELETE FROM " + database + ".`ProduktsRecepte` WHERE `recepteID` = ?;";
+
+		int rowsAffected = 0;
+		
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, recipeId);
+			
+			rowsAffected = preparedStatement.executeUpdate();
+			if(rowsAffected == 0) {
+				throw new CustomException("Rows affected equal to zero for product recipe delete!");
+			}
+		} catch (SQLException e) {
+			throw new CustomException("Notika datu bāzes kļūda dzesot produkts recepte datus", e);
+		}
+	}
 }
