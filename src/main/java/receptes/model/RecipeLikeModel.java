@@ -85,7 +85,7 @@ public class RecipeLikeModel {
 	
 
 	//Skaits, cik daudz lietotāju ir atzīmējuši, ka viņiem patīk recepte.
-	public int recipeLikeCount(int recepteID) {
+	public int getRecipeLikeCount(int recepteID) {
 		String sql = String.join(" ", 
 			"SELECT COUNT(*) as patik_skaits",
 			"FROM", DatabaseConnection.getDatabase(), ".LietotajsReceptePatik",

@@ -3,7 +3,6 @@
 
 package receptes.controller;
 
-import java.sql.Timestamp;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +76,7 @@ public class RecipeController {
         
         RecipeLikeType recipeLikeType = new RecipeLikeType(
     		recipeLikeModel.isRecipeAlreadyLiked(lietotajvardsSkatitajs, recepteID), 
-    		recipeLikeModel.recipeLikeCount(recepteID)
+    		recipeLikeModel.getRecipeLikeCount(recepteID)
         );
         model.addAttribute("receptePatik", recipeLikeType);
         

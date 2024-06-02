@@ -52,6 +52,7 @@
 		    <a class="create-recipe-button" th:href="@{/recipe/create}">Izveidot jaunu recepti</a>
 		    
 		    <div class="search-field">
+				<p>Meklēšana</p>
 			    <form th:action="@{/recipe/list}" method="get">
 			        <input type="text" name="search" th:value="${param.search}" placeholder="Meklēt recepti"/>
 			        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
@@ -63,47 +64,55 @@
 			        <button type="submit" title="Iztīrīt meklēšanu">&#9003;</button>
 			    </form>
 		    </div>
-		    
-		    <p>Sort by:
-		    	Name
-		        <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEASC})}">▲</a>
-			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEDESC})}">▼</a>
-			    Cooking Time
-			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEASC})}">▲</a>
-			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEDESC})}">▼</a>
-		    </p>
+
 		    
 		    <table>
 		        <thead>
 		            <tr>
 		                <th>
-		                	<div>
-		                		Nosaukums
-		                		<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEASC})}">▲</a>
-			    				<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEDESC})}">▼</a>
-			    			</div>
-			    		</th>
+							Nosaukums
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NOSAUKUMSASC})}">▲</a>
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NOSAUKUMSDESC})}">▼</a>
+						</th>
 		                <th>
-		                	<div>
-		                		Pagatavošanas laiks
-		                		<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEASC})}">▲</a>
-			    				<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEDESC})}">▼</a>
-		                	</div>
-		                </th>
+							Ilgums
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).PAGATAVOSANASLAIKSASC})}">▲</a>
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).PAGATAVOSANASLAIKSDESC})}">▼</a>
+						</th>
 		                <th>Apraksts</th>
-		                <th>Ēdiena kategorija</th>
-						<th>Autors</th>
+		                <th>
+							Kategorija
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).KATEGORIJAASC})}">▲</a>
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).KATEGORIJADESC})}">▼</a>
+						</th>
+						<th>
+							Autors
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).LIETOTAJVARDSASC})}">▲</a>
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).LIETOTAJVARDSDESC})}">▼</a>
+						</th>
+						<th>
+							Pievienots
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).PIEVIENOSANASDATUMSASC})}">▲</a>
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).PIEVIENOSANASDATUMSDESC})}">▼</a>
+						</th>
+						<th>
+							Skatijumi
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).SKATSKAITSASC})}">▲</a>
+							<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).SKATSKAITSDESC})}">▼</a>
+						</th>
 		                <th>Papildus</th>
 		            </tr>
 		        </thead>
 		        <tbody>
 		            <!-- Iterate over recipes and display them in the table -->
 		            <tr th:each="recipe : ${recipes}">
-		                <td th:text="${recipe.nosaukums}"></td>
-		                <td th:text="${recipe.pagatavosanasLaiks}"></td>
-		                <td th:text="${recipe.receptesApraksts}"></td>
-		                <td th:text="${recipe.kategorijasNosaukums}"></td>
-						<td th:text="${recipe.lietotajvards}"></td>
+		                <td th:text="${recipe.nosaukums}" />
+		                <td th:text="${recipe.pagatavosanasLaiks} + ' min'" />
+		                <td th:text="${#strings.length(recipe.receptesApraksts) > 30 ? #strings.substring(recipe.receptesApraksts, 0, 30) + '...' : recipe.receptesApraksts}" />
+		                <td th:text="${recipe.kategorijasNosaukums}" />
+						<td th:text="${recipe.lietotajvards}" />						
+						<td th:text="${#dates.format(recipe.pievienosanasDatums, 'dd.MM.yyyy')}" />
+						<td th:text="${recipe.skatSkaits}" />
 		                <td>
 					         <a class="table-button" th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Skatīt</a>
 					    </td>

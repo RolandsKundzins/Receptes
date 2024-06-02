@@ -34,6 +34,7 @@ public class RecipeLikeController {
 			recipeLikeModel.deleteRecipeLike(lietotajvardsPatik, recepteID);
 			response.setSuccess(true);
 			response.addExtraData("patik", false);
+			response.addExtraData("patikSkaits", recipeLikeModel.getRecipeLikeCount(recepteID));
 			response.setMessage("Receptei noņemts patīk :/");
 	    } else {
 	    	//Datu pārbaudes
@@ -49,6 +50,7 @@ public class RecipeLikeController {
 			recipeLikeModel.addRecipeLike(lietotajvardsPatik, recepteID);
 		    response.setSuccess(true);
 		    response.addExtraData("patik", true);
+		    response.addExtraData("patikSkaits", recipeLikeModel.getRecipeLikeCount(recepteID));
 		    response.setMessage("Recepte atzīmēta ar patīk :)");
 	    }
 	    
