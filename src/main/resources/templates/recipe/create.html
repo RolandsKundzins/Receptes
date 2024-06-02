@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create recipe</title>
+    
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            padding: .5rem;
+            text-align: left;
+        }
+        
+        .product-checkbox {
+            display: block;
+        }
+
+        #product-list {
+            height: 12rem;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: .7rem;
+        }
+    </style>
+    <link th:href="@{/styles.css}" rel="stylesheet" />
+</head>
+<body>
+	<div th:replace="navbar :: navbar"></div>
+
+    <div> 	        
+	    <h1>Izveido recepti</h1>
+	    
+	    <form action="/recipe/save-recipe" method="post">
+	    
+		    <div>
+		    	<h4>Nosaukums</h4>
+		    	<input type="text" name="recipe-name" th:value="${param.recipeName}" />
+		    </div>
+		    
+		    <div>
+		    	<h4>Pagatavosanas laiks</h4>
+		    	<input type="text" name="recipe-cooking-time" th:value="${param.recipeCookingTime}"/>
+		    </div>
+		    
+		    <div>
+		    	<h4>Apraksts</h4>
+		    	<input type="text" name="recipe-description" th:value="${param.recipeDescription}"/>
+		    </div>
+		    
+		    <div>
+	    	    <h4>Ediena kategorija</h4>
+	    	    <select name="category">
+	    	        <option th:each="foodCategory : ${foodCategories}" th:value="${foodCategory.getFoodCategoryId()}" th:text="${foodCategory.nosaukums}"></option>
+	    	    </select>
+	        </div>
+	        
+	        <input type="hidden" name="selected-category-id" id="selected-category-id" />
+	        
+	        <div>
+	        	<h4>Produkti</h4>
+	        	<input type="text" id="product-search" placeholder="Meklet produktus" onkeyup="filterProducts()" />
+                <div id="product-list">
+                    <div th:each="product : ${products}" class="product-checkbox">
+                        <input type="checkbox" name="products" th:value="${product.produktsID}" th:id="@{product-checkbox-${product.nosaukums}}" onchange="reorderProducts()" />
+                        <label th:for="@{product-checkbox-${product.nosaukums}}" th:text="${product.nosaukums}"></label>
+                    </div>
+                </div>
+	        </div>
+	        
+	        <input type="hidden" name="selected-products" id="selected-products"/>
+	        
+	        <div>
+	            <button type="submit" onclick="prepareForm()">Izveidot</button>
+	        </div>
+        
+        </form>	
+    </div>
+    
+    <script>
+    function filterProducts() {
+        var input, filter, productDivs, labels, i;
+        input = document.getElementById("product-search");
+        filter = input.value.toUpperCase();
+        productDivs = document.getElementById("product-list").getElementsByClassName("product-checkbox");
+        for (i = 0; i < productDivs.length; i++) {
+            labels = productDivs[i].getElementsByTagName("label");
+            if (labels[0].innerText.toUpperCase().indexOf(filter) > -1) {
+                productDivs[i].style.display = "";
+            } else {
+                productDivs[i].style.display = "none";
+            }
+        }
+    }
+
+    function reorderProducts() {
+        var productList = document.getElementById("product-list");
+        var productDivs = Array.from(productList.getElementsByClassName("product-checkbox"));
+        productDivs.sort(function(a, b) {
+            var aChecked = a.getElementsByTagName("input")[0].checked;
+            var bChecked = b.getElementsByTagName("input")[0].checked;
+            if (aChecked === bChecked) {
+                return 0;
+            }
+            return aChecked ? -1 : 1;
+        });
+        productDivs.forEach(function(div) {
+            productList.appendChild(div);
+        });
+    }
+    
+    function prepareForm() {
+        // Get selected category ID
+        var selectedCategoryId = document.querySelector('select[name="category"]').value;
+        document.getElementById('selected-category-id').value = selectedCategoryId;
+        
+        // Get selected products
+        var selectedProducts = Array.from(document.querySelectorAll('input[name="products"]:checked')).map(function(checkbox) {
+            return checkbox.value;
+        });
+        document.getElementById('selected-products').value = selectedProducts.join(",");
+    }
+    </script>
+</body>
+</html>
