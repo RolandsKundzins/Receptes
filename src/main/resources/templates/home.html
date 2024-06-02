@@ -59,7 +59,7 @@
 <body>
     <div class="container">
         <div class="nav">
-            <a th:href="@{/login}">Login</a>
+            <a th:href="@{/login}">Pieslēgties</a>
         </div>
         <h1>Laipni lūgti receptēs!!!</h1>
         <p>Atklāj savu jauno garšas buķeti un pievienojies mums ar savām receptēm!</p>
@@ -67,10 +67,10 @@
         <div th:each="recipe : ${recipes}" class="recipe">
             <h2 th:text="${recipe.nosaukums}"></h2>
     
-            <p><strong>Pagatavosanas laiks:</strong> <span th:text="${recipe.pagatavosanasLaiks}"></span> minutes</p>
+            <p><strong>Pagatavošanas laiks:</strong> <span th:text="${recipe.pagatavosanasLaiks}"></span> minūtes</p>
             <p th:text="${recipe.receptesApraksts}"></p>
         	<!--<a th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Detalizētāk</a>-->
-			<a href="#" onclick="showLoginAlert()">Detalizētāk</a>
+			<a href="#" onclick="showLoginAlert()">Skatīt</a>
         </div>
     </div>
 

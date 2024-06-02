@@ -15,6 +15,31 @@
             padding: 8px;
             text-align: left;
         }
+        th>div {
+        	display: flex;
+        	align-items: center;
+        }
+        th>div>a {
+        	text-decoration: none;
+        	color: black;
+        }
+        input{
+        	height: 20px;
+        }
+        
+        .search-field{
+        	display: flex;
+        	padding-bottom: 30px;
+        }
+        
+        .search-field > form{
+        	display: flex;
+        	align-items: center;
+        }
+        .search-field > form > button{
+        	height: 100%;
+        }
+        
     </style>
     <link th:href="@{/styles.css}" rel="stylesheet" />
 </head>
@@ -24,34 +49,39 @@
 	    <div>
 		    <h1>Receptes</h1>
 		    
-		    <p>Meklesana</p>
-		    <form th:action="@{/recipe/list}" method="get">
-		        <input type="text" name="search" th:value="${param.search}" />
-		        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
-		        <button type="submit">Search</button>
-		    </form>
-		    <form th:action="@{/recipe/list}" method="get">
-		        <input type="hidden" name="search" value="" />
-		        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
-		        <button type="submit">Clear Search</button>
-		    </form>
-		    <p>Sort by:
-		    	Name
-		        <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEASC})}">▲</a>
-			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEDESC})}">▼</a>
-			    Cooking Time
-			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEASC})}">▲</a>
-			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEDESC})}">▼</a>
-		    </p>
+		    <div class="search-field">
+			    <form th:action="@{/recipe/list}" method="get">
+			        <input type="text" name="search" th:value="${param.search}" placeholder="Meklēt recepti"/>
+			        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
+			        <button type="submit" title="Meklēt">&#x1F50E;</button>
+			    </form>
+			    <form th:action="@{/recipe/list}" method="get">
+			        <input type="hidden" name="search" value="" />
+			        <input type="hidden" name="orderBy" th:value="${param.orderBy}" />
+			        <button type="submit" title="Iztīrīt meklēšanu">&#9003;</button>
+			    </form>
+		    </div>
 		    
 		    <table>
 		        <thead>
 		            <tr>
-		                <th>nosaukums</th>
-		                <th>pagatavosanasLaiks</th>
-		                <th>receptesApraksts</th>
-		                <th>edienaKategorija</th>
-						<th>autors</th>
+		                <th>
+		                	<div>
+		                		Nosaukums
+		                		<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEASC})}">▲</a>
+			    				<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEDESC})}">▼</a>
+			    			</div>
+			    		</th>
+		                <th>
+		                	<div>
+		                		Pagatavošanas laiks
+		                		<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEASC})}">▲</a>
+			    				<a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEDESC})}">▼</a>
+		                	</div>
+		                </th>
+		                <th>Apraksts</th>
+		                <th>Ēdiena kategorija</th>
+						<th>Autors</th>
 		                <th>Papildus</th>
 		            </tr>
 		        </thead>
@@ -64,7 +94,7 @@
 		                <td th:text="${recipe.kategorijasNosaukums}"></td>
 						<td th:text="${recipe.lietotajvards}"></td>
 		                <td>
-					         <a class="table-button" th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Detalizētāk</a>
+					         <a class="table-button" th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Skatīt</a>
 					    </td>
 		            </tr>
 		        </tbody>

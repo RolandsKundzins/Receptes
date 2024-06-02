@@ -9,20 +9,20 @@
 </head>
 <body>
 	<div th:replace="navbar :: navbar"></div>
-
-	<h1>Tava Statistika</h1>
-	<p>Kopējais skatījumu skaits tavām receptēm Pēdējās <span th:text="${dienu_skaits}"></span> dienās</p>
+	<main>
+		<h1>Tava Statistika</h1>
+		<p>Kopējais skatījumu skaits tavām receptēm Pēdējās <span th:text="${dienu_skaits}"></span> dienās</p>
+		
+		
+		<form th:action="@{/statistics/single}" method="get">
+		    <label><input type="radio" name="dienuskaits" value="7" th:checked="${dienu_skaits == 7}"> Skatījumi Pēdējā Nedēļā</label><br>
+		    <label><input type="radio" name="dienuskaits" value="30" th:checked="${dienu_skaits == 30}"> Skatījumi Pēdējā Mēnesī</label><br>
+		    <label><input type="radio" name="dienuskaits" value="90" th:checked="${dienu_skaits == 90}"> Skatījumi Pēdējās 90 Dienās</label><br>
+		    <button type="submit">Iegūt</button>
+		</form>
 	
-	
-	<form th:action="@{/statistics/single}" method="get">
-	    <label><input type="radio" name="dienuskaits" value="7" th:checked="${dienu_skaits == 7}"> Skatījumi Pēdējā Nedēļā</label><br>
-	    <label><input type="radio" name="dienuskaits" value="30" th:checked="${dienu_skaits == 30}"> Skatījumi Pēdējā Mēnesī</label><br>
-	    <label><input type="radio" name="dienuskaits" value="90" th:checked="${dienu_skaits == 90}"> Skatījumi Pēdējās 90 Dienās</label><br>
-	    <button type="submit">Iegūt</button>
-	</form>
-	
-
-    <canvas id="viewCountChart" width="400" height="200"></canvas>
+    	<canvas id="viewCountChart" width="400" height="200"></canvas>
+    </main>
     <script th:inline="javascript">
     	let statistics = [[${statistics}]];
     	

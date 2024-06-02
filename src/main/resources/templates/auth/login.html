@@ -52,7 +52,7 @@
 <body>
 	<main>
 		<div class="login-panel">
-		    <h2>Pieslegties</h2>
+		    <h2>Pieslēgties</h2>
 		    
 		    	
 			<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']}" class="error-message">
@@ -68,18 +68,18 @@
 		
 		    <form th:action="@{/login}" method="post">
 		    	<div class="input-field-wrapper">
-			        <label for="username">Lietotajvards:</label>
+			        <label for="username">Lietotājvārds:</label>
 			        <input type="text" id="username" name="username" required>
 		        </div>
 		        <div class="input-field-wrapper">
 			        <label for="password">Parole:</label>
 			        <input type="password" id="password" name="password" required>
 		        </div>
-		        <button type="submit">Pieslegties</button>
+		        <button type="submit">Pieslēgties</button>
 		    </form>
 		    
-		    <h2>Vel nav konta?</h2> 
-		    <a th:href="@{/register}">Registreties</a>
+		    <h2>Vēl nav konta?</h2> 
+		    <a th:href="@{/register}">Reģistrēties</a>
 		    
 		    <h2>Nevēlies pieslēgties?</h2> 
 		    <a th:href="@{/home}">Receptes nereģistrētiem lietotājiem</a>
