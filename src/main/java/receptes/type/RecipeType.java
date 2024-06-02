@@ -28,6 +28,14 @@ public class RecipeType {
 		this.kategorijaID = kategorijaID;
 		this.kategorijasNosaukums = kategorijasNosaukums;
 	}
+	
+	public RecipeType(String nosaukums, int pagatavosanasLaiks, String receptesApraksts, int lietotajsID, int kategorijaID) {
+		this.nosaukums = nosaukums;
+		this.pagatavosanasLaiks = pagatavosanasLaiks;
+		this.receptesApraksts = receptesApraksts;
+		this.lietotajsID = lietotajsID;
+		this.kategorijaID = kategorijaID;
+	}
 
 
 	//getters and setters

@@ -49,6 +49,8 @@
 	    <div>
 		    <h1>Receptes</h1>
 		    
+		    <a class="create-recipe-button" th:href="@{/recipe/create}">Izveidot jaunu recepti</a>
+		    
 		    <div class="search-field">
 			    <form th:action="@{/recipe/list}" method="get">
 			        <input type="text" name="search" th:value="${param.search}" placeholder="Meklēt recepti"/>
@@ -61,6 +63,15 @@
 			        <button type="submit" title="Iztīrīt meklēšanu">&#9003;</button>
 			    </form>
 		    </div>
+		    
+		    <p>Sort by:
+		    	Name
+		        <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEASC})}">▲</a>
+			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).NAMEDESC})}">▼</a>
+			    Cooking Time
+			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEASC})}">▲</a>
+			    <a th:href="@{/recipe/list(search=${param.search}, orderBy=${T(receptes.enums.RecipeOrderBy).COOKINGTIMEDESC})}">▼</a>
+		    </p>
 		    
 		    <table>
 		        <thead>

@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import java.sql.Statement;
+
 import receptes.config.DatabaseConnection;
 import receptes.enums.RecipeOrderBy;
 import receptes.exception.CustomException;
@@ -176,5 +178,40 @@ public class RecipeModel {
 		} catch (SQLException e) {
 			throw new CustomException("Notika datu bāzes kļūda pievienojot receptes skatījuma datus", e);
 		}
+	}
+	
+	public int InsertRecipe(RecipeType recipeType) {
+		System.out.println("insertRecipe");
+		
+		String database = DatabaseConnection.getDatabase();
+		String sql = "INSERT INTO " + database + ".`Recepte` (`nosaukums`, `pagatavosanasLaiks`, `receptesApraksts`, `lietotajsID`, `edienaKategorijaID`) VALUES (?, ?, ?, ?, ?);";
+		System.out.println(sql);
+		
+		int rowsAffected = 0;
+		int generatedId = -1;
+		
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, recipeType.getNosaukums());
+			preparedStatement.setInt(2, recipeType.getPagatavosanasLaiks());
+			preparedStatement.setString(3, recipeType.getReceptesApraksts());
+			preparedStatement.setInt(4, recipeType.getLietotajsID());
+			preparedStatement.setInt(5, recipeType.getKategorijaID());
+			rowsAffected = preparedStatement.executeUpdate();
+			if(rowsAffected == 0) {
+				throw new CustomException("Rows affected equal to zero for recipe insert!");
+			}
+			
+			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+	        	if (generatedKeys.next()) {
+	        		generatedId = generatedKeys.getInt(1);
+	        	} else {
+	        		throw new CustomException("Failed to retrieve the generated ID for the new recipe");
+	        	}
+		} catch (SQLException e) {
+			throw new CustomException("Notika datu bāzes kļūda pievienojot receptes datus", e);
+		}
+		
+		return generatedId;
 	}
 }
