@@ -74,7 +74,7 @@ public class ProductModel {
 	        PreparedStatement preparedStatement = conn.prepareStatement(sql);
 	        preparedStatement.setInt(1, recepteID);
 	        ResultSet result = preparedStatement.executeQuery();
-	        if (result.next()) {
+	        while (result.next()) {
 	        	products.add(new ProductType(
 	                result.getInt("produktsID"),
 	                result.getString("nosaukums")

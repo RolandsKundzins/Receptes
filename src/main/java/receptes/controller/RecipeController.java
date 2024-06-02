@@ -4,6 +4,8 @@
 package receptes.controller;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,7 @@ import receptes.enums.RecipeOrderBy;
 import receptes.model.RecipeModel;
 import receptes.model.UserModel;
 import receptes.type.ProductRecipeType;
+import receptes.type.ProductType;
 import receptes.type.RecipeLikeType;
 import receptes.type.RecipeType;
 import receptes.type.RecipeViewType;
@@ -98,7 +101,30 @@ public class RecipeController {
 		return "recipe/create";
 	}
 	
-	@PostMapping("/save-recipe")
+	@GetMapping("/editobject")
+	public String showEditRecipe(Model model,
+			@RequestParam("recepteID") int recepteID) {
+		
+		String lietotajvardsSkatitajs = SecurityContextHolder.getContext().getAuthentication().getName();
+
+		RecipeType recipe = recipeModel.getRecipeById(recepteID);
+		model.addAttribute("recepte", recipe);
+        model.addAttribute("lietotajvardsSkatitajs", lietotajvardsSkatitajs);
+		model.addAttribute("foodCategories", foodCategoryModel.getAllFoodCategories());
+		model.addAttribute("products", productModel.getAllProducts());
+		
+		List<ProductType> selectedProducts = productModel.getProductsByRecipeId(recepteID);
+		
+		List<Integer> selectedProductIds = selectedProducts.stream()
+                .map(ProductType::getProduktsID)
+                .collect(Collectors.toList());
+		
+		model.addAttribute("selectedProductIds", selectedProductIds);
+		
+		return "recipe/edit";
+	}
+	
+	@PostMapping("/save")
 	public String saveRecipe(
 	        @RequestParam("recipe-name") String recipeName,
 	        @RequestParam("recipe-cooking-time") int recipeCookingTime,
@@ -122,11 +148,6 @@ public class RecipeController {
 	    		recipeDescription, 
 	    		userId, 
 	    		categoryId);
-	    recipeType.setNosaukums(recipeName);
-	    recipeType.setPagatavosanasLaiks(recipeCookingTime);
-	    recipeType.setReceptesApraksts(recipeDescription);
-	    recipeType.setLietotajsID(userId);
-	    recipeType.setKategorijaID(categoryId);
 
 	    int recipeId = recipeModel.InsertRecipe(recipeType);
 	    
@@ -145,6 +166,49 @@ public class RecipeController {
 
 	    // Redirect to recipe list
 	    return "redirect:/recipe/list";
+	}
+	
+	@PostMapping("/update")
+	public String updateRecipe(
+			@RequestParam("recipe-id") int recipeId,
+	        @RequestParam("recipe-name") String recipeName,
+	        @RequestParam("recipe-cooking-time") int recipeCookingTime,
+	        @RequestParam("recipe-description") String recipeDescription,
+	        @RequestParam("selected-category-id") int categoryId,
+	        @RequestParam("selected-products") String products,
+	        RedirectAttributes redirectAttributes) {
+		
+		System.out.println("updateRecipe");
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		int userId = userModel.findByUsername(username).getLietotajsID();
+		
+	    RecipeType recipeType = new RecipeType(
+	    		recipeId,
+	    		recipeName, 
+	    		recipeCookingTime,
+	    		recipeDescription, 
+	    		userId, 
+	    		categoryId);
+
+	    recipeModel.UpdateRecipe(recipeType);
+	    
+	    String[] productArray = products.split(",");
+	    int[] selectedProducts = Arrays.stream(productArray).mapToInt(Integer::parseInt).toArray();
+	    
+	    productRecipeModel.DeleteByRecipeId(recipeId);
+	    
+	    //insert to produktsrecepte
+	    for (int productId : selectedProducts) {
+	    	ProductRecipeType productRecipeType = new ProductRecipeType(recipeId, productId);
+	    	productRecipeModel.InsertProductRecipe(productRecipeType);
+	    }
+	    
+
+	    redirectAttributes.addFlashAttribute("message", "Recepte ir veiksmigi redigeta!");
+
+	    // Redirect to recipe list
+	    return "redirect:/recipe/object?recepteID=" + recipeId;
 	}
 
 	

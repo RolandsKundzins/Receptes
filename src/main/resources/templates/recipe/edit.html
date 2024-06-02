@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rediget recepti</title>
+    
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            padding: .5rem;
+            text-align: left;
+        }
+        
+        .product-checkbox {
+            display: block;
+        }
+
+        #product-list {
+            height: 12rem;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: .7rem;
+        }
+    </style>
+
+    <link th:href="@{/styles.css}" rel="stylesheet" />
+</head>
+<body>
+	<div th:replace="navbar :: navbar" />
+	<main>
+		<div>
+			<form th:action="@{/recipe/update}" method="post">
+                <input type="hidden" name="recipe-id" th:value="${recepte.recepteID}" />
+                
+                <div>
+	                <h4>Nosaukums:<h4>
+	                <input type="text" id="recipe-name" name="recipe-name" th:value="${recepte.nosaukums}" />
+                </div>
+                
+                <div>
+                	<h4>Pagatavosanas laiks:<h4>
+                	<input type="number" id="recipe-cooking-time" name="recipe-cooking-time" th:value="${recepte.pagatavosanasLaiks}" />
+                </div>
+                
+                <div>
+	                <h4>Apraksts<h4>
+	                <textarea id="recipe-description" name="recipe-description" rows="4" th:text="${recepte.receptesApraksts}"></textarea>
+                </div>
+                
+                <div>
+	                <label for="category">Ediena kategorija</label>
+	                <select id="category" name="category">
+	                    <option th:each="foodCategory : ${foodCategories}" th:value="${foodCategory.getFoodCategoryId()}" th:text="${foodCategory.nosaukums}"
+	                            th:selected="${foodCategory.getFoodCategoryId() == recepte.kategorijaID}" />
+	                </select>
+                </div>
+                
+                <input type="hidden" name="selected-category-id" id="selected-category-id" />
+                
+                <div>
+		        	<h4>Produkti</h4>
+		        	<input type="text" id="product-search" placeholder="Meklet produktus" onkeyup="filterProducts()" />
+	                <div id="product-list">
+	                    <div th:each="product : ${products}" class="product-checkbox">
+	                        <input type="checkbox" name="products" th:value="${product.produktsID}" th:id="@{product-checkbox-${product.nosaukums}}" th:checked="${selectedProductIds.contains(product.produktsID)}" onchange="reorderProducts()" />
+	                        <label th:for="@{product-checkbox-${product.nosaukums}}" th:text="${product.nosaukums}"></label>
+	                    </div>
+	                </div>
+		        </div>
+	        
+	        	<input type="hidden" name="selected-products" id="selected-products"/>
+                
+                <button type="submit" onclick="prepareForm()">Rediget</button>
+            </form>
+	    </div>
+    </main>
+
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+		    reorderProducts();
+		});
+	
+		function filterProducts() {
+	        var input, filter, productDivs, labels, i;
+	        input = document.getElementById("product-search");
+	        filter = input.value.toUpperCase();
+	        productDivs = document.getElementById("product-list").getElementsByClassName("product-checkbox");
+	        for (i = 0; i < productDivs.length; i++) {
+	            labels = productDivs[i].getElementsByTagName("label");
+	            if (labels[0].innerText.toUpperCase().indexOf(filter) > -1) {
+	                productDivs[i].style.display = "";
+	            } else {
+	                productDivs[i].style.display = "none";
+	            }
+	        }
+	    }
+	
+	    function reorderProducts() {
+	        var productList = document.getElementById("product-list");
+	        var productDivs = Array.from(productList.getElementsByClassName("product-checkbox"));
+	        productDivs.sort(function(a, b) {
+	            var aChecked = a.getElementsByTagName("input")[0].checked;
+	            var bChecked = b.getElementsByTagName("input")[0].checked;
+	            if (aChecked === bChecked) {
+	                return 0;
+	            }
+	            return aChecked ? -1 : 1;
+	        });
+	        productDivs.forEach(function(div) {
+	            productList.appendChild(div);
+	        });
+	    }
+	    
+	    function prepareForm() {
+	        // Get selected category ID
+	        var selectedCategoryId = document.querySelector('select[name="category"]').value;
+	        document.getElementById('selected-category-id').value = selectedCategoryId;
+	        
+	        // Get selected products
+	        var selectedProducts = Array.from(document.querySelectorAll('input[name="products"]:checked')).map(function(checkbox) {
+	            return checkbox.value;
+	        });
+	        document.getElementById('selected-products').value = selectedProducts.join(",");
+	    }
+    </script>
+</body>
+</html>
