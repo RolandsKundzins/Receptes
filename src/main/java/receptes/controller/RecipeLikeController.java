@@ -21,7 +21,6 @@ public class RecipeLikeController {
 	
 	@Autowired
 	private RecipeModel recipeModel;
-
 	
 	
 	@PostMapping("change")
@@ -29,12 +28,13 @@ public class RecipeLikeController {
 	public OperationResult likeUnlikeRecipe(@RequestParam("recepteID") int recepteID) {
 		String lietotajvardsPatik = SecurityContextHolder.getContext().getAuthentication().getName();
 		OperationResult response = new OperationResult();
+		boolean isRecipeLikedByUser = recipeLikeModel.isRecipeAlreadyLiked(lietotajvardsPatik, recepteID);
 		
-		if (recipeLikeModel.isRecipeAlreadyLiked(lietotajvardsPatik, recepteID)) {
-			boolean successUnLike = recipeLikeModel.deleteRecipeLike(lietotajvardsPatik, recepteID);
-			response.setSuccess(successUnLike);
-			response.addExtraData("patik", !successUnLike);
-			response.setMessage(successUnLike ? "Receptei noņemts patīk :/": "Radās kļūda noņemot patīk receptei");
+		if (isRecipeLikedByUser) {
+			recipeLikeModel.deleteRecipeLike(lietotajvardsPatik, recepteID);
+			response.setSuccess(true);
+			response.addExtraData("patik", false);
+			response.setMessage("Receptei noņemts patīk :/");
 	    } else {
 	    	//Datu pārbaudes
 	    	RecipeType recipe = recipeModel.getRecipeById(recepteID);
@@ -46,10 +46,10 @@ public class RecipeLikeController {
 			}
 			
 			//Patīk pievienošana DB
-			boolean successLike = recipeLikeModel.addRecipeLike(lietotajvardsPatik, recepteID);
-		    response.setSuccess(successLike);
-		    response.addExtraData("patik", successLike);
-		    response.setMessage(successLike ? "Recepte atzīmēta ar patīk :)": "Radās kļūda atzīmējot, ka recepte patīk");
+			recipeLikeModel.addRecipeLike(lietotajvardsPatik, recepteID);
+		    response.setSuccess(true);
+		    response.addExtraData("patik", true);
+		    response.setMessage("Recepte atzīmēta ar patīk :)");
 	    }
 	    
 	    return response;

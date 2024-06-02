@@ -13,17 +13,11 @@ public class RecipeType {
 	private String receptesApraksts;
 	private int lietotajsID;
 	private String lietotajvards;
-	private int kategorija;
+	private int kategorijaID;
+	private String kategorijasNosaukums;
 	
 	
-	private Boolean irDefinets = false; //Nav ideals risinajums
-
-	public RecipeType() {
-		this.irDefinets = false;	
-	}
-	
-	
-	public RecipeType(int recepteID, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards, int kategorija) {
+	public RecipeType(int recepteID, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards, int kategorijaID, String kategorijasNosaukums) {
 		this.recepteID = recepteID;
 		this.nosaukums = nosaukums;
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
@@ -31,8 +25,8 @@ public class RecipeType {
 		this.pievienosanasDatums = timestamp;
 		this.lietotajsID = lietotajsID;
 		this.lietotajvards = lietotajvards;
-		this.kategorija = kategorija;
-		this.irDefinets = true;
+		this.kategorijaID = kategorijaID;
+		this.kategorijasNosaukums = kategorijasNosaukums;
 	}
 
 
@@ -40,7 +34,6 @@ public class RecipeType {
 	public int getRecepteID() {
 		return recepteID;
 	}
-
 	public void setRecepteID(int recepteID) {
 		this.recepteID = recepteID;
 	}
@@ -48,7 +41,6 @@ public class RecipeType {
 	public String getNosaukums() {
 		return nosaukums;
 	}
-
 	public void setNosaukums(String nosaukums) {
 		this.nosaukums = nosaukums;
 	}
@@ -56,7 +48,6 @@ public class RecipeType {
 	public int getPagatavosanasLaiks() {
 		return pagatavosanasLaiks;
 	}
-
 	public void setPagatavosanasLaiks(int pagatavosanasLaiks) {
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
 	}
@@ -64,8 +55,6 @@ public class RecipeType {
 	public Timestamp getPievienosanasDatums() {
 		return pievienosanasDatums;
 	}
-
-
 	public void setPievienosanasDatums(Timestamp pievienosanasDatums) {
 		this.pievienosanasDatums = pievienosanasDatums;
 	}
@@ -73,7 +62,6 @@ public class RecipeType {
 	public String getReceptesApraksts() {
 		return receptesApraksts;
 	}
-
 	public void setReceptesApraksts(String receptesApraksts) {
 		this.receptesApraksts = receptesApraksts;
 	}
@@ -81,7 +69,6 @@ public class RecipeType {
 	public int getLietotajsID() {
 		return lietotajsID;
 	}
-
 	public void setLietotajsID(int lietotajsID) {
 		this.lietotajsID = lietotajsID;
 	}
@@ -89,33 +76,21 @@ public class RecipeType {
 	public String getLietotajvards() {
 		return lietotajvards;
 	}
-
 	public void setLietotajvards(String lietotajvards) {
 		this.lietotajvards = lietotajvards;
 	}
 	
-	public int getKategorija() {
-		return kategorija;
+	public int getKategorijaID() {
+		return kategorijaID;
+	}
+	public void setKategorijaID(int kategorijaID) {
+		this.kategorijaID = kategorijaID;
 	}
 
-	public void setKategorija(int kategorija) {
-		this.kategorija = kategorija;
+	public String getKategorijasNosaukums() {
+		return kategorijasNosaukums;
 	}
-
-	public Boolean getIrDefinets() {
-		return irDefinets;
-	}
-
-	public void setIrDefinets(Boolean irDefinets) {
-		this.irDefinets = irDefinets;
-	}
-
-
-	@Override
-	public String toString() {
-		return "RecipeType [recepteID=" + recepteID + ", nosaukums=" + nosaukums + ", pagatavosanasLaiks="
-				+ pagatavosanasLaiks + ", pievienosanasDatums=" + pievienosanasDatums + ", receptesApraksts="
-				+ receptesApraksts + ", lietotajsID=" + lietotajsID + ", lietotajvards=" + lietotajvards
-				+ ", irDefinets=" + irDefinets + "]";
+	public void setKategorijasNosaukums(String kategorijasNosaukums) {
+		this.kategorijasNosaukums = kategorijasNosaukums;
 	}
 }

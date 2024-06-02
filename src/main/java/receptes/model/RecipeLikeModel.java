@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
+import receptes.exception.CustomException;
 
 @Component
 public class RecipeLikeModel {
@@ -21,7 +22,7 @@ public class RecipeLikeModel {
 	
 	
 	//Lietotājs atzīmē, ka viņam patīk recepte.
-	public boolean addRecipeLike(String lietotajvards, int recepteID) {
+	public void addRecipeLike(String lietotajvards, int recepteID) {
 		String sql = "INSERT INTO " + DatabaseConnection.getDatabase() + ".LietotajsReceptePatik(lietotajvards, recepteID) VALUES (?, ?)";
 		int rowsAffected = 0;
 		
@@ -30,20 +31,17 @@ public class RecipeLikeModel {
 			preparedStatement.setString(1, lietotajvards);
 			preparedStatement.setInt(2, recepteID);
 			rowsAffected = preparedStatement.executeUpdate();
-			if(rowsAffected > 0) {
-				return true;
+			if(rowsAffected == 0) {
+				throw new CustomException("Notika kļūda pievienojot patīk receptei - netika atjaunota neviena rinda!");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+		} catch (SQLException e) {
+			throw new CustomException("Notika kļūda pievienojot patīk receptei - datubāzes kļūda!", e);
 		}
-		
-		return false;
 	}
 	
 
 
-	public boolean deleteRecipeLike(String lietotajvardsPatik, int recepteID) {
+	public void deleteRecipeLike(String lietotajvardsPatik, int recepteID) {
 		String sql = String.join("\n",
 			"DELETE FROM " + DatabaseConnection.getDatabase() + ".LietotajsReceptePatik",
 			"WHERE lietotajvards = ? AND recepteID = ?"
@@ -55,15 +53,12 @@ public class RecipeLikeModel {
 			preparedStatement.setString(1, lietotajvardsPatik);
 			preparedStatement.setInt(2, recepteID);
 			rowsAffected = preparedStatement.executeUpdate();
-			if(rowsAffected > 0) {
-				return true;
+			if(rowsAffected == 0) {
+				throw new CustomException("Notika kļūda dzēšot patīk receptei - netika dzēsta neviena rinda!");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+		} catch (SQLException e) {
+			throw new CustomException("Notika kļūda dzēšot patīk receptei - datubāzes kļūda!", e);
 		}
-		
-		return false;
 	}
 	
 
@@ -81,7 +76,7 @@ public class RecipeLikeModel {
 	            return likeCount > 0; 
 	        }
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	    	throw new CustomException("Notika kļūda iegūstot vai recepte jau patīk!", e);
 	    }
 	    
 	    return false;
@@ -106,7 +101,7 @@ public class RecipeLikeModel {
             	return results.getInt("patik_skaits");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot receptes patīk skaitu!", e);
         }
         
 		return 0;

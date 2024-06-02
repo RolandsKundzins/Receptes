@@ -14,6 +14,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
+import receptes.exception.CustomException;
 import receptes.type.StatisticsByDateType;
 
 @Component
@@ -70,7 +71,7 @@ public class StatisticsModel {
 	            );
 	        }
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        throw new CustomException("Notika datubāzes kļūda iegūstot statistikas datus par dienu!", e);
 	    }
 
 	    return countMap;

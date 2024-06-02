@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
+import receptes.exception.CustomException;
 import receptes.type.FoodCategoryType;
 
 @Component
@@ -32,7 +33,7 @@ public class FoodCategoryModel {
             	foodCategories.add(new FoodCategoryType(results.getInt("edienaKategorijasID"), results.getString("nosaukums")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot ēdiena kategorijas.", e);
         }
         
         return foodCategories;
@@ -54,7 +55,7 @@ public class FoodCategoryModel {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot ēdiena kategoriju pēc kategorijas id lauka", e);
         }
         
         System.out.println(foodCategory.toString());
@@ -80,7 +81,7 @@ public class FoodCategoryModel {
 	                );
 	            }
 		 }catch (SQLException e) {
-			 e.printStackTrace();
+			 throw new CustomException("Notika kļūda iegūstot ēdiena kategoriju pēc receptes id lauka", e);
 	     }
 		 System.out.println(foodCategory.toString());
 		 
@@ -94,7 +95,7 @@ public class FoodCategoryModel {
 	        preparedStatement.setString(1, foodCategory.getNosaukums());
 	        preparedStatement.executeUpdate();
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        throw new CustomException("Notika kļūda pievienojot ēdiena kategoriju", e);
 	    }
 	}
 	
@@ -106,7 +107,7 @@ public class FoodCategoryModel {
 	        preparedStatement.setInt(2, foodCategory.getFoodCategoryId());
 	        preparedStatement.executeUpdate();
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        throw new CustomException("Notika kļūda atjaunojot ēdiena kategoriju", e);
 	    }
 	}
 	
@@ -117,7 +118,7 @@ public class FoodCategoryModel {
 	        preparedStatement.setInt(1, foodCategory);
 	        preparedStatement.executeUpdate();
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        throw new CustomException("Notika kļūda dzēšot ēdiena kategoriju", e);
 	    }
 	}
 	
