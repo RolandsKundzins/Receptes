@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patīk receptes</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link th:href="@{/styles.css}" rel="stylesheet" />
+    <style>
+		table{
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div th:replace="navbar :: navbar"></div>
+	<main>
+		<h1>Manas "patīk" receptes</h1>
+		<a class="button" th:href="@{/user-recipe/list}">Manas izveidotās receptes</a>
+		
+		<table>
+	        <thead>
+	            <tr>             
+                	<th>
+						Nosaukums
+					</th>
+	                <th>
+						Ilgums
+					</th>
+	                <th>Apraksts</th>
+	                <th>
+						Kategorija
+					</th>
+					<th>
+						Autors
+					</th>
+					<th>
+						Pievienots
+					</th>
+					<th>
+						Skatījumi
+					</th>
+	                <th>Papildus</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="recipe : ${userRecipies}">
+	                <td th:text="${recipe.nosaukums}" />
+	                <td th:text="${recipe.pagatavosanasLaiks} + ' min'" />
+	                <td th:text="${#strings.length(recipe.receptesApraksts) > 30 ? #strings.substring(recipe.receptesApraksts, 0, 30) + '...' : recipe.receptesApraksts}" />
+	                <td th:text="${recipe.kategorijasNosaukums}" />
+					<td th:text="${recipe.lietotajvards}" />						
+					<td th:text="${#dates.format(recipe.pievienosanasDatums, 'dd.MM.yyyy')}" />
+					<td th:text="${recipe.skatSkaits}" />
+	                <td>
+				         <a class="table-button" th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Skatīt</a>
+				    </td>
+	            </tr>
+	        </tbody>
+	    </table>
+    </main>
+</body>
+</html>
