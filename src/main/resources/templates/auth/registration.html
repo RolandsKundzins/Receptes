@@ -60,7 +60,7 @@
 <body>
 	<main>
 		<div class="login-panel">
-		    <h2>Registret jaunu lietotaju</h2> 
+		    <h2>Reģistrēt jaunu lietotāju</h2> 
 		
 			<div th:if="${param.error}" class="error-message">
 			    <p th:text="${param.error}"></p>
@@ -68,7 +68,7 @@
 			
 			<div th:if="${param.successMessage}" class="success-message">
 			    <p th:text="${param.successMessage}" style="margin-bottom: 0;"></p>
-			    <a th:href="@{/login}" class="btn btn-primary">Pieslegties</a>
+			    <a th:href="@{/login}" class="btn btn-primary">Pieslēgties</a>
 			</div>
 		
 		
@@ -81,7 +81,7 @@
 		        </div>
 		        
 		        <div class="input-field-wrapper">
-			        <label for="lietotajvards">Lietotajvards:</label>
+			        <label for="lietotajvards">Lietotājvārds:</label>
 			        <input type="text" id="lietotajvards" th:field="*{lietotajvards}" required minlength="4">
 		        </div>
 		        
@@ -90,11 +90,11 @@
 			        <input type="password" id="parole" th:field="*{parole}" required minlength="8">
 		        </div>
 		        
-		        <button type="submit">Registreties</button>
+		        <button type="submit">Reģistrēties</button>
 		    </form>
 		    
 		    <h2>Jau ir konts?</h2>
-		    <a th:href="@{/login}">Pieslegties</a>
+		    <a th:href="@{/login}">Pieslēgties</a>
 		    
 		    <h2>Nevēlies reģistrēties?</h2> 
 		    <a th:href="@{/home}">Receptes nereģistrētiem lietotājiem</a>

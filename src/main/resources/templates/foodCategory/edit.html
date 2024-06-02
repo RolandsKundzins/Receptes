@@ -9,12 +9,12 @@
 	<div th:replace="navbar :: navbar"></div>
 	<main>
 	    <div class="container">
-	        <h1>Edit Product</h1>
+	        <h1>Rediģēt ēdiena kategoriju</h1>
 	        <form action="#" th:action="@{/food-category/update}" th:object="${foodCategory}" method="post">
 	            <input type="hidden" th:field="*{foodCategoryId}">
 	            <label for="nosaukums">Ēdiena kategorijas nosaukums:</label>
 	            <input type="text" id="nosaukums" th:field="*{nosaukums}" placeholder="">
-	            <button type="submit">Saglabāt izmaiņas</button>
+	            <button type="submit">Saglabāt</button>
 	        </form>
 	    </div>
     </main>

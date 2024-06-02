@@ -12,7 +12,7 @@
 	        <h1>Pievienot ēdiena kateogriju</h1>
 	        <form action="#" th:action="@{/food-category/create}" th:object="${foodCategory}" method="post">
 	            <label for="nosaukums">Nosaukums: </label>
-	            <input type="text" id="nosaukums" th:field="*{nosaukums}" placeholder="Nosaukums">
+	            <input type="text" id="nosaukums" th:field="*{nosaukums}" placeholder="Ievadiet nosaukumu">
 	            <button type="submit">Pievienot</button>
 	        </form>
 	    </div>

@@ -22,7 +22,9 @@
 	                <td class="actions">
 	                	<a class="table-button" th:href="@{/food-category/edit(foodCategoryId=${foodCategory.foodCategoryId})}">Rediģēt</a>
 	            		<a class="table-button destructive" th:href="@{/food-category/delete(foodCategoryId=${foodCategory.foodCategoryId})}" 
-	            		onclick="return confirm('Vai tiešām dzēst?')">Dzēst</a>
+	            			th:attr="onclick='return confirm(\'Vai tiešām dzēst ' + ${foodCategory.nosaukums} + '?\')'">
+	            			Dzēst
+	            		</a>
 	            	</td>
 	            </tr>
 	        </tbody>
