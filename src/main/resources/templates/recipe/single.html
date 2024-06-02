@@ -29,7 +29,8 @@
 				<span th:if="${lietotajvardsSkatitajs == recepte.lietotajvards}">
 			        (Diemžēl nevari atzīmēt savu recepti ar "Patīk")
 			    </span>
-			</p>		    
+			</p>	
+			<p><strong>Skatījumi:</strong> <span th:text="${recepte.skatSkaits}" /> </p>	    
 			<p><strong>Pagatavosanas laiks:</strong> <span th:text="${recepte.pagatavosanasLaiks}" /> minutes</p>
 		    <p><strong>Izveidoja:</strong> <span th:text="${recepte.lietotajvards}" />
 		    <p><strong>Pievienots:</strong> <span th:text="${#dates.format(recepte.pievienosanasDatums, 'dd.MM.yyyy')}"/> </p>

@@ -32,16 +32,18 @@ public class RecipeModel {
 	public RecipeType getRecipeById(int recepteID) {
 		System.out.println("getRecipeById");
 		String database = DatabaseConnection.getDatabase();
-        String sql = "SELECT r.*, l.lietotajsID, l.lietotajvards, ek.nosaukums AS edienaKategorijasNosaukums "
+        String sql = "SELECT r.*, l.lietotajsID, l.lietotajvards, ek.nosaukums AS edienaKategorijasNosaukums, wc.skatSkaits "
         		+ "FROM " + database + ".Recepte r "
         		+ "JOIN " + database + ".Lietotajs l ON l.lietotajsID = r.lietotajsID "
         		+ "JOIN " + database + ".EdienaKategorija ek ON ek.edienaKategorijasID = r.edienaKategorijaID "
+        		+ "LEFT JOIN " + database + ".ViewGetTotalViewCount wc ON wc.recepteID = ? "
         		+ "WHERE r.recepteID = ?";
         RecipeType recipe = null;
         
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, recepteID);
+            preparedStatement.setInt(2, recepteID);
             ResultSet result = preparedStatement.executeQuery();
             if (result.next()) {
                 recipe = new RecipeType(
@@ -53,7 +55,8 @@ public class RecipeModel {
             		result.getInt("lietotajsID"),
             		result.getString("lietotajvards"),
             		result.getInt("edienaKategorijaID"),
-            		result.getString("edienaKategorijasNosaukums")
+            		result.getString("edienaKategorijasNosaukums"),
+            		result.getInt("skatSkaits")
                 );
             }
         } catch (SQLException e) {
@@ -65,10 +68,11 @@ public class RecipeModel {
 
 	public List<RecipeType> getListOfRecipes(String search, RecipeOrderBy orderBy) {
 		String sql = String.join("\n", 
-		    "SELECT r.*, l.lietotajvards, ek.nosaukums AS edienaKategorijasNosaukums",
+		    "SELECT r.*, l.lietotajvards, ek.nosaukums AS edienaKategorijasNosaukums, wc.skatSkaits",
 		    "FROM " + DatabaseConnection.getDatabase() + ".Recepte r",
 		    "JOIN " + DatabaseConnection.getDatabase() + ".Lietotajs l ON r.lietotajsID = l.lietotajsID",
-    		"JOIN " + DatabaseConnection.getDatabase() + ".EdienaKategorija ek ON ek.edienaKategorijasID = r.edienaKategorijaID"
+    		"JOIN " + DatabaseConnection.getDatabase() + ".EdienaKategorija ek ON ek.edienaKategorijasID = r.edienaKategorijaID",
+    		"LEFT JOIN " + DatabaseConnection.getDatabase() + ".ViewGetTotalViewCount wc ON wc.recepteID = r.recepteID"
 		);
 		
 		if (search != null && !search.isEmpty()) {
@@ -76,27 +80,7 @@ public class RecipeModel {
 		}
 		
 		if (orderBy != null) {
-			
-			switch(orderBy) {
-		      case NAMEASC:
-		    	  sql += " ORDER BY r.nosaukums ASC";
-		    	  break;
-		      case NAMEDESC:
-		    	  sql += " ORDER BY r.nosaukums DESC";
-		    	  break;
-		      case COOKINGTIMEASC:
-		    	  sql += " ORDER BY r.pagatavosanasLaiks ASC";
-		    	  break;
-		      case COOKINGTIMEDESC:
-		    	  sql += " ORDER BY r.pagatavosanasLaiks DESC";
-		    	  break;
-		      case DATEADDEDASC:
-		    	  sql += " ORDER BY r.pievienosanasDatums ASC";
-		    	  break;
-		      case DATEADDEDDESC:
-		    	  sql += " ORDER BY r.pievienosanasDatums DESC";
-		    	  break;
-		    }
+			sql += " ORDER BY " + orderBy.getSqlLauks();
 			
 		}
 		
@@ -122,7 +106,8 @@ public class RecipeModel {
         	        results.getInt("lietotajsID"),
         	        results.getString("lietotajvards"),
             		results.getInt("edienaKategorijaID"),
-            		results.getString("edienaKategorijasNosaukums")
+            		results.getString("edienaKategorijasNosaukums"),
+            		results.getInt("skatSkaits")
     			));
             }
         } catch (SQLException e) {

@@ -64,7 +64,7 @@
 			        <button type="submit" title="Iztīrīt meklēšanu">&#9003;</button>
 			    </form>
 		    </div>
-		    
+
 		    
 		    <table>
 		        <thead>
@@ -112,6 +112,7 @@
 		                <td th:text="${recipe.kategorijasNosaukums}" />
 						<td th:text="${recipe.lietotajvards}" />						
 						<td th:text="${#dates.format(recipe.pievienosanasDatums, 'dd.MM.yyyy')}" />
+						<td th:text="${recipe.skatSkaits}" />
 		                <td>
 					         <a class="table-button" th:href="@{/recipe/object?(recepteID = ${recipe.recepteID})}">Skatīt</a>
 					    </td>

@@ -22,7 +22,7 @@ public class HomeController {
 	@GetMapping("/home")
 	public String showHomePage(Model model) {
 		System.out.println("showHomePage");
-        model.addAttribute("recipes", recipeModel.getListOfRecipes("", RecipeOrderBy.DATEADDEDDESC));
+        model.addAttribute("recipes", recipeModel.getListOfRecipes("", RecipeOrderBy.PIEVIENOSANASDATUMSASC));
         return "home"; 
     }
 }

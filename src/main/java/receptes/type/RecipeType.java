@@ -15,9 +15,10 @@ public class RecipeType {
 	private String lietotajvards;
 	private int kategorijaID;
 	private String kategorijasNosaukums;
+	private int skatSkaits;
 	
 	
-	public RecipeType(int recepteID, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards, int kategorijaID, String kategorijasNosaukums) {
+	public RecipeType(int recepteID, String nosaukums, int pagatavosanasLaiks, Timestamp timestamp, String receptesApraksts, int lietotajsID, String lietotajvards, int kategorijaID, String kategorijasNosaukums, int skatSkaits) {
 		this.recepteID = recepteID;
 		this.nosaukums = nosaukums;
 		this.pagatavosanasLaiks = pagatavosanasLaiks;
@@ -27,6 +28,7 @@ public class RecipeType {
 		this.lietotajvards = lietotajvards;
 		this.kategorijaID = kategorijaID;
 		this.kategorijasNosaukums = kategorijasNosaukums;
+		this.skatSkaits = skatSkaits;
 	}
 	
 	public RecipeType(String nosaukums, int pagatavosanasLaiks, String receptesApraksts, int lietotajsID, int kategorijaID) {
@@ -100,5 +102,13 @@ public class RecipeType {
 	}
 	public void setKategorijasNosaukums(String kategorijasNosaukums) {
 		this.kategorijasNosaukums = kategorijasNosaukums;
+	}
+
+
+	public int getSkatSkaits() {
+		return skatSkaits;
+	}
+	public void setSkatSkaits(int skatSkaits) {
+		this.skatSkaits = skatSkaits;
 	}
 }
