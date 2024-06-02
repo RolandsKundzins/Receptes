@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
+import receptes.exception.CustomException;
 import receptes.type.ProductType;
 
 @Component
@@ -32,7 +33,7 @@ public class ProductModel {
             	products.add(new ProductType(results.getInt("produktsID"), results.getString("nosaukums")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot visus produktus!", e);
         }
         
         return products;
@@ -54,11 +55,9 @@ public class ProductModel {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot produktu pēc produkta id!", e);
         }
         
-        System.out.println(product.toString());
-
         return product;
     }
 	
@@ -82,7 +81,7 @@ public class ProductModel {
     			));
 	        }
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        throw new CustomException("Notika kļūda iegūstot produktu pēc receptes id!", e);
 	    }
 	    
 	    System.out.println(products.toString());
@@ -97,7 +96,7 @@ public class ProductModel {
 	        preparedStatement.setString(1, product.getNosaukums());
 	        preparedStatement.executeUpdate();
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        throw new CustomException("Notika kļūda pievienojot produktu!", e);
 	    }
 	}
 	
@@ -109,7 +108,7 @@ public class ProductModel {
 	        preparedStatement.setInt(2, product.getProduktsID());
 	        preparedStatement.executeUpdate();
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        throw new CustomException("Notika kļūda atjaunojot produktu!", e);
 	    }
 	}
 	
@@ -120,12 +119,12 @@ public class ProductModel {
 	        preparedStatement.setInt(1, productId);
 	        preparedStatement.executeUpdate();
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        throw new CustomException("Notika kļūda dzēšot produktu!", e);
 	    }
 	}
 	
-	//atgriež sarakstu List<ProductType> 
-    public List<ProductType> getProductsByName(String name) {
+
+	public List<ProductType> getProductsByName(String name) {
         String database = DatabaseConnection.getDatabase();
         String sql = "SELECT * FROM " + database + ".Produkts WHERE nosaukums LIKE ?";
         List<ProductType> products = new LinkedList<>();
@@ -141,7 +140,7 @@ public class ProductModel {
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot produktu sarakstu pēc produkta nosaukuma", e);
         }
 
         return products;

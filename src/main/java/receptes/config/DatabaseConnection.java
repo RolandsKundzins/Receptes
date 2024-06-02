@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import receptes.exception.CustomException;
+
 public class DatabaseConnection {
 	private static Connection conn;
 
@@ -25,9 +27,9 @@ public class DatabaseConnection {
 				conn.setAutoCommit(true);//false - nesaglabā datus
 			}
 			catch (ClassNotFoundException e) {
-				e.printStackTrace();
+				throw new CustomException("Datubāzes kļūda1", e);
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				throw new CustomException("Datubāzes kļūda2", e1);
 			}
 		} else {
 			System.out.println("Connection not null - already initialized");
@@ -43,7 +45,7 @@ public class DatabaseConnection {
 			System.out.println("closeConnection");
 			conn.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CustomException("Notika kļūda aizverot datubāzes konekciju", e);
 		}
 	}
 

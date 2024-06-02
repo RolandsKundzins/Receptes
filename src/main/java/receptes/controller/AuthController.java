@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import receptes.model.UserModel;
-import receptes.type.OperationResult;
 import receptes.type.UserType;
 
 @Controller
@@ -74,14 +73,8 @@ public class AuthController {
         String encodedPassword = passwordEncoder.encode(user.getParole());
 
         // Ievieto datus DB
-        OperationResult insertResult = userModel.insertUser(user.getEpasts(), encodedPassword, user.getLietotajvards());
+        userModel.insertUser(user.getEpasts(), encodedPassword, user.getLietotajvards());
 
-        if (insertResult.isSuccess()) {
-            // Novirza lietotaju uz pieslegsanas lapu, ja ir veiksmiga jauna lietotaja registresana
-            return "redirect:/register?successMessage=" + URLEncoder.encode("Lietotajs izveidots. Ludzu piesledzies!", StandardCharsets.UTF_8); //nevar isti pievienot parametrus (pazinojumu), jo 
-        } else {
-            // Novirza atpakal uz jauna lietotaja registresanas lapu, ja ir kluda
-            return "redirect:/register?error=" + URLEncoder.encode(insertResult.getMessage(), StandardCharsets.UTF_8);
-        }
+        return "redirect:/register?successMessage=" + URLEncoder.encode("Lietotajs izveidots. Ludzu piesledzies!", StandardCharsets.UTF_8); //nevar isti pievienot parametrus (pazinojumu), jo 
     }
 }

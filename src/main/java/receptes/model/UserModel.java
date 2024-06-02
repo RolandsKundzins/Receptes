@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Component;
 
-import receptes.type.OperationResult;
 import receptes.type.UserType;
 
 import java.sql.Connection;
 
 import receptes.config.DatabaseConnection;
+import receptes.exception.CustomException;
 
 @Component
 public class UserModel {
@@ -42,7 +42,7 @@ public class UserModel {
 				);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CustomException("Notika datubāzes kļūda iegūstot lietotāju pēc lietotājvārda!", e);
 		}
 		
 		return null;
@@ -73,14 +73,14 @@ public class UserModel {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CustomException("Notika datubāzes kļūda pārbaudot vai lietotājs eksistē!", e);
 		}
 		
 		return result;
 	}
 	
 	
-	public OperationResult insertUser(String epasts, String parole, String lietotajvards) {
+	public void insertUser(String epasts, String parole, String lietotajvards) {
 		String sql = "INSERT INTO " + DatabaseConnection.getDatabase() + ".`Lietotajs` (`epasts`, `parole`, `lietotajvards`) VALUES (?,?,?);";
 		int rowsAffected = 0;
 		
@@ -90,20 +90,11 @@ public class UserModel {
 			preparedStatement.setString(2, parole);
 			preparedStatement.setString(3, lietotajvards);
 			rowsAffected = preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			try {
-				conn.rollback();
-			} catch (SQLException el) {
-				el.printStackTrace();
+			if(rowsAffected == 0) {
+				throw new CustomException("Notika kļūda ievietojot jaunu lietotāju - netika pievienota neviena rinda!");
 			}
-			e.printStackTrace();
-			
-			return new OperationResult(false, "Error occurred while inserting user: " + e.getMessage());
+		} catch (SQLException e) {
+			throw new CustomException("Notika datubāzes kļūda ievietojot jaunu lietotāju!", e);
 		}
-		
-		if(rowsAffected > 0) {
-	        return new OperationResult(true, "User inserted successfully");
-		}
-	    return new OperationResult(false, "Failed to insert user. Please contact administrator!");
 	}
 }

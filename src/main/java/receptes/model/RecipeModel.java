@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import receptes.config.DatabaseConnection;
 import receptes.enums.RecipeOrderBy;
+import receptes.exception.CustomException;
 import receptes.type.RecipeType;
 import receptes.type.RecipeViewType;
 
@@ -28,15 +29,15 @@ public class RecipeModel {
 	
 	public List<RecipeType> getAllRecipes() {
 		String sql = String.join("\n", 
-		    "SELECT r.*, l.lietotajvards",
+		    "SELECT r.*, l.lietotajvards, ek.nosaukums AS edienaKategorijasNosaukums",
 		    "FROM " + DatabaseConnection.getDatabase() + ".Recepte r",
-		    "JOIN " + DatabaseConnection.getDatabase() + ".Lietotajs l ON r.lietotajsID = l.lietotajsID"
+		    "JOIN " + DatabaseConnection.getDatabase() + ".Lietotajs l ON r.lietotajsID = l.lietotajsID",
+		    "JOIN " + DatabaseConnection.getDatabase() + ".EdienaKategorija ek ON ek.edienaKategorijasID = r.edienaKategorijaID"
 		);
         List<RecipeType> recipes = new LinkedList<>();
         
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			//additional parameters example: preparedStatement.setString(1, "%" + firstName + "%");
 			ResultSet results = preparedStatement.executeQuery();
             while (results.next()) {
             	recipes.add(new RecipeType(
@@ -47,11 +48,12 @@ public class RecipeModel {
             	        results.getString("receptesApraksts"),
             	        results.getInt("lietotajsID"),
             	        results.getString("lietotajvards"),
-            	        results.getInt("edienaKategorijaID")
+            	        results.getInt("edienaKategorijaID"),
+            	        results.getString("edienaKategorijasNosaukums")
             	    ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot recepšu sarakstu", e);
         }
         
         return recipes;
@@ -61,9 +63,10 @@ public class RecipeModel {
 	public RecipeType getRecipeById(int recepteID) {
 		System.out.println("getRecipeById");
 		String database = DatabaseConnection.getDatabase();
-        String sql = "SELECT r.*, l.lietotajsID, l.lietotajvards "
+        String sql = "SELECT r.*, l.lietotajsID, l.lietotajvards, ek.nosaukums AS edienaKategorijasNosaukums "
         		+ "FROM " + database + ".Recepte r "
         		+ "JOIN " + database + ".Lietotajs l ON l.lietotajsID = r.lietotajsID "
+        		+ "JOIN " + database + ".EdienaKategorija ek ON ek.edienaKategorijasID = r.edienaKategorijaID "
         		+ "WHERE r.recepteID = ?";
         RecipeType recipe = null;
         
@@ -80,11 +83,12 @@ public class RecipeModel {
             		result.getString("receptesApraksts"),
             		result.getInt("lietotajsID"),
             		result.getString("lietotajvards"),
-            		result.getInt("edienaKategorijaID")
+            		result.getInt("edienaKategorijaID"),
+            		result.getString("edienaKategorijasNosaukums")
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot receptes datus pēc receptes id", e);
         }
         
         return recipe;
@@ -92,9 +96,10 @@ public class RecipeModel {
 
 	public List<RecipeType> getListOfRecipes(String search, RecipeOrderBy orderBy) {
 		String sql = String.join("\n", 
-		    "SELECT r.*, l.lietotajvards",
+		    "SELECT r.*, l.lietotajvards, ek.nosaukums AS edienaKategorijasNosaukums",
 		    "FROM " + DatabaseConnection.getDatabase() + ".Recepte r",
-		    "JOIN " + DatabaseConnection.getDatabase() + ".Lietotajs l ON r.lietotajsID = l.lietotajsID"
+		    "JOIN " + DatabaseConnection.getDatabase() + ".Lietotajs l ON r.lietotajsID = l.lietotajsID",
+    		"JOIN " + DatabaseConnection.getDatabase() + ".EdienaKategorija ek ON ek.edienaKategorijasID = r.edienaKategorijaID"
 		);
 		
 		if (search != null && !search.isEmpty()) {
@@ -140,18 +145,19 @@ public class RecipeModel {
             		results.getString("receptesApraksts"),
         	        results.getInt("lietotajsID"),
         	        results.getString("lietotajvards"),
-            		results.getInt("edienaKategorijaID")
+            		results.getInt("edienaKategorijaID"),
+            		results.getString("edienaKategorijasNosaukums")
     			));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomException("Notika kļūda iegūstot recepšu sarakstu ar meklēšanu un kārtošanu!", e);
         }
         return recipes;
     }
 	
 	
 	//Kad lietotajs apskata recepti, tad tiek pievienots ieraksts tabulā "LietotajsRecepteSkatits" ar apskates laiku
-	public boolean insertRecipeUserViewed(RecipeViewType recipeViewType) {
+	public void insertRecipeUserViewed(RecipeViewType recipeViewType) {
 		System.out.println("insertRecipeView");
 
 		String database = DatabaseConnection.getDatabase();
@@ -165,16 +171,10 @@ public class RecipeModel {
 			preparedStatement.setInt(2, recipeViewType.getRecepteID());
 			rowsAffected = preparedStatement.executeUpdate();
 			if(rowsAffected == 0) {
-				throw new Exception("Rows affected equal to zero for statistics insert!");
+				throw new CustomException("Rows affected equal to zero for statistics insert!");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			throw new CustomException("Notika datu bāzes kļūda pievienojot receptes skatījuma datus", e);
 		}
-		
-		return true;
 	}
 }
