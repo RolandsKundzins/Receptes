@@ -8,21 +8,21 @@ public class UserType {
 	private String epasts;
 	private String parole;
 	private String lietotajvards;
-	//private String apraksts; //TODO nez kur sitas tiks lietots?
-	//private attels - ir datubazee
 	//private izveidesDatums - ir datubazee
-	private Boolean irAktivs; // - ir datubazee, bet bez administratora nav jegas
+	private Boolean irAktivs; //Sobrīd netiek lietots
+	private String loma;
 	
 
 	public UserType() {
 	}
 	
-	public UserType(int lietotajsID, String epasts, String parole, String lietotajvards, Boolean irAktivs) {
+	public UserType(int lietotajsID, String epasts, String parole, String lietotajvards, Boolean irAktivs, String loma) {
 		this.lietotajsID = lietotajsID;
 		this.epasts = epasts;
 		this.parole = parole;
 		this.lietotajvards = lietotajvards;
 		this.irAktivs = irAktivs;
+		this.loma = loma;
 	}
 	
 	
@@ -62,9 +62,10 @@ public class UserType {
 		this.irAktivs = irAktivs;
 	}
 
-	@Override
-	public String toString() {
-		return "UserType [epasts=" + epasts + ", parole=" + parole + ", lietotajvards=" + lietotajvards + ", irAktivs="
-				+ irAktivs + "]";
+	public String getLoma() {
+		return loma;
+	}
+	public void setLoma(String loma) {
+		this.loma = loma;
 	}
 }

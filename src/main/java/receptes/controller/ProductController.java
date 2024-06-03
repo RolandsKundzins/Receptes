@@ -28,7 +28,7 @@ public class ProductController {
         // Load recipe data and add it to the model
 		System.out.println("showproductModel");
         model.addAttribute("products", productModel.getAllProducts());
-        return "product/list"; // src/main/templates/recipe-list.html
+        return "product/list";
     }
 	
 	@GetMapping("/object")

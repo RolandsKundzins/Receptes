@@ -20,7 +20,7 @@ import receptes.MyUserDetailsService;
 public class SecurityConfiguration {
 	@Autowired
 	private MyUserDetailsService userDetailsService;
-
+	
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -29,8 +29,7 @@ public class SecurityConfiguration {
 			.authorizeHttpRequests(registry -> {
 				registry.antMatchers("/home").permitAll();
 				registry.antMatchers("/register").permitAll(); //sadi var iestatit lapas, kuram var pieklut bez auth
-				//registry.antMatchers("/admin/**").hasRole("ADMIN"); //pagaidam nav vairaku lietotaja limenu
-				//registry.antMatchers("/user/**").hasRole("USER");
+				registry.antMatchers("/product/**", "/food-category/**").hasRole("ADMINISTRATORS");
 				registry.anyRequest().authenticated();
 			})
 			.formLogin(form -> form

@@ -182,7 +182,6 @@ public class RecipeModel {
 		System.out.println(sql);
 		
 		int rowsAffected = 0;
-		int generatedId = -1;
 		
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);

@@ -8,13 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import receptes.model.FoodCategoryModel;
 import receptes.type.FoodCategoryType;
 
 
-@SuppressWarnings("unused")
 @Controller
 @RequestMapping("/food-category")
 public class FoodCategoryController {
@@ -25,11 +23,8 @@ public class FoodCategoryController {
 	@GetMapping("/list")
 	public String showFoodCategoryModel(Model model) {
         model.addAttribute("foodCategories", foodCategoryModel.getAllFoodCategories());
-        return "foodCategory/list"; // src/main/templates/recipe-list.html
+        return "foodCategory/list";
     }
-	
-	//varbut japieliek vienas kategorijas apskate, bet nezinu vai ir vērts, jo listā
-	//jau tāpat var visu redzēt
 	
 	@GetMapping("/create")
 	public String showCreatePage(Model model) {

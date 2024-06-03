@@ -38,7 +38,8 @@ public class UserModel {
 					results.getString("epasts"), 
 					results.getString("parole"), 
 					results.getString("lietotajvards"), 
-					results.getBoolean("irAktivs")
+					results.getBoolean("irAktivs"),
+					results.getString("loma")
 				);
 			}
 		} catch (SQLException e) {

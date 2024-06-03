@@ -59,7 +59,7 @@ public class UserRecipeModel {
                     ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+        	throw new CustomException("Notika datu bāzes kļūda iegūstot lietotāja veidotās receptes", e);
         }
 
         return recipies;
@@ -101,7 +101,7 @@ public class UserRecipeModel {
                     ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+        	throw new CustomException("Notika datu bāzes kļūda iegūstot receptes, kuras lietotājam patīk", e);
         }
 
         return recipies;
