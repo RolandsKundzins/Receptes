@@ -43,7 +43,7 @@
 		    </div>
 		    
 		    <div>
-		    	<h4>Pagatavosanas laiks</h4>
+		    	<h4>Pagatavošanas laiks</h4>
 		    	<input type="text" name="recipe-cooking-time" th:value="${param.recipeCookingTime}"/>
 		    </div>
 		    
@@ -53,7 +53,7 @@
 		    </div>
 		    
 		    <div>
-	    	    <h4>Ediena kategorija</h4>
+	    	    <h4>Ēdiena kategorija</h4>
 	    	    <select name="category">
 	    	        <option th:each="foodCategory : ${foodCategories}" th:value="${foodCategory.getFoodCategoryId()}" th:text="${foodCategory.nosaukums}"></option>
 	    	    </select>
