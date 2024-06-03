@@ -23,7 +23,6 @@ public class MyUserDetailsService implements UserDetailsService {
 		UserType userType = userModel.findByUsername(username);
 		if(userType != null) {
 			System.out.println("loadUserByUsername" + userType.toString());
-			System.out.println("loadUserByUsername.userType.getLoma()" + userType.getLoma());
 			return User.builder()
 				.username(userType.getLietotajvards())
 				.password(userType.getParole())
