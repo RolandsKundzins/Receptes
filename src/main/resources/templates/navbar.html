@@ -3,10 +3,11 @@
 
 <header th:fragment="navbar">
 	<div><a th:href="@{/recipe/list}">Receptes</a></div>
-	<div><a th:href="@{/product/list}">Produkti</a></div>
-	<div><a th:href="@{/food-category/list}">Ēdiena kategorijas</a></div>
 	<div><a th:href="@{/statistics/single?(dienuskaits=7)}">Lietotaja statistika</a></div>
 	<div><a th:href="@{/user-recipe/list}">Manas receptes</a></div>
+
+    <div th:if="${#request.isUserInRole('ADMINISTRATORS')}"><a th:href="@{/product/list}">Produkti</a></div>
+    <div th:if="${#request.isUserInRole('ADMINISTRATORS')}"><a th:href="@{/food-category/list}">Ēdiena kategorijas</a></div>
 	
 	<div><a th:href="@{/logout}">Atvienoties</a><br></div>
 </header>

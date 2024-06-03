@@ -20,14 +20,14 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		UserType userType = userModel.findByUsername(username);
 		if(userType != null) {
 			System.out.println("loadUserByUsername" + userType.toString());
+			System.out.println("loadUserByUsername.userType.getLoma()" + userType.getLoma());
 			return User.builder()
 				.username(userType.getLietotajvards())
-				.password(userType.getParole()) //1234
-				.roles("USER")
+				.password(userType.getParole())
+				.roles(userType.getLoma())
 				.build();
 		} else {
 			throw new UsernameNotFoundException(username);
