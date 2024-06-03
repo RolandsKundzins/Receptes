@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import receptes.enums.RecipeOrderBy;
+import receptes.exception.CustomException;
 import receptes.model.RecipeModel;
 import receptes.model.UserModel;
 import receptes.type.ProductRecipeType;
@@ -108,6 +109,9 @@ public class RecipeController {
 		String lietotajvardsSkatitajs = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		RecipeType recipe = recipeModel.getRecipeById(recepteID);
+		if(!lietotajvardsSkatitajs.equals(recipe.getLietotajvards())){
+			throw new CustomException("Jums nav tiesību rediģēt šo recepti");
+		}
 		model.addAttribute("recepte", recipe);
         model.addAttribute("lietotajvardsSkatitajs", lietotajvardsSkatitajs);
 		model.addAttribute("foodCategories", foodCategoryModel.getAllFoodCategories());
