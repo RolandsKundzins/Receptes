@@ -2,6 +2,20 @@
 
 ## Universitātes kursa "Objektorientēta programmēšana" (OOP) grupu darbs "Recepšu apkopošanas sistēma"
 
+
+# DOKUMENTĀCIJA PIEEJAMA DOCS MAPĒ
+## Vai arī šeit ir saites:
+ - prezentācija: 
+ ```
+ 	https://docs.google.com/presentation/d/1IPymoSThkCkRDukXCCktNai88dX2INPzsZrj-IiHCus/edit?usp=sharing
+ ```
+
+ - dokumentācija: 
+ ```
+ 	https://docs.google.com/document/d/1AIOqsqhoI9dFk2CxTe6cIl95icFrWl40DLTihd_6iLE/edit?usp=sharing
+ ```
+
+
 ## GIT
 
 ### Uzstadi Git
