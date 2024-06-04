@@ -15,6 +15,7 @@
  	https://docs.google.com/document/d/1AIOqsqhoI9dFk2CxTe6cIl95icFrWl40DLTihd_6iLE/edit?usp=sharing
  ```
 
+# Priekš programmētājiem jeb grupas dalībniekiem:
 
 ## GIT
 
