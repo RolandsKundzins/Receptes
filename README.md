@@ -16,6 +16,7 @@
  ```
 
 # Priekš programmētājiem jeb grupas dalībniekiem:
+
 ## GIT
 
 ### Uzstadi Git
